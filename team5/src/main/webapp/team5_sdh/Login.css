@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+.CreateId{
+	text-align:center;
+	height: 800px;
+	min-width:800px;
+	min-height:9
+}
+
+.CreateId table {
+	width:100%;	
+	text-align:center;
+}
+
+#title{
+	padding-top:50px;
+}
+
+#insert{
+	padding-top: 50px;
+	width:80%;
+	height: 50px;
+}
+
+#text {
+	width:98%;
+	height:50px;
+}
+#checkbox{
+	width:10px;
+}
+
+
