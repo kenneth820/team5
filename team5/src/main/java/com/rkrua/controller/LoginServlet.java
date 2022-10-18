@@ -34,6 +34,7 @@ public class LoginServlet extends HttpServlet {
  		RequestDispatcher dispatcher;
  		dispatcher = request.getRequestDispatcher(url);
  		dispatcher.forward(request,response);
+ 		System.out.println("get방식입니다.");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

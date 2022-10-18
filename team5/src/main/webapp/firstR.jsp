@@ -120,10 +120,10 @@ ul, li {
 
 			<div id="info">
 				<div id="updateProf">
-					<a href="./updateProf">개인정보수정</a>
+					<a href="updateMember.do">개인정보수정</a>
 				</div>
 				<div id="Logout">
-					<a href="./Logout">로그아웃</a>
+					<a href="logout.do">로그아웃</a>
 				</div>
 			</div>
 
@@ -131,9 +131,30 @@ ul, li {
 				<img class="profilePhoto" src="./prof_img.png" alt="기본프로필사진">
 
 				<div class="userInfo">
-					<p class="name">name</p>
-					<p class="point">보유포인트</p>
-					<div class="intro">한줄소개</div>
+					<table id=userinfoT >
+						<tr>
+						<td>
+						유저 이름:
+						</td>
+						<td>
+							<p class="name">${loginUser.name}</p>
+						</td>
+						</tr>
+						<tr>
+						<td>
+						보유 포인트:
+						</td>
+						<td>
+							<p class="point">${loginUser.point}p</p>
+						</td>
+						</tr>
+						<tr>
+							<td colspan="2">						
+							<div class="intro">한줄소개</div>
+							</td>
+						</tr>
+					</table>
+					
 				</div>
 			</div>
 
