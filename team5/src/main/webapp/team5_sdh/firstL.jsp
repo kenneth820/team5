@@ -29,8 +29,8 @@
            imgChar.src="./ms18.png";
            var imgBg= new Image();
            imgBg.src="./bg4.png";
-           var imgfn= new Image();
-           imgBg.src="./Small1.jpg";
+           // var imgfn= new Image();
+           // imgBg.src="./Small1.jpg";
     		
            // 플레이어 캐릭터의 중심좌표
            var x=800, y=850; //캐릭터의 위치좌표
