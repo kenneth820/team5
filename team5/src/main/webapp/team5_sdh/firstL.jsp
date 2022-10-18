@@ -29,6 +29,8 @@
            imgChar.src="./ms18.png";
            var imgBg= new Image();
            imgBg.src="./bg4.png";
+           var imgfn= new Image();
+           imgBg.src="./Small1.jpg";
     		
            // 플레이어 캐릭터의 중심좌표
            var x=800, y=850; //캐릭터의 위치좌표
@@ -53,7 +55,7 @@
                x+=dx;
                y+=dy;
                if(x>=700 && y<=300){
-            	   location.href = ("./canv.jsp");
+            	   location.href = ("./indexC.jsp");
                 }
                if(x<=120  && y<=267){
             	   console.log("왼쪽 위 문입니다!!!")
