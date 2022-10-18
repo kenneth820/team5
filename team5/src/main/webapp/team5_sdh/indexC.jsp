@@ -15,10 +15,10 @@ margin:0px;
 <body>
 	<div style="display: flex;">
 		<div style="width:70%">
-		<%@ include file="left.jsp" %>
+		<%@ include file="indexL.jsp" %>
 		</div>
 		<div style="width:30%">
-		<%@ include file="right.jsp" %>
+		<%@ include file="indexR.jsp" %>
 		</div>	
 	</div>
 	
