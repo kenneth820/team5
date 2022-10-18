@@ -52,6 +52,16 @@
                //플레이어의 좌표 변경
                x+=dx;
                y+=dy;
+               if(x>=700 && y<=300){
+            	   location.href = ("./canv.jsp");
+                }
+               if(x<=120  && y<=267){
+            	   console.log("왼쪽 위 문입니다!!!")
+               }
+               if(x<=115  && y>=620){
+            	   console.log("왼쪽 아래 문입니다!!!")
+               }
+               
            }
            function drawAll(){
                //배경 그리기
