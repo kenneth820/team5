@@ -5,6 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="css/Login.css">
+<script type="text/javascript" src="Script/member.js"></script>
 </head>
 <body>
 	<div style="flex: 20%;  ">
@@ -13,16 +15,26 @@
             로고 사이트 이름
         </div>
         <div style="padding-top: 70%; margin-left: 10%;">
-            <form>
-                아이디 : &nbsp; &nbsp;<input type="text" value="아이디를 입력하세요.">
-                <br>
-                비밀번호 : <input type="password">
-                <br>
-                <br>
-                <input type="button" value="로그인" onclick="location.href='first.jsp'" style="margin-left: 15%;">
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="button" value="회원가입">
-            </form>
+        <form action="login.do" method="post" name="frm">
+	<!-- <table border="1"> -->
+	<table>
+		<tr>
+			<td>아이디</td>
+			<td><input type="text" name="userId"></td>
+		</tr>
+		<tr>
+			<td>암 호</td>
+			<td><input type="password" name="userPwd"></td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center">
+				<input type="submit" value="로그인" onclick="return checkLogin()">
+				<input type="reset" value="취소">
+				<input type="button" value="회원가입" onclick="location.href='join.do'">
+			</td>
+		</tr>	
+	</table>
+</form>
         </div>
     </div>
 	</div>
