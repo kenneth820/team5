@@ -7,22 +7,24 @@
 <head>
 <meta charset="UTF-8">
 <link rel ="stylesheet" href="css/Shop.css">
-<title>상점</title>
+<title>관리자페이지 - 상점</title>
 </head>
 <body>
 <c:set var="category" value="${(empty param.c)?00:param.c}"></c:set>
 <c:set var="page" value="${(empty param.p)?1:param.p}"></c:set>
 <c:set var="startNum" value="${(param.p==null or param.p <= 3)?1:param.p-2}"></c:set>
 <c:set var="endNum" value="${fn:substringBefore(Math.ceil(count/9), '.')}"></c:set>
-    <header>
-        <a href="login.do">쇼룸으로 이동</a>
+
+	    <header>
+        <a href="manager.jsp">관리자 메인 페이지</a>
     </header>
+    <h3>관리자 페이지-상점입니다.</h3>
     <nav>
     	<div>
     		<a id=logo_img href="productList.do">
 		        <img class="logo_img" src="image/Logo.jpg"></img>
     		</a>
-		  	<form id=SearchForm value="name" action="productList.do?k=${param.k}&p=${1}&c=${category}">
+   		  	<form id=SearchForm value="name" action="productList.do?k=${param.k}&p=${1}&c=${category}">
 		        <input id="Search" type="text" name="k" placeholder="검색어를 입력해주세요.">
 		        <input id="submit" type="image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTDlkdG6O5lJVaXJ40p34v1j4CUJDpb7Ml7g&usqp=CAU">
 			</form>
@@ -32,39 +34,39 @@
         <ul class="nav">
         	<li class="category">
         		<a href="productList.do">
-        		<p>
-	        		전체
-	        	</p>
+	        		<p>
+		        		전체
+		        	</p>
         		</a>
         	</li>
             <li class="category">
             	<a href="productList.do?k=${param.k}&p=${1}&c=${200}">
-            	<p>
-	                바닥
-                <p>
+	            	<p>
+		                바닥
+	                <p>
             	</a>
             </li>
             <li class="category">
             	<a href="productList.do?k=${param.k}&p=${1}&c=${400}">
-            	<p>
-                	물건
-               	<p> 
+	            	<p>
+	                	물건
+	               	<p> 
                 </a>
             </li>
             <li class="category">
             	<a href="productList.do?k=${param.k}&p=${1}&c=${600}">
-            	<p>
-	                장식
-                </p>
+	            	<p>
+		                장식
+	                </p>
 	            </a>
             </li>
         </ul>
     </div>
     <article>
-        <div class="menubar">
-	    	<ul class="right-menu">
-		        <li>
-			        <div class="profilePhoto">
+      <div class="menubar">
+    	<ul class="right-menu">
+	        <li>
+		        <div class="profilePhoto">
                			<c:choose>
 							<c:when test="${empty loginUser.pictureurl}">
 								<img src="image/noimage.jpg">
@@ -73,84 +75,60 @@
 								<img src="profilePhoto/${loginUser.pictureurl}">
 							</c:otherwise>
 						</c:choose>
-			        </div>
-		        </li>
-				<li>
-		            <div class="userInfo">
-		                <p class="name">${loginUser.name}</p>
-		                <p class="point">${loginUser.point}p</p>
-		            </div>
-				</li>
-	    	</ul>
+		        </div>
+	        </li>
+			<li>
+	            <div class="userInfo">
+	                <p class="name">${loginUser.name}</p>
+	            </div>
+			</li>
+    	</ul>
+       </div>
+	    <div class="shopping_list">
         </div>
-        <div class="S_L">
-	        <p>
-    	        <a href="cartList.do?userid=${loginUser.userid}"><h2>장바구니로 이동</h2></a>
-            </p>
-        </div>
-        <div class="Cart_List">
-        <table id=cartTable border="1" width="100%">
-	        	<tr>
-		        	<th width=25%>사진</th>
-		        	<th colspan="2">상품정보</th>
-		        </tr>
-        		<c:forEach var="Cart" items="${CartList}">
-        		<tr>
-		        	<td rowspan="2">
-               			<c:choose>
-							<c:when test="${empty Cart.pictureurl}">
-								<img src="image/noimage.jpg">
-							</c:when>
-							<c:otherwise>
-								<img src="upload/${Cart.pictureurl}">
-							</c:otherwise>
-						</c:choose>
-		        	</td>	
-		        	<td>
-		        		${Cart.name}
-		        	</td>	
-		        </tr>
-				<tr>	   
-		        	<td>
-		        		${Cart.price}
-		        	</td>	
-				</tr>
-				</c:forEach>
-        </table>
-        </div>
+            <div class="B_or_N">
+            <a href="writeProduct.do">
+            <input type="button" value="상품 등록">
+            </a>
+            </div>
     </article>
-    <section>
-    	<div class="shop_Form">
-	   		<c:forEach var="product" items="${pageList}">
-		        <ul class="item_list">
-		            <li class="items"> 
-		                <div class="flip">  
-		                    <div class="card">
-		                    <!-- 앞면 -->
-		                    <div class="front">
-                       			<c:choose>
-									<c:when test="${empty product.pictureurl}">
-										<img src="image/noimage.jpg">
-									</c:when>
-									<c:otherwise>
-										<img src="upload/${product.pictureurl}">
-									</c:otherwise>
-								</c:choose>
-		                    </div>
-		                    <!-- 뒷면 -->
-		                    <div class="back">
-		                        <p>${product.name}</p>
-		                        <p>${product.price}</p>
-		                        <a href="addCart.do?code=${product.code}&userid=${loginUser.userid}">
-		                        	<input type="button" value="장바구니">                 
-		                        </a>
-		                    </div>
-		                    </div>
-		                </div>
-		            </li>
-	        	</ul>
-  			</c:forEach> 
-    	</div>
+        <section>
+    	<form class="shop_Form">
+	        <ul class="item_list">
+        		<c:forEach var="product" items="${pageList}">
+	            <li class="items"> 
+	                <div class="flip">  
+	                    <div class="card">
+	                    <!-- 앞면 -->
+	                    <div class="front">
+							<c:choose>
+								<c:when test="${empty product.pictureurl}}">
+									<img src="profile.jpg">
+								</c:when>
+								<c:otherwise>
+									<img src="upload/${product.pictureurl}">
+								</c:otherwise>
+							</c:choose>
+							</div>
+	                    <!-- 뒷면 -->
+	                    <div class="back">
+	                        <p>${product.name}</p>
+	                        <p>${product.price}</p>
+	                        <p>${product.reg_date}</p>
+	                        <a href="updateProduct.do?code=${product.code}">
+	                        <input type="button" value="상품 수정">
+	                        </a>
+	                        <a href="deleteProduct.do?code=${product.code}">	                        
+	                        <input type="button" value="상품 삭제">                 
+	                        </a>
+	                    </div>
+	                    </div>
+	                </div>
+	            </li>
+	            </c:forEach>
+	        </ul>
+       </form>
+
 		<table id=channel style="padding: 100px;" align="center">
 		<tr>
 			<td colspan="7" align="center">
@@ -208,9 +186,9 @@
 				</ul>
 		</tr>
 </table>
-		
 
     </section>
+
     <footer style="border-color: grey;"> footer</footer>
 </body>
 </html>

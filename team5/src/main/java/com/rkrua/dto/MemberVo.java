@@ -11,6 +11,8 @@ public class MemberVo {
 	private String email;
 	private String phone;
 	private int admin;
+	private String pictureurl;
+	private int point;
 	
 	public String getName() {
 		return name;
@@ -48,4 +50,22 @@ public class MemberVo {
 	public void setAdmin(int admin) {
 		this.admin = admin;
 	}
+	public String getPictureurl() {
+		return pictureurl;
+	}
+	public void setPictureurl(String pictureurl) {
+		this.pictureurl = pictureurl;
+	}
+	public int getPoint() {
+		return point;
+	}
+	public void setPoint(int point) {
+		this.point = point;
+	}
+	@Override
+	public String toString() {
+		return "MemberVo [name=" + name + ", userid=" + userid + ", pwd=" + pwd + ", email=" + email + ", phone="
+				+ phone + ", admin=" + admin + ", pictureurl=" + pictureurl + ", point=" + point + "]";
+	}
+	
 }

@@ -33,7 +33,7 @@ public class ProductDao {
 		// 동일한 쿼리문을 특정 값만 바꿔서 여러번 실행해야 할 때, 매개변수가 많아서 쿼리문 정리 필요
 		PreparedStatement pstmt = null;
 
-		String sql_insert = "insert into product(name,price,pictureurl,description,reg_date) values(?, ?, ?, ?, ?)";
+		String sql_insert = "insert into product(name,price,pictureurl,category,coordinate) values(?, ?, ?, ?, ?)";
 
 		try {
 			conn = DBManager.getConnection();
@@ -44,8 +44,8 @@ public class ProductDao {
 			pstmt.setString(1, pVo.getName());
 			pstmt.setInt(2, pVo.getPrice()); // 정수형
 			pstmt.setString(3, pVo.getPictureurl());
-			pstmt.setString(4, pVo.getDescription()); // 문자형
-			pstmt.setDate(5, pVo.getReg_date()); // 날짜형
+			pstmt.setInt(4, pVo.getCategory()); // 문자형
+			pstmt.setString(5, pVo.getCoordinate());
 
 			result = pstmt.executeUpdate(); // 荑쇰━ �닔�뻾
 		} catch (Exception e) {
@@ -83,8 +83,9 @@ public class ProductDao {
 				pVo.setName(rs.getString("name")); // DB에서 가져온 객체를 pVo객체에 저장
 				pVo.setPrice(rs.getInt("price"));
 				pVo.setPictureurl(rs.getString("pictureurl"));
-				pVo.setDescription(rs.getString("description"));
-				pVo.setReg_date(rs.getDate("reg_date"));
+				pVo.setCategory(rs.getInt("Category"));
+				pVo.setCoordinate(rs.getString("Coordinate"));
+				pVo.setReg_date(rs.getTimestamp("reg_date"));
 				/* System.out.println(pVo); */
 				list.add(pVo); // list 객체에 데이터 추가
 			}
@@ -118,8 +119,9 @@ public class ProductDao {
 				pVo.setName(rs.getString("name"));
 				pVo.setPrice(rs.getInt("price"));
 				pVo.setPictureurl(rs.getString("pictureurl"));
-				pVo.setDescription(rs.getString("description"));
-				pVo.setReg_date(rs.getDate("reg_date"));	
+				pVo.setCategory(rs.getInt("Category"));
+				pVo.setCoordinate(rs.getString("Coordinate"));
+				pVo.setReg_date(rs.getTimestamp("reg_date"));	
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -136,7 +138,7 @@ public class ProductDao {
 		// 동일한 쿼리문을 특정 값만 바꿔서 여러번 실행해야 할 때, 매개변수가 많아서 쿼리문 정리 필요
 		PreparedStatement pstmt = null;
 
-		String sql_update = "update product set name=?, price=?, pictureurl=?, description=?, reg_date=? where code=?";
+		String sql_update = "update product set name=?, price=?, pictureurl=?, category=?, coordinate=? where code=?";
 
 		try {
 			conn = DBManager.getConnection();
@@ -145,8 +147,8 @@ public class ProductDao {
 			pstmt.setString(1, pVo.getName());
 			pstmt.setInt(2, pVo.getPrice()); // 정수형
 			pstmt.setString(3, pVo.getPictureurl());
-			pstmt.setString(4, pVo.getDescription()); // 문자형
-			pstmt.setDate(5, pVo.getReg_date()); // 날짜형
+			pstmt.setInt(4, pVo.getCategory()); // 문자형
+			pstmt.setString(5, pVo.getCoordinate());
 			pstmt.setInt(6, pVo.getCode());
 
 			result = pstmt.executeUpdate(); // 荑쇰━ �닔�뻾
@@ -188,7 +190,9 @@ public class ProductDao {
 //		# 안되는 예시 : select * from product where 'code' like '%사과%' order by code desc;
 //		=> String sql = "select * from product where ? like ? order by code desc";
 //		String sql= "select * from product where "+column+" like ? order by code desc";
-		String sql = "select * from product where name like ? order by code desc";
+		String sql = "select * from ( "
+				+ "select rownum n, p.* "
+				+ "from (select * from product where name like ? order by code) p) ";
 		
 		List<ProductVo> list = new ArrayList<ProductVo>();		// List 컬렉션 객체 생성
 		
@@ -209,8 +213,9 @@ public class ProductDao {
 				pVo.setName(rs.getString("name"));
 				pVo.setPrice(rs.getInt("price"));
 				pVo.setPictureurl(rs.getString("pictureurl"));
-				pVo.setDescription(rs.getString("description"));
-				pVo.setReg_date(rs.getDate("reg_date"));
+				pVo.setCategory(rs.getInt("category"));
+				pVo.setCoordinate(rs.getString("Coordinate"));
+				pVo.setReg_date(rs.getTimestamp("reg_date"));
 				list.add(pVo);		// 리스트 객체에 데이터 추가
 			}
 		} catch (Exception e) {
@@ -221,15 +226,29 @@ public class ProductDao {
 		return list;
 	}
 	
-	public List<ProductVo> getListProducts(int pageNum, int amount) {
-		String sql = "select *"
-				+ "from (select rownum rn,"
-				+ "    a.*"
-				+ "    from(select *"
-				+ "        from product"
-				+ "        order by code)a)"
-				+ "where ? < rn and rn <= ?";
 
+	// 게시글 검색
+	public List<ProductVo> getProductList(){
+		return getProductList(00,"", 1);
+	}
+	// 페이지 별 리스트 표시
+	public List<ProductVo> getProductList(int page){
+		return getProductList(00,"",page);
+	}
+	public List<ProductVo> getProductList(String keyword,int page){
+		return getProductList(00,keyword,page);
+	}
+
+	// 검색 기능과 페이징을 구현
+	public List<ProductVo> getProductList(int category ,String keyword, int page){
+		String sql = "select * from ("
+				+ "select rownum n, b.* "
+				+ "from (select * from product where name like ? and category like ? order by code ) b "
+				+ ")"
+				+ "where n between ? and ?";
+		
+//		등차수열의 n에 대한 식은 첫째항 A공차가 B인 경우 => A + B(n-1)
+//		1 + (page-1)* 10
 		List<ProductVo> list = new ArrayList<ProductVo>(); // 리스트 컬렉션 객체 생성
 
 		Connection conn = null;
@@ -240,9 +259,12 @@ public class ProductDao {
 			conn = DBManager.getConnection();
 			// (3단계) Statement 객체 생성
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, (pageNum-1)*amount);
-			pstmt.setInt(2, pageNum * amount);
-
+			pstmt.setString(1, "%"+keyword+"%");
+			pstmt.setString(2, "%"+category+"%");
+			pstmt.setInt(3, 1+(page-1)*9);
+			pstmt.setInt(4, page * 9);
+			
+			
 			// (4단계) SQl문 실행 및 결과처리 => executeUpdate : 삽입(insert/update/delete)
 			rs = pstmt.executeQuery(); // 쿼리 수행
 			while (rs.next()) {
@@ -252,8 +274,8 @@ public class ProductDao {
 				pVo.setName(rs.getString("name")); // DB에서 가져온 객체를 pVo객체에 저장
 				pVo.setPrice(rs.getInt("price"));
 				pVo.setPictureurl(rs.getString("pictureurl"));
-				pVo.setDescription(rs.getString("description"));
-				pVo.setReg_date(rs.getDate("reg_date"));
+				pVo.setCategory(rs.getInt("Category"));
+				pVo.setReg_date(rs.getTimestamp("reg_date"));
 				/* System.out.println(pVo); */
 				list.add(pVo); // list 객체에 데이터 추가
 			}
@@ -265,29 +287,42 @@ public class ProductDao {
 		return list;
 	}
 	
-	
-	
-	
-	public int getTotal() {
-		int result = 0;
+	// 게시물 수 조회
+	public int getProductCount() {
+		return getProductCount(00,"");
+	}
+	// 특정 컬럼의 키워드를 통해 게시물 수 조회
+	public int getProductCount(String keyword) {
+		return getProductCount(00,keyword);
+	}
+	public int getProductCount(int category,String keyword) {
+		int count=0;
+		String sql = "select count(code) as count from ( "
+				+ "				select rownum n, b.* "
+				+ "				from (select * from product where name like ? and category like ? order by code desc) b"
+				+ "				) ";
+		
 		Connection conn = null;
 		ResultSet rs = null;
 		PreparedStatement pstmt = null; // 동적 쿼리
-		
-		String sql = "select count(*) as total from product";
 
 		try {
 			conn = DBManager.getConnection();
+			// (3단계) Statement 객체 생성
 			pstmt = conn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
+			pstmt.setString(1, "%"+keyword+"%");
+			pstmt.setString(2, "%"+category+"%");
+			
+			// (4단계) SQl문 실행 및 결과처리 => executeUpdate : 삽입(insert/update/delete)
+			rs = pstmt.executeQuery(); // 쿼리 수행
 			if(rs.next()) {
-				result = rs.getInt("total");
+				count = rs.getInt("count");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			DBManager.close(conn, pstmt);
+			DBManager.close(conn, pstmt, rs);
 		}
-		return result;
+		return count;
 	}
 }

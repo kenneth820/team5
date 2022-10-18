@@ -36,10 +36,18 @@
 						<td>${product.price}</td>
 					</tr>
 					<tr>
-						<th>설명</th>
+						<th>카테고리</th>
 						<td>
 							<div>
-								${product.description}
+								${product.category}
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th>좌표</th>
+						<td>
+							<div>
+								${product.coordinate}
 							</div>
 						</td>
 					</tr>

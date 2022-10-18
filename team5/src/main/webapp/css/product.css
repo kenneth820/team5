@@ -16,7 +16,7 @@ ul,li{
 }
 
 h2{
-	color: darkorange;	/* 글 색상 */
+	color: cornflowerblue;	/* 글 색상 */
 }
 
 table {
@@ -34,7 +34,8 @@ table td, th {
 }
 
 th {
-	background: moccasin;
+	background: cornflowerblue;
+	color:white;
 }
 
 img {
@@ -55,4 +56,12 @@ a:HOVER {
 
 ::placeholder {
 	color: gainsboro;
+}
+
+li {
+	display:inline;
+	padding-left: 10px;
+}
+#nowP{
+	color: white;
 }

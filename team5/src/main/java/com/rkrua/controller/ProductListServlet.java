@@ -15,7 +15,6 @@ import com.rkrua.dao.CartDao;
 import com.rkrua.dao.ProductDao;
 import com.rkrua.dto.CartVo;
 import com.rkrua.dto.MemberVo;
-import com.rkrua.dto.PageVo;
 import com.rkrua.dto.ProductVo;
 
 @WebServlet("/productList.do")
@@ -25,44 +24,55 @@ public class ProductListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ProductDao pDao = ProductDao.getInstance();
 		CartDao cDao = CartDao.getInstance();
-		CartVo cVo = new CartVo();
 		HttpSession session = request.getSession(); // 세션 객체 호출
 		
-		int pageNum=1;
-		int amount=9;
+		int page = 1;
+		String t_page = request.getParameter("p") ;
 		
-		if(request.getParameter("pageNum") != null && 
-				request.getParameter("amount") != null) {
-			pageNum = Integer.parseInt(request.getParameter("pageNum"));
-			amount = Integer.parseInt(request.getParameter("amount"));
+		if(t_page != null && !t_page.equals("")) {
+			page = Integer.parseInt(t_page);
 		}
 		
+		String keyword = "";
 		
-		// 모든 상품 리스트를 디비로부터 조회하여 출력
-//		ProductVo[] productList = pDao.selectAllProducts();
-//		System.out.println(productList[0]);
+		String t_keyword = request.getParameter("k");
 		
-		List<ProductVo> pageList = pDao.getListProducts(pageNum, amount);
+		if(t_keyword != null && !t_keyword.equals("")) {
+			keyword = t_keyword;
+		}
 		
-		int total = pDao.getTotal();
+		int category = 00;
+		String t_category = request.getParameter("c") ;
 		
-		PageVo pVo = new PageVo(pageNum, amount, total);
+		if(t_category != null && !t_keyword.equals("00")) {
+			category = Integer.parseInt(t_category);
+		}
+		
+		List<ProductVo> pageList = pDao.getProductList(category, keyword, page);
+		System.out.println(pageList);
+		
 		
 		MemberVo mVo = (MemberVo)session.getAttribute("loginUser");
-//		List<CartVo> cartList = cDao.selectAllCart(session.getId());
 		List<CartVo> cartList = cDao.selectAllCart(mVo.getUserid());
 		
 		
-		request.setAttribute("pageVo", pVo);
+		int count = pDao.getProductCount(category, keyword);
+		request.setAttribute("count", count);
 		request.setAttribute("pageList", pageList);
 		request.setAttribute("CartList", cartList);
 //		productList.size();
 //		productList.get(0);
 
 		// 리스트 페이지로 이동
+		if (mVo.getAdmin()==1) {			
 		RequestDispatcher dispatcher = 
-				request.getRequestDispatcher("product/Shop.jsp");
+				request.getRequestDispatcher("product/Shop_manager.jsp");
 		dispatcher.forward(request, response);
+		} else {
+			RequestDispatcher dispatcher = 
+					request.getRequestDispatcher("product/Shop.jsp");
+			dispatcher.forward(request, response);
+		}
 		
 //		request.getRequestDispatcher("product/productList.jsp").forward(request, response);
 	}

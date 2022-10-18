@@ -37,15 +37,15 @@
 					</tr>
 					<tr>
 						<th>사진</th>
-						<td><input type="file" name="pictureurl"><br>()이미지 변경시 선택하세요.)</td>
+						<td><input type="file" name="pictureurl" value="${product.pictureurl}"><br>()이미지 변경시 선택하세요.)</td>
 					</tr>
 					<tr>
-						<th>설명</th>
-						<td><textarea rows="10" cols="80" name="description">${product.description}</textarea>
+						<th>카테고리</th>
+						<td><input type="text" name="category" value="${product.category}">(바닥: 200 전등: 400 장식: 600)</td>
 					</tr>	
 					<tr>
-						<th>등록 일자</th>
-						<td><input type="text" name="reg_date" value="${product.reg_date}">예시(2022-10-03)</td>
+						<th>상품 좌표</th>
+						<td><input type="text" name="coordinate" value="${product.coordinate}">예시(000,000,000,000)</td>
 					</tr>
 				</table>
 			</td>
