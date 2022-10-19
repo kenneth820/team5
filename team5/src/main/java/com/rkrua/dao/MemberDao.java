@@ -13,21 +13,21 @@ import com.rkrua.dao.MemberDao;
 import com.rkrua.dto.MemberVo;
 import com.rkrua.dto.ProductVo;
 import com.rkrua.util.DBManager;
-// �곗�댄�� 踰��댁�� ��洹�
+// 占쎄퀣占쎈똾占쏙옙 甕곤옙占쎈똻占쏙옙 占쏙옙域뱄옙
 public class MemberDao {
 	
 	private static MemberDao instance = new MemberDao();	
-	// 占쎄문占쎄쉐占쎌��
+	// �뜝�럡臾멨뜝�럡�뎽�뜝�럩占쏙옙
 	private MemberDao(){		
 	}	
-	// 筌�遺용�쇽옙諭�
+	// 嶺뚳옙�겫�슜占쎌눦�삕獄�占�
 	public static MemberDao getInstance() {
 		return instance;		
 	}	
 
-	// 濡�洹몄��(�ъ�⑹�� �몄�): select
-	// ���κ�: 濡�洹몄�� ���댁����� ���λ��� �ъ�⑹�����대���� ���� 
-	// 諛���媛� : result 1: ���� �쇱� 0: ���� 遺��쇱� -1: �ъ�⑹�� ���대�� ����
+	// 嚥∽옙域밸챷占쏙옙(占싼딉옙�뫗占쏙옙 占쎈챷占�): select
+	// 占쏙옙占싸븝옙: 嚥∽옙域밸챷占쏙옙 占쏙옙占쎈똻占쏙옙占쏙옙占� 占쏙옙占싸삼옙占쏙옙 占싼딉옙�뫗占쏙옙占쏙옙占쎈�占쏙옙占쏙옙 占쏙옙占쏙옙 
+	// 獄쏉옙占쏙옙揶쏉옙 : result 1: 占쏙옙占쏙옙 占쎌눘占� 0: 占쏙옙占쏙옙 �겫占쏙옙�눘占� -1: 占싼딉옙�뫗占쏙옙 占쏙옙占쎈�占쏙옙 占쏙옙占쏙옙
 	public int checkUser(String userid, String pwd) {
 		int result= -1;
 		
@@ -39,26 +39,26 @@ public class MemberDao {
 		//		String sql = "select pwd from member where userid='"+userid+"'";
 		String sql = "select pwd, admin from member where userid=?";
 		try {
-//			// (1�④�	) JDBC ���쇱�대� 濡���
+//			// (1占썩몿占�	) JDBC 占쏙옙占쎌눘占쎈�占� 嚥∽옙占쏙옙
 //			Class.forName("oracle.jdbc.driver.OracleDriver");		
-//			// (2�④�) �곗�댄�곕��댁�� �곌껐 媛�泥� ����
+//			// (2占썩몿占�) 占쎄퀣占쎈똾占쎄퀡占쏙옙�똻占쏙옙 占쎄퀗猿� 揶쏉옙筌ｏ옙 占쏙옙占쏙옙
 //			String url = "jdbc:oracle:thin:@localhost:1521:orcl";
 //			String uid = "ora_user";
 //			String pass = "1234";
 //			conn =  DriverManager.getConnection(url, uid, pass);
 			conn = DBManager.getConnection();
 			
-			// (3�④�) Statement 媛�泥� ����
+			// (3占썩몿占�) Statement 揶쏉옙筌ｏ옙 占쏙옙占쏙옙
 			pstmt = conn.prepareStatement(sql);	
 			pstmt.setString(1, userid);
-			// (4�④�) SQl臾� �ㅽ�� 諛� 寃곌낵泥�由� => executeQuery : 議고��(selecet)
+			// (4占썩몿占�) SQl�눧占� 占썬끋占쏙옙 獄쏉옙 野껉퀗�궢筌ｏ옙�뵳占� => executeQuery : 鈺곌퀬占쏙옙(selecet)
 			rs = pstmt.executeQuery();
-			// rs.next() ": �ㅼ�� �� (row)����, rs.getString("
+			// rs.next() ": 占썬끉占쏙옙 占쏙옙 (row)占쏙옙占쏙옙, rs.getString("
 			if(rs.next()){
-				//���대�� / ���� 鍮�援� �� ���댁� �대��
+				//占쏙옙占쎈�占쏙옙 / 占쏙옙占쏙옙 �뜮占썸뤃占� 占쏙옙 占쏙옙占쎈똻占� 占쎈�占쏙옙
 				if(rs.getString("pwd")!= null && 
 						rs.getString("pwd").equals(pwd) && rs.getInt("admin") == 1) {
-					result = 2;  // ���� �쇱�
+					result = 2;  // 占쏙옙占쏙옙 占쎌눘占�
 				} else if(rs.getString("pwd")!= null && 
 						rs.getString("pwd").equals(pwd)) {
 					result = 1;
@@ -74,7 +74,7 @@ public class MemberDao {
 		} finally  {
 			DBManager.close(conn, pstmt, rs);
 			//			try {
-//				// (5�④�) �ъ�⑺�� 由ъ���� �댁��
+//				// (5占썩몿占�) 占싼딉옙�뫚占쏙옙 �뵳�딉옙占쏙옙占� 占쎈똻占쏙옙
 //				rs.close();
 ////				stmt.close();
 //				pstmt.close();
@@ -86,52 +86,51 @@ public class MemberDao {
 	return result;
 	}	
 	
-	// ���� 媛���
+	// 占쏙옙占쏙옙 揶쏉옙占쏙옙
 //	public int insertMember(String name, String id, String pwd, String email, String phone, int admin) {
 	public int insertMember(MemberVo mVo) {
 		int result = -1;
 		Connection conn = null;
-//		Statement stmt = null;		// ���� 荑쇰━
-		// ���쇳�� 荑쇰━臾몄�� �뱀�� 媛�留� 諛�轅��� �щ�щ� �ㅽ���댁�� �� ��, 留ㅺ�蹂���媛� 留����� 荑쇰━臾� ��由� ����
-		PreparedStatement pstmt = null;	// ���� 荑쇰━
+//		Statement stmt = null;		// 占쏙옙占쏙옙 �뜎�눖�봺
+		// 占쏙옙占쎌눛占쏙옙 �뜎�눖�봺�눧紐꾬옙占� 占쎈�占쏙옙 揶쏉옙筌랃옙 獄쏉옙饔낉옙占쏙옙 占싼됵옙�됵옙 占썬끋占쏙옙占쎈똻占쏙옙 占쏙옙 占쏙옙, 筌띲끆占썼퉪占쏙옙占썲첎占� 筌랃옙占쏙옙占쏙옙 �뜎�눖�봺�눧占� 占쏙옙�뵳占� 占쏙옙占쏙옙
+		PreparedStatement pstmt = null;	// 占쏙옙占쏙옙 �뜎�눖�봺
 		
 		
 //		String sql_insert= "insert into member values('"+name+"','"+id+"','"+pwd+"','"+email+"','"+phone+"',"+admin+")";
-		String sql_insert= "insert into member(name, userid, pwd, email, phone, selfcomment) values(?, ?, ?, ?, ?, ?)";
+		String sql_insert= "insert into member(name, userid, pwd, email, phone) values(?, ?, ?, ?, ?)";
 		
 //		System.out.println(sql_insert);
 		
 		try {
 			conn = DBManager.getConnection();
-			// (3�④�) Statement 媛�泥� ����
+			// (3占썩몿占�) Statement 揶쏉옙筌ｏ옙 占쏙옙占쏙옙
 //			stmt = conn.createStatement();
 			pstmt = conn.prepareStatement(sql_insert);
 //			pstmt.setString(1, name);
 //			pstmt.setString(2, id);
 //			pstmt.setString(3, pwd);
 //			pstmt.setString(4, email);
-//			pstmt.setString(5, phone);				// 臾몄����
-//			pstmt.setInt(6, admin);					// ������
+//			pstmt.setString(5, phone);				// �눧紐꾬옙占쏙옙占�
+//			pstmt.setInt(6, admin);					// 占쏙옙占쏙옙占쏙옙
 			
 			pstmt.setString(1, mVo.getName());
 			pstmt.setString(2, mVo.getUserid());
 			pstmt.setString(3, mVo.getPwd());
 			pstmt.setString(4, mVo.getEmail());
-			pstmt.setString(5, mVo.getPhone());				// 臾몄����
-			pstmt.setString(6, mVo.getSelfcomment());
-//			pstmt.setFloat(admin, float x);			// �ㅼ����
-//			pstmt.setDate(idx, Date x);				// ��吏���
-//			pstmt.setTimestamp(idx, Timestamp t);	// ��媛���
+			pstmt.setString(5, mVo.getPhone());				// �눧紐꾬옙占쏙옙占�
+//			pstmt.setFloat(admin, float x);			// 占썬끉占쏙옙占쏙옙
+//			pstmt.setDate(idx, Date x);				// 占쏙옙筌욑옙占쏙옙
+//			pstmt.setTimestamp(idx, Timestamp t);	// 占쏙옙揶쏉옙占쏙옙
 			
-			// (4�④�) SQl臾� �ㅽ�� 諛� 寃곌낵泥�由� => executeUpdate : �쎌��(insert/update/delete)
+			// (4占썩몿占�) SQl�눧占� 占썬끋占쏙옙 獄쏉옙 野껉퀗�궢筌ｏ옙�뵳占� => executeUpdate : 占쎌럩占쏙옙(insert/update/delete)
 //			result = stmt.executeUpdate(sql_insert);
-			result = pstmt.executeUpdate();			// 荑쇰━ ����
+			result = pstmt.executeUpdate();			// �뜎�눖�봺 占쏙옙占쏙옙
 		} catch(Exception e) {			
 			e.printStackTrace();			
 		} finally  {
 			DBManager.close(conn, pstmt);
 			//			try {
-//				// (5�④�) �ъ�⑺�� 由ъ���� �댁��
+//				// (5占썩몿占�) 占싼딉옙�뫚占쏙옙 �뵳�딉옙占쏙옙占� 占쎈똻占쏙옙
 ////				stmt.close();
 //				pstmt.close();
 //				conn.close();				
@@ -142,9 +141,9 @@ public class MemberDao {
 		return result;
 }
 
-	// ���� ��蹂� 媛��몄�ㅺ린 : select
-	// ���κ�: �ъ�⑹��id(userid)
-	// 諛���媛�: �깃났�щ�
+	// 占쏙옙占쏙옙 占쏙옙癰귨옙 揶쏉옙占쎈챷占썬끆由� : select
+	// 占쏙옙占싸븝옙: 占싼딉옙�뫗占쏙옙id(userid)
+	// 獄쏉옙占쏙옙揶쏉옙: 占쎄퉫�궗占싼됵옙
 	public MemberVo getMember(String userid) {
 		int result = -1;
 		String sql = "select * from member where userid = ?";
@@ -152,31 +151,31 @@ public class MemberDao {
 		
 		Connection conn = null;
 		ResultSet rs = null;
-		PreparedStatement pstmt = null;	// ���� 荑쇰━
+		PreparedStatement pstmt = null;	// 占쏙옙占쏙옙 �뜎�눖�봺
 		
 		try {
 			conn = DBManager.getConnection();
-			// (3�④�) Statement 媛�泥� ����
+			// (3占썩몿占�) Statement 揶쏉옙筌ｏ옙 占쏙옙占쏙옙
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userid);
 		
 			
-			// (4�④�) SQl臾� �ㅽ�� 諛� 寃곌낵泥�由� => executeUpdate : �쎌��(insert/update/delete)
-			rs = pstmt.executeQuery();			// 荑쇰━ ����
+			// (4占썩몿占�) SQl�눧占� 占썬끋占쏙옙 獄쏉옙 野껉퀗�궢筌ｏ옙�뵳占� => executeUpdate : 占쎌럩占쏙옙(insert/update/delete)
+			rs = pstmt.executeQuery();			// �뜎�눖�봺 占쏙옙占쏙옙
 			if(rs.next()) {
-				// ��鍮�濡�遺��� ������蹂� ����
+				// 占쏙옙�뜮占썸에占썽겫占쏙옙占� 占쏙옙占쏙옙占쏙옙癰귨옙 占쏙옙占쏙옙
 				mVo = new MemberVo();
-				mVo.setName(rs.getString("name")); 	// 而щ�쇰� name�� ��蹂대�� 媛��몄��
-				mVo.setUserid(rs.getString("userid")); // 	而щ�쇰� name�� ��蹂대�� 媛��몄��
-				mVo.setPwd(rs.getString("pwd")); // 	而щ�쇰� name�� ��蹂대�� 媛��몄��
-				mVo.setEmail(rs.getString("email")); // 	而щ�쇰� name�� ��蹂대�� 媛��몄��
-				mVo.setPhone(rs.getString("phone")); // 	而щ�쇰� name�� ��蹂대�� 媛��몄��
-				mVo.setAdmin(rs.getInt("admin")); // 	而щ�쇰� name�� ��蹂대�� 媛��몄��
+				mVo.setName(rs.getString("name")); 	// �뚎됵옙�눖占� name占쏙옙 占쏙옙癰귣�占쏙옙 揶쏉옙占쎈챷占쏙옙
+				mVo.setUserid(rs.getString("userid")); // 	�뚎됵옙�눖占� name占쏙옙 占쏙옙癰귣�占쏙옙 揶쏉옙占쎈챷占쏙옙
+				mVo.setPwd(rs.getString("pwd")); // 	�뚎됵옙�눖占� name占쏙옙 占쏙옙癰귣�占쏙옙 揶쏉옙占쎈챷占쏙옙
+				mVo.setEmail(rs.getString("email")); // 	�뚎됵옙�눖占� name占쏙옙 占쏙옙癰귣�占쏙옙 揶쏉옙占쎈챷占쏙옙
+				mVo.setPhone(rs.getString("phone")); // 	�뚎됵옙�눖占� name占쏙옙 占쏙옙癰귣�占쏙옙 揶쏉옙占쎈챷占쏙옙
+				mVo.setAdmin(rs.getInt("admin")); // 	�뚎됵옙�눖占� name占쏙옙 占쏙옙癰귣�占쏙옙 揶쏉옙占쎈챷占쏙옙
 				mVo.setPictureurl(rs.getString("pictureurl"));
 				mVo.setPoint(rs.getInt("point"));
 				mVo.setSelfcomment(rs.getString("selfcomment"));
 			} else {
-				result = -1;		// ��鍮��� userid ����
+				result = -1;		// 占쏙옙�뜮占쏙옙占� userid 占쏙옙占쏙옙
 			}
 		} catch(Exception e) {			
 			e.printStackTrace();			
@@ -186,12 +185,12 @@ public class MemberDao {
 		return mVo;
 	}
 	
-	// ���� ��蹂� ���곗�댄��: update
-	// ���κ�: ���� ���대� ��蹂�
-	// 諛���媛� : �깃났�щ�
+	// 占쏙옙占쏙옙 占쏙옙癰귨옙 占쏙옙占쎄퀣占쎈똾占쏙옙: update
+	// 占쏙옙占싸븝옙: 占쏙옙占쏙옙 占쏙옙占쎈�占� 占쏙옙癰귨옙
+	// 獄쏉옙占쏙옙揶쏉옙 : 占쎄퉫�궗占싼됵옙
 	public int updateMember(MemberVo mVo) {
 		int result = -1;
-		String sql = "update member set pwd=?, email=?, phone=?, admin=?, pictureurl=?, name=?, selfcomment=? where userid=?";
+		String sql = "update member set pwd=?, email=?, phone=?, admin=?, pictureurl=?, name=?, selfcomment=?, point=? where userid=?";
 
 
 		
@@ -200,7 +199,7 @@ public class MemberDao {
 		
 		try {
 			conn = DBManager.getConnection();
-			// (3�④�) Statement 媛�泥� ����
+			// (3占썩몿占�) Statement 揶쏉옙筌ｏ옙 占쏙옙占쏙옙
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, mVo.getPwd());
 			pstmt.setString(2, mVo.getEmail());
@@ -209,9 +208,10 @@ public class MemberDao {
 			pstmt.setString(5, mVo.getPictureurl());
 			pstmt.setString(6, mVo.getName());
 			pstmt.setString(7, mVo.getSelfcomment());
-			pstmt.setString(8, mVo.getUserid());
+			pstmt.setInt(8, mVo.getPoint());
+			pstmt.setString(9, mVo.getUserid());
 			
-			result = pstmt.executeUpdate();			// 荑쇰━ ����
+			result = pstmt.executeUpdate();			// �뜎�눖�봺 占쏙옙占쏙옙
 			System.out.println(mVo);
 		} catch(Exception e) {			
 			e.printStackTrace();			
@@ -223,31 +223,31 @@ public class MemberDao {
 		return result;
 	}
 
-	// ���대�� ���� : select
-	// ���κ�: 以�蹂� 泥댄�� �� ���� ���대��
-	// 諛���媛�: 泥댄�ы�� ID�� DB 議댁�� �щ�
+	// 占쏙옙占쎈�占쏙옙 占쏙옙占쏙옙 : select
+	// 占쏙옙占싸븝옙: 餓ο옙癰귨옙 筌ｋ똾占쏙옙 占쏙옙 占쏙옙占쏙옙 占쏙옙占쎈�占쏙옙
+	// 獄쏉옙占쏙옙揶쏉옙: 筌ｋ똾占싼뗰옙占� ID占쏙옙 DB 鈺곕똻占쏙옙 占싼됵옙
 	public int confirmID(String userid) {
 		int result = -1;
 		String sql = "select userid from member where userid = ?";
 		
 		Connection conn = null;
 		ResultSet rs = null;
-		PreparedStatement pstmt = null;	// ���� 荑쇰━
+		PreparedStatement pstmt = null;	// 占쏙옙占쏙옙 �뜎�눖�봺
 		
 		try {
 			conn = DBManager.getConnection();
-			// (3�④�) Statement 媛�泥� ����
+			// (3占썩몿占�) Statement 揶쏉옙筌ｏ옙 占쏙옙占쏙옙
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userid);		
 			
-			// (4�④�) SQl臾� �ㅽ�� 諛� 寃곌낵泥�由� => executeUpdate : �쎌��(insert/update/delete)
-			rs = pstmt.executeQuery();			// 荑쇰━ ����
-			// res.next() : �ㅼ�� ��(row)�� ����, rs.getString("而щ�쇰�")
+			// (4占썩몿占�) SQl�눧占� 占썬끋占쏙옙 獄쏉옙 野껉퀗�궢筌ｏ옙�뵳占� => executeUpdate : 占쎌럩占쏙옙(insert/update/delete)
+			rs = pstmt.executeQuery();			// �뜎�눖�봺 占쏙옙占쏙옙
+			// res.next() : 占썬끉占쏙옙 占쏙옙(row)占쏙옙 占쏙옙占쏙옙, rs.getString("�뚎됵옙�눖占�")
 			if(rs.next()) {
-				// ��鍮�濡�遺��� ������蹂� ����
-				result = 1;			// ��鍮��� userid ����
+				// 占쏙옙�뜮占썸에占썽겫占쏙옙占� 占쏙옙占쏙옙占쏙옙癰귨옙 占쏙옙占쏙옙
+				result = 1;			// 占쏙옙�뜮占쏙옙占� userid 占쏙옙占쏙옙
 			} else {
-				result = -1;		// ��鍮��� userid ����
+				result = -1;		// 占쏙옙�뜮占쏙옙占� userid 占쏙옙占쏙옙
 			}
 		} catch(Exception e) {			
 			e.printStackTrace();			
@@ -272,27 +272,27 @@ public class MemberDao {
 				+ ")"
 				+ "where n between ? and ? ";
 
-		List<MemberVo> list = new ArrayList<MemberVo>(); // 由ъ�ㅽ�� 而щ���� 媛�泥� ����
+		List<MemberVo> list = new ArrayList<MemberVo>(); // �뵳�딉옙�끋占쏙옙 �뚎됵옙占쏙옙占� 揶쏉옙筌ｏ옙 占쏙옙占쏙옙
 
 		Connection conn = null;
 		ResultSet rs = null;
-		PreparedStatement pstmt = null; // ���� 荑쇰━
+		PreparedStatement pstmt = null; // 占쏙옙占쏙옙 �뜎�눖�봺
 
 		try {
 			conn = DBManager.getConnection();
-			// (3�④�) Statement 媛�泥� ����
+			// (3占썩몿占�) Statement 揶쏉옙筌ｏ옙 占쏙옙占쏙옙
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, "%"+keyword+"%");
 			pstmt.setInt(2, 1+(page-1)*9);
 			pstmt.setInt(3, page * 9);
 
-			// (4�④�) SQl臾� �ㅽ�� 諛� 寃곌낵泥�由� => executeUpdate : �쎌��(insert/update/delete)
-			rs = pstmt.executeQuery(); // 荑쇰━ ����
+			// (4占썩몿占�) SQl�눧占� 占썬끋占쏙옙 獄쏉옙 野껉퀗�궢筌ｏ옙�뵳占� => executeUpdate : 占쎌럩占쏙옙(insert/update/delete)
+			rs = pstmt.executeQuery(); // �뜎�눖�봺 占쏙옙占쏙옙
 			while (rs.next()) {
 				MemberVo mVo = new MemberVo();
-				// ��鍮�濡�遺��� ������蹂� ����
+				// 占쏙옙�뜮占썸에占썽겫占쏙옙占� 占쏙옙占쏙옙占쏙옙癰귨옙 占쏙옙占쏙옙
 				mVo.setUserid(rs.getString("userid"));
-				mVo.setName(rs.getString("name")); // DB���� 媛��몄�� 媛�泥대�� pVo媛�泥댁�� ����
+				mVo.setName(rs.getString("name")); // DB占쏙옙占쏙옙 揶쏉옙占쎈챷占쏙옙 揶쏉옙筌ｋ�占쏙옙 pVo揶쏉옙筌ｋ똻占쏙옙 占쏙옙占쏙옙
 				mVo.setPwd(rs.getString("pwd"));
 				mVo.setPictureurl(rs.getString("pictureurl"));
 				mVo.setEmail(rs.getString("Email"));
@@ -300,7 +300,7 @@ public class MemberDao {
 				mVo.setPoint(rs.getInt("point"));
 				mVo.setSelfcomment(rs.getString("selfcomment"));
 				/* System.out.println(pVo); */
-				list.add(mVo); // list 媛�泥댁�� �곗�댄�� 異�媛�
+				list.add(mVo); // list 揶쏉옙筌ｋ똻占쏙옙 占쎄퀣占쎈똾占쏙옙 �빊占썲첎占�
 				System.out.println(mVo);
 			}
 		} catch (Exception e) {
@@ -321,7 +321,7 @@ public class MemberDao {
 		int count = 0;
 		Connection conn = null;
 		ResultSet rs = null;
-		PreparedStatement pstmt = null; // ���� 荑쇰━
+		PreparedStatement pstmt = null; // 占쏙옙占쏙옙 �뜎�눖�봺
 		
 		String sql = "select count(*) as count from ( select rownum n, b.*  "
 				+ "from (select * from member where "+ column +" like ? order by name desc) b)";
@@ -345,7 +345,7 @@ public class MemberDao {
 	public void deleteMember(String userid) {
 		int result = -1;
 		Connection conn = null;
-		// ���쇳�� 荑쇰━臾몄�� �뱀�� 媛�留� 諛�轅��� �щ�щ� �ㅽ���댁�� �� ��, 留ㅺ�蹂���媛� 留����� 荑쇰━臾� ��由� ����
+		// 占쏙옙占쎌눛占쏙옙 �뜎�눖�봺�눧紐꾬옙占� 占쎈�占쏙옙 揶쏉옙筌랃옙 獄쏉옙饔낉옙占쏙옙 占싼됵옙�됵옙 占썬끋占쏙옙占쎈똻占쏙옙 占쏙옙 占쏙옙, 筌띲끆占썼퉪占쏙옙占썲첎占� 筌랃옙占쏙옙占쏙옙 �뜎�눖�봺�눧占� 占쏙옙�뵳占� 占쏙옙占쏙옙
 		PreparedStatement pstmt = null;
 
 		String sql = "delete from member where userid=?";
@@ -356,7 +356,7 @@ public class MemberDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userid);
 
-			result = pstmt.executeUpdate(); // 荑쇰━臾� �ㅽ��
+			result = pstmt.executeUpdate(); // �뜎�눖�봺�눧占� 占썬끋占쏙옙
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

@@ -23,14 +23,28 @@
 				<td id=title>*아이디</td>
 				<td id=insert><input id=text type="text" name="userid" value="${mVo.userid}" readonly></td>
 			</tr>
-			<tr>
-				<td id=title>*암호</td>
-				<td id=insert><input id=text type="password" name= "pwd"></td>
-			</tr>
-			<tr>
-				<td id=title>*암호확인</td>
-				<td id=insert><input id=text type="password" name= "pwd_check"></td>
-			</tr>
+			<c:choose>
+				<c:when test="${loginUser.admin==1}">
+					<tr>
+						<td id=title>*암호</td>
+						<td id=insert><input id=text type="text" name="pwd" value="${mVo.pwd}"></td>
+					</tr>
+					<tr>
+						<td id=title>*암호확인</td>
+						<td id=insert><input id=text type="text" name= "pwd_check" value="${mVo.pwd}" ></td>
+					</tr>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td id=title>*암호</td>
+						<td id=insert><input id=text type="password" name="pwd"></td>
+					</tr>
+					<tr>
+						<td id=title>*암호확인</td>
+						<td id=insert><input id=text type="password" name= "pwd_check" ></td>
+					</tr>
+				</c:otherwise>				
+			</c:choose>
 			<tr>
 				<td id=title>이메일</td>
 				<td id=insert><input id=text type="text" name="email" value="${mVo.email}"></td>
@@ -55,6 +69,20 @@
 					<input type="radio" name="admin" value="1"> 관리자</td>
 			</c:if>
 				</tr>
+			<c:choose>
+				<c:when test="${loginUser.admin==1}">
+					<tr>
+						<td id=title>포인트</td>
+						<td id=insert><input id=text type="text" name="point" value="${mVo.point}"></td>
+					</tr>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td id=title>포인트</td>
+						<td id=insert><input id=text type="text" name="point" value="${mVo.point}"readonly></td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
 			<tr>
 				<td colspan="2" align="center">
 					<input type="submit" value="확인" onclick="return checkJoin()">&nbsp;&nbsp;&nbsp;

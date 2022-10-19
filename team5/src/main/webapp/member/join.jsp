@@ -50,10 +50,6 @@
 				<td id=insert><input type="radio" name="admin" value="0" checked="checked"> 일반회원
 			</tr>
 			<tr>
-				<td id=title>한줄소개</td>
-				<td id=insert><input id=text type="text" name="selfcomment">
-			</tr>
-			<tr>
 				<td colspan="2" align="center">
 					&nbsp;&nbsp;&nbsp;
 					<input type="submit" value="확인" onclick="return checkJoin()">

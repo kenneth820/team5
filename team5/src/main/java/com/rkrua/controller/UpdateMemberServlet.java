@@ -46,10 +46,8 @@ public class UpdateMemberServlet extends HttpServlet {
 		MemberVo mVo = new MemberVo();
 		
 		// 상품 수정 코드 : 데이터베이스에서 상품 삭제
-		ProductDao pDao = ProductDao.getInstance();
-		ProductVo pVo = new ProductVo();
 		HttpSession session = request.getSession(); // 세션 객체 호출
-		mVo = (MemberVo)session.getAttribute("loginUser");
+		MemberVo admininfo = (MemberVo)session.getAttribute("loginUser");
 		
 		// 파일 업로드 코드 작성	
 		int result = -1;
@@ -78,6 +76,7 @@ public class UpdateMemberServlet extends HttpServlet {
 			String phone = multi.getParameter("phone");
 			String selfcomment = multi.getParameter("selfcomment");
 			int admin = Integer.parseInt(multi.getParameter("admin"));
+			int point = Integer.parseInt(multi.getParameter("point"));
 			
 			mVo.setUserid(userid);		// 입력된 상품 정보 Vo에 저장
 			mVo.setName(name);
@@ -86,11 +85,11 @@ public class UpdateMemberServlet extends HttpServlet {
 			mVo.setPictureurl(pictureurl);
 			mVo.setPhone(phone);
 			mVo.setSelfcomment(selfcomment);
+			mVo.setAdmin(admin);
+			mVo.setPoint(point);
 		} catch(Exception e) {
 			System.out.println("파일 업로드간 예외 발생: " + e);
-		}
-		System.out.println("ㅇㅇ"+ mVo);
-		
+		}		
 		// 데이터베이스로부터 해당 코드의 정보 수정
 		result = mDao.updateMember(mVo);
 		
@@ -102,7 +101,7 @@ public class UpdateMemberServlet extends HttpServlet {
 			}		
 		
 		// 수정 후 목록 페이지로 이동
-			if(mVo.getAdmin()==1) {
+			if(admininfo.getAdmin() == 1) {
 				response.sendRedirect("memberList.do");				
 			} else {
 				response.sendRedirect("main.jsp");
