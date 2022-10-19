@@ -10,20 +10,19 @@
 </head>
 <body onload="loaded()" onkeydown="keydown()" onkeyup="keyup()">
 <div style="flex: 80%;" >
+
    <canvas width="884px"height="909px" id="c1"></canvas>
    <div>
             <script>
-    
            
-           var context; //화가 객체
-    
+           var context; //화가 객체 
+
            // 플레이어 이동 방향과 속도
            var dx=0;
            var dy=0;
-    
            // 키 이벤트로 인해 인식된 keycode변수
            var keycode;
-    
+
            // 전역변수로서 이미지 객체 생성
            var imgChar= new Image();
            imgChar.src="./ms18.png";
@@ -32,7 +31,7 @@
     		
            // 플레이어 캐릭터의 중심좌표
            var x=800, y=850; //캐릭터의 위치좌표
-           var w=50, h=50; //플레이어 이미지의 절반 사이즈
+           var w=50, h=50; //플레이어 이미지의 사이즈
     
            function loaded(){
                canvas= document.getElementById('c1');
@@ -53,7 +52,7 @@
                x+=dx;
                y+=dy;
                if(x>=700 && y<=300){
-            	   location.href = ("./canv.jsp");
+            	   location.href = ("/productList.do");
                 }
                if(x<=120  && y<=267){
             	   console.log("왼쪽 위 문입니다!!!")
@@ -63,15 +62,13 @@
                }
                
            }
-           function drawAll(){
+           
+                 function drawAll(){
                //배경 그리기
                context.drawImage(imgBg,0,0,884,909);
                //context.drawImage(imgBg,0,0,800,500);
                //플레이어 그리기
                context.drawImage(imgChar,x-w,y-h,w*2,h*2);
-/* 	           console.log(x);
-	           console.log(y); 
-     */
                // 키 코드값 글씨 그리기
                context.fillStyle="white";
                context.font="30px sans-serif";
@@ -98,12 +95,7 @@
                    case 40: dy=0; break;
                }
            }
-           // 사운드 작업 : 크롬은 자동 재생을 막은 듯 함. Edge는 될 것임
-           /* var sd= new Audio('./dragon_flight.mp3');
-           sd.volume= 1.0; //0.0 ~ 1.0
-           sd.loof= true; //반복재생여부
-           sd.play(); */
-
+           
 		</script>
    </div>
 </div>

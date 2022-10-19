@@ -49,7 +49,7 @@ public class ProductListServlet extends HttpServlet {
 		}
 		
 		List<ProductVo> pageList = pDao.getProductList(category, keyword, page);
-		System.out.println(pageList);
+		/* System.out.println(pageList); */
 		
 		
 		MemberVo mVo = (MemberVo)session.getAttribute("loginUser");

@@ -1,18 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>로그인 페이지</title>
+<title>Insert title here</title>
 </head>
+<style>
+*{
+padding:0px;
+margin:0px;
+}
+</style>
 <body>
-
-
-	시작페이지 입니다.
-	잘부탁드립니다.
-	<br>
-
-	<a href="login.do">로그인 페이지로 이동</a>
+	<div style="display: flex;">
+		<div style="width:70%">
+		<%@ include file="indexL.jsp" %>
+		</div>
+		<div style="width:30%">
+		<%@ include file="indexR.jsp" %>
+		</div>	
+	</div>
+	
 </body>
 </html>
