@@ -233,7 +233,7 @@ ul, li {
 								function $(id) {
 									return document.getElementById(id);
 								}
-								var audio = new Audio("music1.mp3");
+								var audio = new Audio("team5_sdh/music1.mp3");
 								audio.addEventListener("timeupdate",function(e) {$("time_info").innerHTML = "진행 : "+ audio.currentTime+ "/"+ audio.duration;$("volume_info").innerHTML = "볼륨 : "+ audio.volume;});
 								function changeVolume(v) {
 									var new_v = audio.volume + v;
