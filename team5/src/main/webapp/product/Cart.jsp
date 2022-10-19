@@ -10,14 +10,16 @@
 </head>
 <body>
     <header>
-        <a href="">쇼룸으로 이동</a>
+        <a href="productList.do">상점으로 이동</a>
     </header>
     <nav>
     	<div>
-	        <img class="logo_img" src="profile.jpg"></img>
+    		<a id=logo_img href="productList.do">
+		        <img class="logo_img" src="image/Logo.jpg"></img>
+    		</a>
 		  	<form id=SearchForm value="name" action="searchProduct.do">
 		        <input id="Search" type="text" name="keyword" placeholder="검색어를 입력해주세요.">
-		        <input id="submit" type="submit" value="검색">
+		        <input id="submit" type="image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTDlkdG6O5lJVaXJ40p34v1j4CUJDpb7Ml7g&usqp=CAU">
 			</form>
     	</div>
     </nav>
@@ -44,46 +46,84 @@
 						</td>
 	                    <td>${Cart.name}</td>
 	                    <td>${Cart.price}</td>
-	                    <td><a href="deleteCart.do?code=${product.code}">상품 삭제</a></td>	
+	                    <td><a href="deleteCart.do?cartid=${Cart.cartid}">상품 삭제</a></td>	
 	                </tr>
 	                </c:forEach>
-	                <td>
-	                <input type=button value="상품전체삭제">
-	                </td>
+	                <tr>
+		                <td colspan="4">
+		                	<c:choose>
+		                	<c:when test="${CartList.size() == 0}">
+		                	 <h2>장바구니가 비었습니다.</h2>
+		                	 <a href="productList.do">
+		                	 	<input id=update type="button" value="상점으로 이동">
+ 		                	 </a>
+		                	</c:when>
+		                	<c:otherwise>
+			                <a href="deleteAllCart.do?userid=${loginUser.userid}">
+			                	<input id=button type=button value="상품전체삭제">
+			                </a>
+			                </c:otherwise>
+			                </c:choose>
+		                </td>
+	                </tr>
 	            </table>
 	        <%-- ${message} --%>
 	        </div>
         </div>
     </section>
     <article class="Cart_result">
+        <div class="menubar">
         	<ul class="right-menu">
-		        <div class="menubar">
 			        <li>
 				        <div class="profilePhoto">
-				            <img src="profile.jpg">
+	               			<c:choose>
+								<c:when test="${empty loginUser.pictureurl}">
+									<img src="image/noimage.jpg">
+								</c:when>
+								<c:otherwise>
+									<img src="profilePhoto/${loginUser.pictureurl}">
+								</c:otherwise>
+							</c:choose>
 				        </div>
 			        </li>
 					<li>
 			            <div class="userInfo">
 			                <p class="name">${loginUser.name}</p>
-			                <%-- <p class="point">보유포인트${loginUser.point}</p> --%>
 			            </div>
 					</li>
-		        </div>
     		</ul>
-    		<div>
-                <p id=Money>
-                    &nbsp;&nbsp;&nbsp;&nbsp;상품 가격
-                </p>
-                <p id=Money>
-                    - &nbsp;&nbsp;&nbsp; 보유 포인트
-                </p>
-                <p id=empty_Money>
-                <h2>잔여포인트</h2>
-                </p>
-            </div>
-            <hr>
-            <button id=buy>상품 구매</button>
+        </div>
+   		<table id=resultForm>
+		    <tbody>
+		        <tr>
+			        <td id="resultForm table">
+			           보유한 P:     
+			        </td>
+			        <td>
+	                    ${loginUser.point}
+	                </td>
+                </tr>
+                <tr>
+	                <td>
+	                총 금액:
+	                </td>
+	                <td>
+	                    ${total}p
+	                </td>
+                </tr>
+	        </tbody>
+        </table>
+        <c:if test="${extrapoint>=0}">
+        <div>
+           	<h2>${extrapoint}</h2>
+        </div>
+        <button id=buy>상품 구매</button>
+        </c:if>
+        <c:if test="${extrapoint==-1}">
+        <div>
+        	<h2>보유 포인트가 부족합니다.</h2>
+        </div>
+        </c:if>
     </article>
 </body>
 </html>

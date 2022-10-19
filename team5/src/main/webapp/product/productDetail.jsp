@@ -34,16 +34,16 @@
 					<td>${product.price}</td>
 				</tr>
 				<tr>
-					<th>설명</th>
+					<th>카테고리</th>
 					<td>
-						<div style="height:220px; width:100%">
-							${product.description}
+						<div>
+							${product.category}
 						</div>
 					</td>
 				</tr>
 				<tr>
-					<th>등록 일자</th>
-					<td>${product.reg_date}</td>
+					<th>상품 좌표</th>
+					<td>${product.coordinate}</td>
 				</tr>
 			</tr>
 		</table>

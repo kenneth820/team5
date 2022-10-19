@@ -5,10 +5,13 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.sql.SQLException;
 
 import com.rkrua.dao.MemberDao;
 import com.rkrua.dto.MemberVo;
+import com.rkrua.dto.ProductVo;
 import com.rkrua.util.DBManager;
 // 데이터 베이스 접근
 public class MemberDao {
@@ -94,7 +97,7 @@ public class MemberDao {
 		
 		
 //		String sql_insert= "insert into member values('"+name+"','"+id+"','"+pwd+"','"+email+"','"+phone+"',"+admin+")";
-		String sql_insert= "insert into member values(?, ?, ?, ?, ?, ?)";
+		String sql_insert= "insert into member(name, userid, pwd, email, phone) values(?, ?, ?, ?, ?)";
 		
 //		System.out.println(sql_insert);
 		
@@ -115,7 +118,6 @@ public class MemberDao {
 			pstmt.setString(3, mVo.getPwd());
 			pstmt.setString(4, mVo.getEmail());
 			pstmt.setString(5, mVo.getPhone());				// 문자형
-			pstmt.setInt(6, mVo.getAdmin());				// 정수형
 //			pstmt.setFloat(admin, float x);			// 실수형
 //			pstmt.setDate(idx, Date x);				// 날짜형
 //			pstmt.setTimestamp(idx, Timestamp t);	// 시간형
@@ -169,6 +171,8 @@ public class MemberDao {
 				mVo.setEmail(rs.getString("email")); // 	컬럼명 name인 정보를 가져옴
 				mVo.setPhone(rs.getString("phone")); // 	컬럼명 name인 정보를 가져옴
 				mVo.setAdmin(rs.getInt("admin")); // 	컬럼명 name인 정보를 가져옴
+				mVo.setPictureurl(rs.getString("pictureurl"));
+				mVo.setPoint(rs.getInt("point"));
 			} else {
 				result = -1;		// 디비에 userid 없음
 			}
@@ -185,7 +189,7 @@ public class MemberDao {
 	// 반환값 : 성공여부
 	public int updateMember(MemberVo mVo) {
 		int result = -1;
-		String sql = "update member set pwd=?, email=?, phone=?, admin=? where userid=?";
+		String sql = "update member set pwd=?, email=?, phone=?, admin=?, pictureurl=?, name=? where userid=?";
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -198,7 +202,9 @@ public class MemberDao {
 			pstmt.setString(2, mVo.getEmail());
 			pstmt.setString(3, mVo.getPhone());
 			pstmt.setInt(4, mVo.getAdmin());
-			pstmt.setString(5, mVo.getUserid());	
+			pstmt.setString(5, mVo.getPictureurl());
+			pstmt.setString(6, mVo.getName());
+			pstmt.setString(7, mVo.getUserid());	
 			
 			// (4단계) SQl문 실행 및 결과처리 => executeUpdate : 삽입(insert/update/delete)
 			result = pstmt.executeUpdate();			// 쿼리 수행
@@ -246,10 +252,111 @@ public class MemberDao {
 		}	
 		return result;
 	}
-	/*
-	 * public HashMap<String, Object> pagingListCnt(pagingVo pagingVo) {
-	 * 
-	 * }
-	 */
+	public List<MemberVo> getMemberList() {
+		return getMemberList("userid","",1);
+	}
+	public List<MemberVo> getMemberList(int page) {
+		return getMemberList("userid","",page);
+	}
+	public List<MemberVo> getMemberList(String keyword, int page) {
+		return getMemberList("userid",keyword,1);
+	}
+	public List<MemberVo> getMemberList(String column ,String keyword, int page) {
+		String sql = "select * from ( "
+				+ "select rownum n, b.* "
+				+ "from (select * from member where "+column+" like ? order by name ) b "
+				+ ")"
+				+ "where n between ? and ? ";
+
+		List<MemberVo> list = new ArrayList<MemberVo>(); // 리스트 컬렉션 객체 생성
+
+		Connection conn = null;
+		ResultSet rs = null;
+		PreparedStatement pstmt = null; // 동적 쿼리
+
+		try {
+			conn = DBManager.getConnection();
+			// (3단계) Statement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+keyword+"%");
+			pstmt.setInt(2, 1+(page-1)*9);
+			pstmt.setInt(3, page * 9);
+
+			// (4단계) SQl문 실행 및 결과처리 => executeUpdate : 삽입(insert/update/delete)
+			rs = pstmt.executeQuery(); // 쿼리 수행
+			while (rs.next()) {
+				MemberVo mVo = new MemberVo();
+				// 디비로부터 회원정보 획득
+				mVo.setUserid(rs.getString("userid"));
+				mVo.setName(rs.getString("name")); // DB에서 가져온 객체를 pVo객체에 저장
+				mVo.setPwd(rs.getString("pwd"));
+				mVo.setPictureurl(rs.getString("pictureurl"));
+				mVo.setEmail(rs.getString("Email"));
+				mVo.setPhone(rs.getString("phone"));
+				mVo.setPoint(rs.getInt("point"));
+				/* System.out.println(pVo); */
+				list.add(mVo); // list 객체에 데이터 추가
+				/* System.out.println(mVo); */
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		return list;
+	}
+	
+	public int getMemberCount() {
+		return getMemberCount("userid","");
+	}
+	public int getMemberCount(String keyword) {
+		return getMemberCount("userid",keyword);
+	}
+	public int getMemberCount(String column,String keyword) {
+		int count = 0;
+		Connection conn = null;
+		ResultSet rs = null;
+		PreparedStatement pstmt = null; // 동적 쿼리
+		
+		String sql = "select count(*) as count from ( select rownum n, b.*  "
+				+ "from (select * from member where "+ column +" like ? order by name desc) b)";
+
+		try {
+			conn = DBManager.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+keyword+"%");
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt("count");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt);
+		}
+		return count;
+	}
+	
+	public void deleteMember(String userid) {
+		int result = -1;
+		Connection conn = null;
+		// 동일한 쿼리문을 특정 값만 바꿔서 여러번 실행해야 할 때, 매개변수가 많아서 쿼리문 정리 필요
+		PreparedStatement pstmt = null;
+
+		String sql = "delete from member where userid=?";
+
+		try {
+			conn = DBManager.getConnection();
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userid);
+
+			result = pstmt.executeUpdate(); // 쿼리문 실행
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt);
+		}
+	}
 	
 }

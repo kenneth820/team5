@@ -47,19 +47,19 @@
 			</tr>
 			<tr>
 				<th>
-					설명: 
+					카테고리: 
 				</th>
-				<td >
+				<td>
 					<!-- <input type="text" name="description"> -->
-					<textarea rows="10" cols="80" name="description" placeholder="상품 설명을 입력하세요."></textarea>
+					<input type="text" name="category" placeholder="상품 카테고리를 설정하세요."> (바닥: 200 전등: 400 장식: 600)
 				</td>
 			</tr>
 			<tr>
 				<th>
-				등록일자
+				상품 좌표 :
 				</th>
 				<td>
-					<input type="text" name="reg_date" placeholder="2022-10-03"> (예시) 2022-10-03
+					<input type="text" name="coordinate" placeholder="000,000,000,000"> (예시) 000,000,000,000
 				</td>
 			</tr>
 		</table>

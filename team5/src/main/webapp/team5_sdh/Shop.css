@@ -1,0 +1,191 @@
+* {
+    list-style: none;
+    box-sizing: border-box;  
+}
+
+header{
+    display: flex;
+    height: 50px;
+    margin-right: 19%;
+}
+    
+nav{
+	display:flex;
+	height: 75px;
+	margin-right: 19%;
+	padding-left: 40px;
+}
+
+nav div{
+	display: flex;
+	height: 75px;
+	margin-right: 19%;
+	flex-shrink: 0;	
+}
+.nav{
+    display: flex;
+    position: relative;
+    margin-right: 19%;
+    margin-top: 2%;
+}
+
+article{
+display: flex;
+flex-direction: column;
+flex-wrap: wrap;
+position: fixed;
+top: 0;
+left: 1;
+right: 0;
+border-left:1px solid black ;
+min-width : 20%;
+background-color : #fff;
+
+
+height: 100%;
+width: 20.8%;
+}
+
+section{
+width:80%;
+display: flex;
+flex-direction: column;
+}
+
+#Search{
+	width:800px;
+	font-size: 20px;
+}
+
+#submit {
+	width:10%;
+}
+
+
+.shop_Form {
+	width:100%;
+}
+
+.items {
+	display:flex;
+	min-width: 100px;
+    width: 30%;
+    margin: 5% 1%;
+    height: 30%;
+    text-align: center;
+    background-color: #fff;
+    float: left;
+}
+
+
+.item_price{
+    margin-top: 1%;
+}
+.category{
+    width: 30%;
+    margin: 0 auto 0 0;
+    height: 50px;
+    text-align: center;
+    background-color: cornflowerblue;
+}
+.category > p {
+    color: white;
+}
+
+.right-menu{
+    display: flex;
+    flex-direction: column;
+	flex-wrap: wrap;
+    width: 100%;
+    padding: 8% 0% 8% 0%;
+}
+.right-menu > .shopping_list {
+    padding: 0% 10%;
+}
+.menubar{
+	text-align: center;
+}
+.profilePhoto img {
+	max-height:100px;
+}
+
+.userInfo{
+    width : 100%;
+}
+
+.name,.point {
+    text-align: center;
+}
+
+.P_info{
+    padding-left : 10%
+}
+.B_or_N{
+    display:flex;
+    margin-top: auto;
+    height:50px;
+    justify-content : space-around;
+}
+
+.B_or_N > button {
+    height:50%
+}
+
+a {
+    text-decoration: none;
+}    
+    
+.flip {
+	flex:none;
+    width: 100%;
+    perspective: 2000px;
+    margin: 2rem;
+  }
+  
+.card {
+    position: relative;
+    right: 15%;
+    display: flex;
+    height: 200px;
+    transition: 0.5s;
+    transform-style: preserve-3d;
+} 
+
+
+.front, .back {
+    position: absolute;
+    backface-visibility: hidden;
+  }
+.front img {
+    width: 80%;
+    padding: auto;
+  }
+  
+.back { 
+    box-sizing: border-box;
+    top: 100;
+    width: 100%;
+    transform: rotateY(180deg);
+    }
+  
+.flip:hover .card {
+    transform: rotateY(180deg);
+  }
+  
+.item_list {
+    width: 90%;
+  }
+.Shopping_Cart {
+  	width: 100%;
+  	text-align: center;
+  }
+.Cart_result{
+  align-items:flex-end;
+  padding-top:30%;
+  }
+#buy{
+  width:100%;
+  }
+#empty_Money{
+  border-top:1px;
+  }

@@ -54,9 +54,9 @@ public class WriteProductServlet extends HttpServlet {
 //			int code = Integer.parseInt(multi.getParameter("code"));
 			String name = multi.getParameter("name");
 			int price = Integer.parseInt(multi.getParameter("price"));
-			String description = multi.getParameter("description");
+			int category = Integer.parseInt(multi.getParameter("category"));
 			String pictureurl = multi.getFilesystemName("pictureurl");
-			Date reg_date = Date.valueOf(multi.getParameter("reg_date"));			
+			String coordinate = multi.getParameter("coordinate");
 			
 //			System.out.println(name);
 //			System.out.println(price);
@@ -68,9 +68,9 @@ public class WriteProductServlet extends HttpServlet {
 //			pVo.setCode(code);		// 입력된 상품 정보 Vo에 저장
 			pVo.setName(name);
 			pVo.setPrice(price);
-			pVo.setDescription(description);
+			pVo.setCategory(category);
 			pVo.setPictureurl(pictureurl);
-			pVo.setReg_date(reg_date);
+			pVo.setCoordinate(coordinate);
 			
 			
 			result = pDao.insertProduct(pVo);
