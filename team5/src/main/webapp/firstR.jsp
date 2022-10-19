@@ -120,7 +120,7 @@ ul, li {
 
 			<div id="info">
 				<div id="updateProf">
-					<a href="updateMember.do">개인정보수정</a>
+					<a href="updateMember.do?userId=${loginUser.userid}">개인정보수정</a>
 				</div>
 				<div id="Logout">
 					<a href="logout.do">로그아웃</a>
