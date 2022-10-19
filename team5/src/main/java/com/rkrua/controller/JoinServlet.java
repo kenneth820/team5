@@ -35,6 +35,7 @@ public class JoinServlet extends HttpServlet {
 		String pwd = request.getParameter("pwd");
 		String email = request.getParameter("email");
 		String phone = request.getParameter("phone");
+		String selfcomment = request.getParameter("selfcomment");
 		//String admin = request.getParameter("admin");
 		int admin = Integer.parseInt(request.getParameter("admin"));
 		
@@ -54,6 +55,7 @@ public class JoinServlet extends HttpServlet {
 		mVo.setEmail(email);
 		mVo.setPhone(phone);
 		mVo.setAdmin(admin);
+		mVo.setSelfcomment(selfcomment);
 		
 //		mDao.insertMember(name, userid, pwd, email, phone, admin);
 //		mDao.insertMember(mVo);

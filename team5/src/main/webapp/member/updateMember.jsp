@@ -41,16 +41,20 @@
 			</tr>
 			<tr>
 				<td id=title>프로필사진</td>
-				<td id=insert><input type="file" name="pictureurl">
+				<td id=insert><input type="file" name="pictureurl"></td>
 			</tr>
-			<c:if test="${loginUser.admin == 1}">
+			<tr>
+				<td id=title>한줄소개</td>
+				<td id=insert><input id=text type="text" name="selfcomment" value="${mVo.selfcomment}"></td>
+			</tr>
 				<tr>
 					<td id=title>등급</td>
 					<td id=insert><input type="radio" name="admin" value="0" checked="checked"> 일반회원
+			<c:if test="${loginUser.admin == 1}">
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<input type="radio" name="admin" value="1"> 관리자</td>
-				</tr>
 			</c:if>
+				</tr>
 			<tr>
 				<td colspan="2" align="center">
 					<input type="submit" value="확인" onclick="return checkJoin()">&nbsp;&nbsp;&nbsp;

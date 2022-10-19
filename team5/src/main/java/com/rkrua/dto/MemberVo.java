@@ -12,6 +12,7 @@ public class MemberVo {
 	private String phone;
 	private int admin;
 	private String pictureurl;
+	private String selfcomment;
 	private int point;
 	
 	public String getName() {
@@ -56,6 +57,12 @@ public class MemberVo {
 	public void setPictureurl(String pictureurl) {
 		this.pictureurl = pictureurl;
 	}
+	public String getSelfcomment() {
+		return selfcomment;
+	}
+	public void setSelfcomment(String selfcomment) {
+		this.selfcomment = selfcomment;
+	}
 	public int getPoint() {
 		return point;
 	}
@@ -65,7 +72,8 @@ public class MemberVo {
 	@Override
 	public String toString() {
 		return "MemberVo [name=" + name + ", userid=" + userid + ", pwd=" + pwd + ", email=" + email + ", phone="
-				+ phone + ", admin=" + admin + ", pictureurl=" + pictureurl + ", point=" + point + "]";
+				+ phone + ", admin=" + admin + ", pictureurl=" + pictureurl + ", point=" + point + ", selfcomment="+ selfcomment +"]";
 	}
+	
 	
 }

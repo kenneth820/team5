@@ -56,7 +56,7 @@ public class UpdateMemberServlet extends HttpServlet {
 		String savePath= "profilePhoto";
 		ServletContext context = getServletContext();
 		String uploadFilePath = context.getRealPath(savePath);
-		int uploadFileSizeLimit = 5 * 1024 * 1024;
+		int uploadFileSizeLimit = 8 * 1024 * 1024;
 		String encType = "UTF-8";
 
 //		System.out.println(uploadFilePath);
@@ -76,6 +76,7 @@ public class UpdateMemberServlet extends HttpServlet {
 			String email = multi.getParameter("email");
 			String pictureurl = multi.getFilesystemName("pictureurl");
 			String phone = multi.getParameter("phone");
+			String selfcomment = multi.getParameter("selfcomment");
 			int admin = Integer.parseInt(multi.getParameter("admin"));
 			
 			mVo.setUserid(userid);		// 입력된 상품 정보 Vo에 저장
@@ -84,9 +85,11 @@ public class UpdateMemberServlet extends HttpServlet {
 			mVo.setEmail(email);
 			mVo.setPictureurl(pictureurl);
 			mVo.setPhone(phone);
+			mVo.setSelfcomment(selfcomment);
 		} catch(Exception e) {
 			System.out.println("파일 업로드간 예외 발생: " + e);
 		}
+		System.out.println("ㅇㅇ"+ mVo);
 		
 		// 데이터베이스로부터 해당 코드의 정보 수정
 		result = mDao.updateMember(mVo);
