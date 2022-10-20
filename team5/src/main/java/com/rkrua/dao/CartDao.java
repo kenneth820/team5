@@ -38,8 +38,8 @@ public class CartDao {
 //			pstmt.setInt(1, pVo.getCode());
 			pstmt.setString(1, userid);
 			pstmt.setInt(2, code); // 정수형
-			System.out.println("유저아이디: "+userid);
-			System.out.println("상품아이디: "+code);
+//			System.out.println("유저아이디: "+userid);
+//			System.out.println("상품아이디: "+code);
 			
 			result = pstmt.executeUpdate(); // 荑쇰━ �닔�뻾
 		} catch (Exception e) {
@@ -101,6 +101,7 @@ public class CartDao {
 		String sql = "select  c.userid"
 				+ "    ,   m.name as username"
 				+ "    ,   p.pictureurl"
+				+ "    ,   p.code"
 				+ "    ,   p.price"
 				+ "    ,   p.name  as productname"
 				+ "    ,   c.cartid"
@@ -111,7 +112,7 @@ public class CartDao {
 				+ "                    and m.userid = ?";
 
 		List<CartVo> list = new ArrayList<CartVo>(); // 리스트 컬렉션 객체 생성
-		System.out.println(userid);
+//		System.out.println(userid);
 		Connection conn = null;
 		ResultSet rs = null;
 		PreparedStatement pstmt = null; // 동적 쿼리
@@ -129,6 +130,7 @@ public class CartDao {
 				// 디비로부터 회원정보 획득
 		
 				cVo.setCartid(rs.getInt("cartid")); // 컬럼명 code인 정보를 가져옴
+				cVo.setCode(rs.getInt("code"));
 				cVo.setUserid(rs.getString("username"));
 				cVo.setName(rs.getString("productname")); // DB에서 가져온 객체를 pVo객체에 저장
 				cVo.setPrice(rs.getInt("price"));
@@ -213,10 +215,35 @@ public class CartDao {
 	}
 	public int resultPrice(int userpoint, int totalpoint) {
 		int result = -1;
-		String sql="";
-		if(userpoint - totalpoint > 0) {
-			result = userpoint-totalpoint;
+		int price = userpoint - totalpoint;
+		System.out.println(price);
+		if(price > 0 || price == 0) {
+			result = price;
 		} 
+		return result;
+	}
+	
+	public int buyProduct(String userid, int change) {
+		int result = -1;
+		String sql = "update member set point=? where userid=?";
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = DBManager.getConnection();
+			// (3단계) Statement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, change);
+			pstmt.setString(2, userid);			
+			// (4단계) SQl문 실행 및 결과처리 => executeUpdate : 삽입(insert/update/delete)
+			result = pstmt.executeUpdate();			// 쿼리 수행
+			
+		} catch(Exception e) {			
+			e.printStackTrace();			
+		} finally  {
+			DBManager.close(conn, pstmt);
+		}
 		return result;
 	}
 }

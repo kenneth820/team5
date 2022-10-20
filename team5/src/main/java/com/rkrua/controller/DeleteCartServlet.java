@@ -35,6 +35,9 @@ public class DeleteCartServlet extends HttpServlet {
 	int total = cDao.totalPrice(mVo.getUserid());
 	request.setAttribute("total", total);
 
+	int change = cDao.resultPrice(mVo.getPoint(), total);
+	
+	request.setAttribute("change", change);
 	// 데이터베이스로부터 해당 코드의 정보 삭제
 	
 	// 삭제 후 목록 페이지로 이동

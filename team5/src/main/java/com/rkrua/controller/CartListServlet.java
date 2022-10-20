@@ -37,11 +37,13 @@ public class CartListServlet extends HttpServlet {
 //		System.out.println(cartList.size());
 		request.setAttribute("CartList", cartList);
 		int total = cDao.totalPrice(userid);
-		int extrapoint = cDao.resultPrice(mVo.getPoint(), total);
+		int change = cDao.resultPrice(mVo.getPoint(), total);
+		System.out.println(mVo.getPoint());
+		System.out.println(change);
 		
-		request.setAttribute("extrapoint", extrapoint);
+		request.setAttribute("change", change);
 		request.setAttribute("total", total);
-		System.out.println(cartList);
+//		System.out.println(cartList); 
 		
 		// 리스트 페이지로 이동
 		RequestDispatcher dispatcher = 

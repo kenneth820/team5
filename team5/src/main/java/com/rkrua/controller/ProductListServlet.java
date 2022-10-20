@@ -48,15 +48,22 @@ public class ProductListServlet extends HttpServlet {
 			category = Integer.parseInt(t_category);
 		}
 		
-		List<ProductVo> pageList = pDao.getProductList(category, keyword, page);
-		/* System.out.println(pageList); */
-		
-		
 		MemberVo mVo = (MemberVo)session.getAttribute("loginUser");
-		List<CartVo> cartList = cDao.selectAllCart(mVo.getUserid());
+		String userid = "";
+		String t_userid = mVo.getUserid();
+		
+		if(t_userid != null && !t_userid.equals("")) {
+			userid = t_userid;
+		}
+		
+		List<ProductVo> pageList = pDao.getProductList(userid,category, keyword, page);
+		System.out.println(pageList);
 		
 		
-		int count = pDao.getProductCount(category, keyword);
+		List<CartVo> cartList = cDao.selectAllCart(userid);
+		
+		
+		int count = pDao.getProductCount(userid, category, keyword);
 		request.setAttribute("count", count);
 		request.setAttribute("pageList", pageList);
 		request.setAttribute("CartList", cartList);

@@ -120,6 +120,9 @@
         </div>
     </article>
     <section>
+    <c:if test="${empty pageList}">
+    <h2>모든 상품을 구매하셨습니다.</h2>
+    </c:if>
     	<div class="shop_Form">
 	   		<c:forEach var="product" items="${pageList}">
 		        <ul class="item_list">

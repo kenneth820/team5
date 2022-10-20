@@ -21,25 +21,25 @@ public class LoginServlet extends HttpServlet {
  	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
  		String url = "member/login.jsp";
  		
- 		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+ 		// ¼¼¼Ç ¼³Á¤
  		HttpSession session = request.getSession();
- 		// ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½Ó¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½, ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½ï¿½ï¿½ main.jsp ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
- 		if(session.getAttribute("loginUser") != null) { // ï¿½ï¿½ï¿½Ç¿ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ È¸ï¿½ï¿½  ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ 		// ¸¸¾à, ¼¼¼Ç ¼Ó¼ºÀÌ À¯ÁöµÇ°í ÀÖ´Â µ¿¾È(Áï, ·Î±×ÀÎÀÌ µÇ¾î ÀÖ´Â »óÅÂ)¿¡´Â main.jsp ÆäÀÌÁö·Î ÀÌµ¿
+ 		if(session.getAttribute("loginUser") != null) { // ¼¼¼Ç¿¡ ·Î±×ÀÎ È¸¿ø  ÀúÀåµÈ Á¤º¸¸¦ È®ÀÎ ÈÄ °¡Á®¿À±â
  			url="main.jsp";
 		} /*
 			 * else if (session.getAttribute("loginUser") == admin) { url ="manager.jsp"; }
 			 */
  		
- 		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½(forward ï¿½ï¿½ï¿½)
+ 		// ÆäÀÌÁö ÀÌµ¿(forward ¹æ½Ä)
  		RequestDispatcher dispatcher;
  		dispatcher = request.getRequestDispatcher(url);
  		dispatcher.forward(request,response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8"); 	// post ï¿½ï¿½ï¿½
+		request.setCharacterEncoding("UTF-8"); 	// post ¹æ½Ä
 		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out= response.getWriter();		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+		PrintWriter out= response.getWriter();		// À¥ÆäÀÌÁö Ãâ·Â
 		
 		String url = "member/login.jsp";
 		
@@ -48,45 +48,45 @@ public class LoginServlet extends HttpServlet {
 		String userId = request.getParameter("userId");
 		String userPwd = request.getParameter("userPwd");
 		
-		//ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½/ ï¿½ï¿½È£
+		//µðºñ ¿¬µ¿ ÈÄ, °¡Á®¿Ã ¾ÆÀÌµð/ ¾ÏÈ£
 //		String id = "rkrua";
 		int result = mDao.checkUser(userId, userPwd);
 		
-//		out.print("ï¿½ï¿½ï¿½Ìµï¿½: "+ userId);
+//		out.print("¾ÆÀÌµð: "+ userId);
 //		out.print("<br>");
-//		out.print("ï¿½ï¿½È£: "+ userPwd);
+//		out.print("¾ÏÈ£: "+ userPwd);
 		
-		// ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½È£  ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
+		// ¾ÆÀÌµð ¾ÏÈ£  ºñ±³ ÈÄ ÆäÀÌÁö ÀÌµ¿
 		if(result == 2) {
-//			System.out.println("ï¿½ï¿½È£ ï¿½ï¿½Ä¡");
+//			System.out.println("¾ÏÈ£ ÀÏÄ¡");
 			url = "manager.jsp";
 			
 			MemberVo mVo = mDao.getMember(userId);
-//			System.out.println("È¸ï¿½ï¿½ ï¿½Ì¸ï¿½:" + mVo.getName());
+//			System.out.println("È¸¿ø ÀÌ¸§:" + mVo.getName());
 			
-	 		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-	 		HttpSession session = request.getSession(); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ È£ï¿½ï¿½
-	 		session.setAttribute("loginUser", mVo);		// ï¿½ï¿½ï¿½Ç¿ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	 		// ¼¼¼Ç ¼³Á¤
+	 		HttpSession session = request.getSession(); // ¼¼¼Ç °´Ã¼ È£Ãâ
+	 		session.setAttribute("loginUser", mVo);		// ¼¼¼Ç¿¡ È¸¿ø Á¤º¸ ÀúÀå
 	 		System.out.println(session.getAttribute("loginUser"));
 //			request.setAttribute("name", mVo.getName());
 //			request.setAttribute("id", mVo.getUserid());
 		} else if (result ==1) {
-//			System.out.println("ï¿½ï¿½È£ ï¿½ï¿½Ä¡");
+//			System.out.println("¾ÏÈ£ ÀÏÄ¡");
 			url = "main.jsp";
 			
 			MemberVo mVo = mDao.getMember(userId);
-//			System.out.println("È¸ï¿½ï¿½ ï¿½Ì¸ï¿½:" + mVo.getName());
+//			System.out.println("È¸¿ø ÀÌ¸§:" + mVo.getName());
 			
-	 		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-	 		HttpSession session = request.getSession(); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ È£ï¿½ï¿½
-	 		session.setAttribute("loginUser", mVo);		// ï¿½ï¿½ï¿½Ç¿ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	 		// ¼¼¼Ç ¼³Á¤
+	 		HttpSession session = request.getSession(); // ¼¼¼Ç °´Ã¼ È£Ãâ
+	 		session.setAttribute("loginUser", mVo);		// ¼¼¼Ç¿¡ È¸¿ø Á¤º¸ ÀúÀå
 	 		System.out.println(session.getAttribute("loginUser"));
 //			request.setAttribute("name", mVo.getName());
 //			request.setAttribute("id", mVo.getUserid());
 		}	else if(result ==0){
-			System.out.println("ï¿½ï¿½È£ ï¿½ï¿½ï¿½ï¿½Ä¡.");
+			System.out.println("¾ÏÈ£ ºÒÀÏÄ¡.");
 		} else {			
-			System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê´ï¿½ È¸ï¿½ï¿½");
+			System.out.println("Á¸ÀçÇÏÁö ¾Ê´Â È¸¿ø");
 		}
 		
 		RequestDispatcher dispatcher;

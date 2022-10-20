@@ -21,7 +21,7 @@ public class LogoutServlet extends HttpServlet {
 		
 		// 페이지 이동 : 로그인	
 //		response.sendRedirect("member/login.jsp");
-		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("member/login.jsp");
 		dispatcher.forward(request, response);
 	}
 

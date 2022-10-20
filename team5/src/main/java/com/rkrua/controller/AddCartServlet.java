@@ -30,7 +30,7 @@ public class AddCartServlet extends HttpServlet {
 		CartVo cVo = new CartVo();
 		CartDao cDao = CartDao.getInstance();		
 		
-		System.out.println(cVo.getUserid());
+//		System.out.println(cVo.getUserid());
 		
 		int result = cDao.checkCart(userid, code);
 		if (result == -1){

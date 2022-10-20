@@ -13,21 +13,21 @@ import com.rkrua.dao.MemberDao;
 import com.rkrua.dto.MemberVo;
 import com.rkrua.dto.ProductVo;
 import com.rkrua.util.DBManager;
-// 占쎄퀣占쎈똾占쏙옙 甕곤옙占쎈똻占쏙옙 占쏙옙域뱄옙
+// 데이터 베이스 접근
 public class MemberDao {
 	
 	private static MemberDao instance = new MemberDao();	
-	// �뜝�럡臾멨뜝�럡�뎽�뜝�럩占쏙옙
+	// �깮�꽦�옄
 	private MemberDao(){		
 	}	
-	// 嶺뚳옙�겫�슜占쎌눦�삕獄�占�
+	// 硫붿냼�뱶
 	public static MemberDao getInstance() {
 		return instance;		
 	}	
 
-	// 嚥∽옙域밸챷占쏙옙(占싼딉옙�뫗占쏙옙 占쎈챷占�): select
-	// 占쏙옙占싸븝옙: 嚥∽옙域밸챷占쏙옙 占쏙옙占쎈똻占쏙옙占쏙옙占� 占쏙옙占싸삼옙占쏙옙 占싼딉옙�뫗占쏙옙占쏙옙占쎈�占쏙옙占쏙옙 占쏙옙占쏙옙 
-	// 獄쏉옙占쏙옙揶쏉옙 : result 1: 占쏙옙占쏙옙 占쎌눘占� 0: 占쏙옙占쏙옙 �겫占쏙옙�눘占� -1: 占싼딉옙�뫗占쏙옙 占쏙옙占쎈�占쏙옙 占쏙옙占쏙옙
+	// 로그인(사용자 인증): select
+	// 입력값: 로그인 페이지에서 입력받은 사용자아이디와 암호 
+	// 반환값 : result 1: 암호 일치 0: 암호 불일치 -1: 사용자 아이디 없음
 	public int checkUser(String userid, String pwd) {
 		int result= -1;
 		
@@ -39,26 +39,26 @@ public class MemberDao {
 		//		String sql = "select pwd from member where userid='"+userid+"'";
 		String sql = "select pwd, admin from member where userid=?";
 		try {
-//			// (1占썩몿占�	) JDBC 占쏙옙占쎌눘占쎈�占� 嚥∽옙占쏙옙
+//			// (1단계	) JDBC 드라이버 로드
 //			Class.forName("oracle.jdbc.driver.OracleDriver");		
-//			// (2占썩몿占�) 占쎄퀣占쎈똾占쎄퀡占쏙옙�똻占쏙옙 占쎄퀗猿� 揶쏉옙筌ｏ옙 占쏙옙占쏙옙
+//			// (2단계) 데이터베이스 연결 객체 생성
 //			String url = "jdbc:oracle:thin:@localhost:1521:orcl";
 //			String uid = "ora_user";
 //			String pass = "1234";
 //			conn =  DriverManager.getConnection(url, uid, pass);
 			conn = DBManager.getConnection();
 			
-			// (3占썩몿占�) Statement 揶쏉옙筌ｏ옙 占쏙옙占쏙옙
+			// (3단계) Statement 객체 생성
 			pstmt = conn.prepareStatement(sql);	
 			pstmt.setString(1, userid);
-			// (4占썩몿占�) SQl�눧占� 占썬끋占쏙옙 獄쏉옙 野껉퀗�궢筌ｏ옙�뵳占� => executeQuery : 鈺곌퀬占쏙옙(selecet)
+			// (4단계) SQl문 실행 및 결과처리 => executeQuery : 조회(selecet)
 			rs = pstmt.executeQuery();
-			// rs.next() ": 占썬끉占쏙옙 占쏙옙 (row)占쏙옙占쏙옙, rs.getString("
+			// rs.next() ": 다음 행 (row)확인, rs.getString("
 			if(rs.next()){
-				//占쏙옙占쎈�占쏙옙 / 占쏙옙占쏙옙 �뜮占썸뤃占� 占쏙옙 占쏙옙占쎈똻占� 占쎈�占쏙옙
+				//아이디 / 암호 비교 후 페이지 이동
 				if(rs.getString("pwd")!= null && 
 						rs.getString("pwd").equals(pwd) && rs.getInt("admin") == 1) {
-					result = 2;  // 占쏙옙占쏙옙 占쎌눘占�
+					result = 2;  // 암호 일치
 				} else if(rs.getString("pwd")!= null && 
 						rs.getString("pwd").equals(pwd)) {
 					result = 1;
@@ -74,7 +74,7 @@ public class MemberDao {
 		} finally  {
 			DBManager.close(conn, pstmt, rs);
 			//			try {
-//				// (5占썩몿占�) 占싼딉옙�뫚占쏙옙 �뵳�딉옙占쏙옙占� 占쎈똻占쏙옙
+//				// (5단계) 사용한 리소스 해제
 //				rs.close();
 ////				stmt.close();
 //				pstmt.close();
@@ -86,14 +86,14 @@ public class MemberDao {
 	return result;
 	}	
 	
-	// 占쏙옙占쏙옙 揶쏉옙占쏙옙
+	// 회원 가입
 //	public int insertMember(String name, String id, String pwd, String email, String phone, int admin) {
 	public int insertMember(MemberVo mVo) {
 		int result = -1;
 		Connection conn = null;
-//		Statement stmt = null;		// 占쏙옙占쏙옙 �뜎�눖�봺
-		// 占쏙옙占쎌눛占쏙옙 �뜎�눖�봺�눧紐꾬옙占� 占쎈�占쏙옙 揶쏉옙筌랃옙 獄쏉옙饔낉옙占쏙옙 占싼됵옙�됵옙 占썬끋占쏙옙占쎈똻占쏙옙 占쏙옙 占쏙옙, 筌띲끆占썼퉪占쏙옙占썲첎占� 筌랃옙占쏙옙占쏙옙 �뜎�눖�봺�눧占� 占쏙옙�뵳占� 占쏙옙占쏙옙
-		PreparedStatement pstmt = null;	// 占쏙옙占쏙옙 �뜎�눖�봺
+//		Statement stmt = null;		// 정적 쿼리
+		// 동일한 쿼리문을 특정 값만 바꿔서 여러번 실행해야 할 때, 매개변수가 많아서 쿼리문 정리 필요
+		PreparedStatement pstmt = null;	// 동적 쿼리
 		
 		
 //		String sql_insert= "insert into member values('"+name+"','"+id+"','"+pwd+"','"+email+"','"+phone+"',"+admin+")";
@@ -103,34 +103,34 @@ public class MemberDao {
 		
 		try {
 			conn = DBManager.getConnection();
-			// (3占썩몿占�) Statement 揶쏉옙筌ｏ옙 占쏙옙占쏙옙
+			// (3단계) Statement 객체 생성
 //			stmt = conn.createStatement();
 			pstmt = conn.prepareStatement(sql_insert);
 //			pstmt.setString(1, name);
 //			pstmt.setString(2, id);
 //			pstmt.setString(3, pwd);
 //			pstmt.setString(4, email);
-//			pstmt.setString(5, phone);				// �눧紐꾬옙占쏙옙占�
-//			pstmt.setInt(6, admin);					// 占쏙옙占쏙옙占쏙옙
+//			pstmt.setString(5, phone);				// 문자형
+//			pstmt.setInt(6, admin);					// 정수형
 			
 			pstmt.setString(1, mVo.getName());
 			pstmt.setString(2, mVo.getUserid());
 			pstmt.setString(3, mVo.getPwd());
 			pstmt.setString(4, mVo.getEmail());
-			pstmt.setString(5, mVo.getPhone());				// �눧紐꾬옙占쏙옙占�
-//			pstmt.setFloat(admin, float x);			// 占썬끉占쏙옙占쏙옙
-//			pstmt.setDate(idx, Date x);				// 占쏙옙筌욑옙占쏙옙
-//			pstmt.setTimestamp(idx, Timestamp t);	// 占쏙옙揶쏉옙占쏙옙
+			pstmt.setString(5, mVo.getPhone());				// 문자형
+//			pstmt.setFloat(admin, float x);			// 실수형
+//			pstmt.setDate(idx, Date x);				// 날짜형
+//			pstmt.setTimestamp(idx, Timestamp t);	// 시간형
 			
-			// (4占썩몿占�) SQl�눧占� 占썬끋占쏙옙 獄쏉옙 野껉퀗�궢筌ｏ옙�뵳占� => executeUpdate : 占쎌럩占쏙옙(insert/update/delete)
+			// (4단계) SQl문 실행 및 결과처리 => executeUpdate : 삽입(insert/update/delete)
 //			result = stmt.executeUpdate(sql_insert);
-			result = pstmt.executeUpdate();			// �뜎�눖�봺 占쏙옙占쏙옙
+			result = pstmt.executeUpdate();			// 쿼리 수행
 		} catch(Exception e) {			
 			e.printStackTrace();			
 		} finally  {
 			DBManager.close(conn, pstmt);
 			//			try {
-//				// (5占썩몿占�) 占싼딉옙�뫚占쏙옙 �뵳�딉옙占쏙옙占� 占쎈똻占쏙옙
+//				// (5단계) 사용한 리소스 해제
 ////				stmt.close();
 //				pstmt.close();
 //				conn.close();				
@@ -141,9 +141,9 @@ public class MemberDao {
 		return result;
 }
 
-	// 占쏙옙占쏙옙 占쏙옙癰귨옙 揶쏉옙占쎈챷占썬끆由� : select
-	// 占쏙옙占싸븝옙: 占싼딉옙�뫗占쏙옙id(userid)
-	// 獄쏉옙占쏙옙揶쏉옙: 占쎄퉫�궗占싼됵옙
+	// 회원 정보 가져오기 : select
+	// 입력값: 사용자id(userid)
+	// 반환값: 성공여부
 	public MemberVo getMember(String userid) {
 		int result = -1;
 		String sql = "select * from member where userid = ?";
@@ -151,31 +151,30 @@ public class MemberDao {
 		
 		Connection conn = null;
 		ResultSet rs = null;
-		PreparedStatement pstmt = null;	// 占쏙옙占쏙옙 �뜎�눖�봺
+		PreparedStatement pstmt = null;	// 동적 쿼리
 		
 		try {
 			conn = DBManager.getConnection();
-			// (3占썩몿占�) Statement 揶쏉옙筌ｏ옙 占쏙옙占쏙옙
+			// (3단계) Statement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userid);
 		
 			
-			// (4占썩몿占�) SQl�눧占� 占썬끋占쏙옙 獄쏉옙 野껉퀗�궢筌ｏ옙�뵳占� => executeUpdate : 占쎌럩占쏙옙(insert/update/delete)
-			rs = pstmt.executeQuery();			// �뜎�눖�봺 占쏙옙占쏙옙
+			// (4단계) SQl문 실행 및 결과처리 => executeUpdate : 삽입(insert/update/delete)
+			rs = pstmt.executeQuery();			// 쿼리 수행
 			if(rs.next()) {
-				// 占쏙옙�뜮占썸에占썽겫占쏙옙占� 占쏙옙占쏙옙占쏙옙癰귨옙 占쏙옙占쏙옙
+				// 디비로부터 회원정보 획득
 				mVo = new MemberVo();
-				mVo.setName(rs.getString("name")); 	// �뚎됵옙�눖占� name占쏙옙 占쏙옙癰귣�占쏙옙 揶쏉옙占쎈챷占쏙옙
-				mVo.setUserid(rs.getString("userid")); // 	�뚎됵옙�눖占� name占쏙옙 占쏙옙癰귣�占쏙옙 揶쏉옙占쎈챷占쏙옙
-				mVo.setPwd(rs.getString("pwd")); // 	�뚎됵옙�눖占� name占쏙옙 占쏙옙癰귣�占쏙옙 揶쏉옙占쎈챷占쏙옙
-				mVo.setEmail(rs.getString("email")); // 	�뚎됵옙�눖占� name占쏙옙 占쏙옙癰귣�占쏙옙 揶쏉옙占쎈챷占쏙옙
-				mVo.setPhone(rs.getString("phone")); // 	�뚎됵옙�눖占� name占쏙옙 占쏙옙癰귣�占쏙옙 揶쏉옙占쎈챷占쏙옙
-				mVo.setAdmin(rs.getInt("admin")); // 	�뚎됵옙�눖占� name占쏙옙 占쏙옙癰귣�占쏙옙 揶쏉옙占쎈챷占쏙옙
+				mVo.setName(rs.getString("name")); 	// 컬럼명 name인 정보를 가져옴
+				mVo.setUserid(rs.getString("userid")); // 	컬럼명 name인 정보를 가져옴
+				mVo.setPwd(rs.getString("pwd")); // 	컬럼명 name인 정보를 가져옴
+				mVo.setEmail(rs.getString("email")); // 	컬럼명 name인 정보를 가져옴
+				mVo.setPhone(rs.getString("phone")); // 	컬럼명 name인 정보를 가져옴
+				mVo.setAdmin(rs.getInt("admin")); // 	컬럼명 name인 정보를 가져옴
 				mVo.setPictureurl(rs.getString("pictureurl"));
 				mVo.setPoint(rs.getInt("point"));
-				mVo.setSelfcomment(rs.getString("selfcomment"));
 			} else {
-				result = -1;		// 占쏙옙�뜮占쏙옙占� userid 占쏙옙占쏙옙
+				result = -1;		// 디비에 userid 없음
 			}
 		} catch(Exception e) {			
 			e.printStackTrace();			
@@ -185,21 +184,19 @@ public class MemberDao {
 		return mVo;
 	}
 	
-	// 占쏙옙占쏙옙 占쏙옙癰귨옙 占쏙옙占쎄퀣占쎈똾占쏙옙: update
-	// 占쏙옙占싸븝옙: 占쏙옙占쏙옙 占쏙옙占쎈�占� 占쏙옙癰귨옙
-	// 獄쏉옙占쏙옙揶쏉옙 : 占쎄퉫�궗占싼됵옙
+	// 회원 정보 업데이트: update
+	// 입력값: 회원 테이블 정보
+	// 반환값 : 성공여부
 	public int updateMember(MemberVo mVo) {
 		int result = -1;
-		String sql = "update member set pwd=?, email=?, phone=?, admin=?, pictureurl=?, name=?, selfcomment=?, point=? where userid=?";
-
-
+		String sql = "update member set pwd=?, email=?, phone=?, admin=?, pictureurl=?, name=?, point=? where userid=?";
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
 		try {
 			conn = DBManager.getConnection();
-			// (3占썩몿占�) Statement 揶쏉옙筌ｏ옙 占쏙옙占쏙옙
+			// (3단계) Statement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, mVo.getPwd());
 			pstmt.setString(2, mVo.getEmail());
@@ -207,12 +204,13 @@ public class MemberDao {
 			pstmt.setInt(4, mVo.getAdmin());
 			pstmt.setString(5, mVo.getPictureurl());
 			pstmt.setString(6, mVo.getName());
-			pstmt.setString(7, mVo.getSelfcomment());
-			pstmt.setInt(8, mVo.getPoint());
-			pstmt.setString(9, mVo.getUserid());
+			pstmt.setInt(7, mVo.getPoint());
+			System.out.println(mVo.getPoint());
+			pstmt.setString(8, mVo.getUserid());
 			
-			result = pstmt.executeUpdate();			// �뜎�눖�봺 占쏙옙占쏙옙
-			System.out.println(mVo);
+			// (4단계) SQl문 실행 및 결과처리 => executeUpdate : 삽입(insert/update/delete)
+			result = pstmt.executeUpdate();			// 쿼리 수행
+			
 		} catch(Exception e) {			
 			e.printStackTrace();			
 		} finally  {
@@ -223,31 +221,31 @@ public class MemberDao {
 		return result;
 	}
 
-	// 占쏙옙占쎈�占쏙옙 占쏙옙占쏙옙 : select
-	// 占쏙옙占싸븝옙: 餓ο옙癰귨옙 筌ｋ똾占쏙옙 占쏙옙 占쏙옙占쏙옙 占쏙옙占쎈�占쏙옙
-	// 獄쏉옙占쏙옙揶쏉옙: 筌ｋ똾占싼뗰옙占� ID占쏙옙 DB 鈺곕똻占쏙옙 占싼됵옙
+	// 아이디 확인 : select
+	// 입력값: 중복 체크 할 유저 아이디
+	// 반환값: 체크한 ID의 DB 존재 여부
 	public int confirmID(String userid) {
 		int result = -1;
 		String sql = "select userid from member where userid = ?";
 		
 		Connection conn = null;
 		ResultSet rs = null;
-		PreparedStatement pstmt = null;	// 占쏙옙占쏙옙 �뜎�눖�봺
+		PreparedStatement pstmt = null;	// 동적 쿼리
 		
 		try {
 			conn = DBManager.getConnection();
-			// (3占썩몿占�) Statement 揶쏉옙筌ｏ옙 占쏙옙占쏙옙
+			// (3단계) Statement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userid);		
 			
-			// (4占썩몿占�) SQl�눧占� 占썬끋占쏙옙 獄쏉옙 野껉퀗�궢筌ｏ옙�뵳占� => executeUpdate : 占쎌럩占쏙옙(insert/update/delete)
-			rs = pstmt.executeQuery();			// �뜎�눖�봺 占쏙옙占쏙옙
-			// res.next() : 占썬끉占쏙옙 占쏙옙(row)占쏙옙 占쏙옙占쏙옙, rs.getString("�뚎됵옙�눖占�")
+			// (4단계) SQl문 실행 및 결과처리 => executeUpdate : 삽입(insert/update/delete)
+			rs = pstmt.executeQuery();			// 쿼리 수행
+			// res.next() : 다음 행(row)을 확인, rs.getString("컬럼명")
 			if(rs.next()) {
-				// 占쏙옙�뜮占썸에占썽겫占쏙옙占� 占쏙옙占쏙옙占쏙옙癰귨옙 占쏙옙占쏙옙
-				result = 1;			// 占쏙옙�뜮占쏙옙占� userid 占쏙옙占쏙옙
+				// 디비로부터 회원정보 획득
+				result = 1;			// 디비에 userid 있음
 			} else {
-				result = -1;		// 占쏙옙�뜮占쏙옙占� userid 占쏙옙占쏙옙
+				result = -1;		// 디비에 userid 없음
 			}
 		} catch(Exception e) {			
 			e.printStackTrace();			
@@ -272,36 +270,35 @@ public class MemberDao {
 				+ ")"
 				+ "where n between ? and ? ";
 
-		List<MemberVo> list = new ArrayList<MemberVo>(); // �뵳�딉옙�끋占쏙옙 �뚎됵옙占쏙옙占� 揶쏉옙筌ｏ옙 占쏙옙占쏙옙
+		List<MemberVo> list = new ArrayList<MemberVo>(); // 리스트 컬렉션 객체 생성
 
 		Connection conn = null;
 		ResultSet rs = null;
-		PreparedStatement pstmt = null; // 占쏙옙占쏙옙 �뜎�눖�봺
+		PreparedStatement pstmt = null; // 동적 쿼리
 
 		try {
 			conn = DBManager.getConnection();
-			// (3占썩몿占�) Statement 揶쏉옙筌ｏ옙 占쏙옙占쏙옙
+			// (3단계) Statement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, "%"+keyword+"%");
 			pstmt.setInt(2, 1+(page-1)*9);
 			pstmt.setInt(3, page * 9);
 
-			// (4占썩몿占�) SQl�눧占� 占썬끋占쏙옙 獄쏉옙 野껉퀗�궢筌ｏ옙�뵳占� => executeUpdate : 占쎌럩占쏙옙(insert/update/delete)
-			rs = pstmt.executeQuery(); // �뜎�눖�봺 占쏙옙占쏙옙
+			// (4단계) SQl문 실행 및 결과처리 => executeUpdate : 삽입(insert/update/delete)
+			rs = pstmt.executeQuery(); // 쿼리 수행
 			while (rs.next()) {
 				MemberVo mVo = new MemberVo();
-				// 占쏙옙�뜮占썸에占썽겫占쏙옙占� 占쏙옙占쏙옙占쏙옙癰귨옙 占쏙옙占쏙옙
+				// 디비로부터 회원정보 획득
 				mVo.setUserid(rs.getString("userid"));
-				mVo.setName(rs.getString("name")); // DB占쏙옙占쏙옙 揶쏉옙占쎈챷占쏙옙 揶쏉옙筌ｋ�占쏙옙 pVo揶쏉옙筌ｋ똻占쏙옙 占쏙옙占쏙옙
+				mVo.setName(rs.getString("name")); // DB에서 가져온 객체를 pVo객체에 저장
 				mVo.setPwd(rs.getString("pwd"));
 				mVo.setPictureurl(rs.getString("pictureurl"));
 				mVo.setEmail(rs.getString("Email"));
 				mVo.setPhone(rs.getString("phone"));
 				mVo.setPoint(rs.getInt("point"));
-				mVo.setSelfcomment(rs.getString("selfcomment"));
 				/* System.out.println(pVo); */
-				list.add(mVo); // list 揶쏉옙筌ｋ똻占쏙옙 占쎄퀣占쎈똾占쏙옙 �빊占썲첎占�
-				System.out.println(mVo);
+				list.add(mVo); // list 객체에 데이터 추가
+				/* System.out.println(mVo); */
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -321,7 +318,7 @@ public class MemberDao {
 		int count = 0;
 		Connection conn = null;
 		ResultSet rs = null;
-		PreparedStatement pstmt = null; // 占쏙옙占쏙옙 �뜎�눖�봺
+		PreparedStatement pstmt = null; // 동적 쿼리
 		
 		String sql = "select count(*) as count from ( select rownum n, b.*  "
 				+ "from (select * from member where "+ column +" like ? order by name desc) b)";
@@ -345,7 +342,7 @@ public class MemberDao {
 	public void deleteMember(String userid) {
 		int result = -1;
 		Connection conn = null;
-		// 占쏙옙占쎌눛占쏙옙 �뜎�눖�봺�눧紐꾬옙占� 占쎈�占쏙옙 揶쏉옙筌랃옙 獄쏉옙饔낉옙占쏙옙 占싼됵옙�됵옙 占썬끋占쏙옙占쎈똻占쏙옙 占쏙옙 占쏙옙, 筌띲끆占썼퉪占쏙옙占썲첎占� 筌랃옙占쏙옙占쏙옙 �뜎�눖�봺�눧占� 占쏙옙�뵳占� 占쏙옙占쏙옙
+		// 동일한 쿼리문을 특정 값만 바꿔서 여러번 실행해야 할 때, 매개변수가 많아서 쿼리문 정리 필요
 		PreparedStatement pstmt = null;
 
 		String sql = "delete from member where userid=?";
@@ -356,7 +353,7 @@ public class MemberDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userid);
 
-			result = pstmt.executeUpdate(); // �뜎�눖�봺�눧占� 占썬끋占쏙옙
+			result = pstmt.executeUpdate(); // 쿼리문 실행
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

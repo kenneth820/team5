@@ -28,8 +28,6 @@ public class MemberListServlet extends HttpServlet {
 		String t_keyword = request.getParameter("k");
 		String t_column = request.getParameter("c");
 		String t_page = request.getParameter("p");
-		System.out.println("컬럼"+t_column);
-		System.out.println("키워드"+t_keyword);
 		
 		if(t_page != null && !t_page.equals("")) {
 			page = Integer.parseInt(t_page);

@@ -113,16 +113,18 @@
                 </tr>
 	        </tbody>
         </table>
-        <c:if test="${extrapoint>=0}">
-        <div>
-           	<h2>${extrapoint}</h2>
-        </div>
-        <button id=buy>상품 구매</button>
+        <c:if test="${change >= 0  and total > 0}">
+	        <div>
+	           	<h2>${change}</h2>
+	        </div>
+	        <a id= buy href="buyCart.do?userid=${loginUser.userid}&change=${change}">
+	        	<button id=buy>상품 구매</button>
+	        </a>
         </c:if>
-        <c:if test="${extrapoint==-1}">
-        <div>
-        	<h2>보유 포인트가 부족합니다.</h2>
-        </div>
+        <c:if test="${change == -1 }">
+	        <div>
+	        	<h2>보유 포인트가 부족합니다.</h2>
+	        </div>
         </c:if>
     </article>
 </body>

@@ -238,14 +238,24 @@ public class ProductDao {
 	public List<ProductVo> getProductList(String keyword,int page){
 		return getProductList(00,keyword,page);
 	}
+	public List<ProductVo> getProductList(int category, String keyword,int page){
+		return getProductList(category,keyword,page);
+	}
 
 	// 검색 기능과 페이징을 구현
-	public List<ProductVo> getProductList(int category ,String keyword, int page){
-		String sql = "select * from ("
-				+ "select rownum n, b.* "
-				+ "from (select * from product where name like ? and category like ? order by code ) b "
-				+ ")"
-				+ "where n between ? and ?";
+	public List<ProductVo> getProductList(String userid,int category ,String keyword, int page){
+		String sql = "select * from ( "
+				+ "				select rownum n, b.* "
+				+ "				from (select  * "
+				+ "    from product p "
+				+ "    left outer join item i "
+				+ "        on i.code = p.code "
+				+ "        and i.userid = ?"
+				+ "        where i.code is null "
+				+ "        and name like  ? "
+				+ "        and category like ? ) b "
+				+ "				) "
+				+ "				where n between ? and ? ";
 		
 //		등차수열의 n에 대한 식은 첫째항 A공차가 B인 경우 => A + B(n-1)
 //		1 + (page-1)* 10
@@ -259,10 +269,11 @@ public class ProductDao {
 			conn = DBManager.getConnection();
 			// (3단계) Statement 객체 생성
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, "%"+keyword+"%");
-			pstmt.setString(2, "%"+category+"%");
-			pstmt.setInt(3, 1+(page-1)*9);
-			pstmt.setInt(4, page * 9);
+			pstmt.setString(1, userid);
+			pstmt.setString(2, "%"+keyword+"%");
+			pstmt.setString(3, "%"+category+"%");
+			pstmt.setInt(4, 1+(page-1)*9);
+			pstmt.setInt(5, page * 9);
 			
 			
 			// (4단계) SQl문 실행 및 결과처리 => executeUpdate : 삽입(insert/update/delete)
@@ -289,18 +300,26 @@ public class ProductDao {
 	
 	// 게시물 수 조회
 	public int getProductCount() {
-		return getProductCount(00,"");
+		return getProductCount("",00,"");
 	}
 	// 특정 컬럼의 키워드를 통해 게시물 수 조회
 	public int getProductCount(String keyword) {
-		return getProductCount(00,keyword);
+		return getProductCount("",00,keyword);
 	}
-	public int getProductCount(int category,String keyword) {
+	public int getProductCount(int category ,String keyword) {
+		return getProductCount("",category,keyword);
+	}
+	public int getProductCount(String userid, int category,String keyword) {
 		int count=0;
-		String sql = "select count(code) as count from ( "
-				+ "				select rownum n, b.* "
-				+ "				from (select * from product where name like ? and category like ? order by code desc) b"
-				+ "				) ";
+		String sql = "select count(*) as count from ( select rownum n, b.* "
+				+ "				from (select  * "
+				+ "    from product p "
+				+ "    left outer join item i "
+				+ "        on i.code = p.code "
+				+ "        and i.userid = ? "
+				+ "        where i.code is null "
+				+ "        and name like  ? "
+				+ "        and category like ?) b)" ;
 		
 		Connection conn = null;
 		ResultSet rs = null;
@@ -310,8 +329,9 @@ public class ProductDao {
 			conn = DBManager.getConnection();
 			// (3단계) Statement 객체 생성
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, "%"+keyword+"%");
-			pstmt.setString(2, "%"+category+"%");
+			pstmt.setString(1, userid);
+			pstmt.setString(2, "%"+keyword+"%");
+			pstmt.setString(3, "%"+category+"%");
 			
 			// (4단계) SQl문 실행 및 결과처리 => executeUpdate : 삽입(insert/update/delete)
 			rs = pstmt.executeQuery(); // 쿼리 수행

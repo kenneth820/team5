@@ -12,7 +12,7 @@ import com.rkrua.util.DBManager;
 
 
 public class BoardDao {
-	// ì‹±ê¸€í†¤
+	// ½Ì±ÛÅæ
 	private static BoardDao instance = new BoardDao();
 	private BoardDao() {
 	}
@@ -20,13 +20,13 @@ public class BoardDao {
 		return instance;
 	}
 	
-	// ê²Œì‹œë¬¼ ë“±ë¡
-//	ì…ë ¥ê°’: ì „ì²´ ê²Œì‹œë¬¼ ì •ë³´
-//	ë°˜í™˜ê°’: ì¿¼ë¦¬ ìˆ˜í–‰ ê²°ê³¼
+	// °Ô½Ã¹° µî·Ï
+//	ÀÔ·Â°ª: ÀüÃ¼ °Ô½Ã¹° Á¤º¸
+//	¹İÈ¯°ª: Äõ¸® ¼öÇà °á°ú
 	public int insertBoard(BoardVo bVo) {
 		int result = -1;
 		Connection conn = null;
-		// ë™ì¼í•œ ì¿¼ë¦¬ë¬¸ì„ íŠ¹ì • ê°’ë§Œ ë°”ê¿”ì„œ ì—¬ëŸ¬ë²ˆ ì‹¤í–‰í•´ì•¼ í•  ë•Œ, ë§¤ê°œë³€ìˆ˜ê°€ ë§ì•„ì„œ ì¿¼ë¦¬ë¬¸ ì •ë¦¬ í•„ìš”
+		// µ¿ÀÏÇÑ Äõ¸®¹®À» Æ¯Á¤ °ª¸¸ ¹Ù²ã¼­ ¿©·¯¹ø ½ÇÇàÇØ¾ß ÇÒ ¶§, ¸Å°³º¯¼ö°¡ ¸¹¾Æ¼­ Äõ¸®¹® Á¤¸® ÇÊ¿ä
 		PreparedStatement pstmt = null;
 
 		String sql = "insert into board(name,email,pass,title,content) values(?, ?, ?, ?, ?)";
@@ -37,12 +37,12 @@ public class BoardDao {
 			pstmt = conn.prepareStatement(sql);
 
 			pstmt.setString(1, bVo.getName());
-			pstmt.setString(2, bVo.getEmail()); // ì •ìˆ˜í˜•
+			pstmt.setString(2, bVo.getEmail()); // Á¤¼öÇü
 			pstmt.setString(3, bVo.getPass());
-			pstmt.setString(4, bVo.getTitle()); // ë¬¸ìí˜•
-			pstmt.setString(5, bVo.getContent()); // ë‚ ì§œí˜•
+			pstmt.setString(4, bVo.getTitle()); // ¹®ÀÚÇü
+			pstmt.setString(5, bVo.getContent()); // ³¯Â¥Çü
 
-			result = pstmt.executeUpdate(); // ì¿¼ë¦¬ìˆ˜í–‰
+			result = pstmt.executeUpdate(); // Äõ¸®¼öÇà
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -51,25 +51,25 @@ public class BoardDao {
 		return result;
 	}
 	
-	// ê²Œì‹œë¬¼ ëª©ë¡ ì¡°íšŒ
+	// °Ô½Ã¹° ¸ñ·Ï Á¶È¸
 	public List<BoardVo> selectAllBoards() {
 		String sql = "select * from board order by num desc";
-		List<BoardVo> list = new ArrayList<BoardVo>(); // ë¦¬ìŠ¤íŠ¸ ì»¬ë ‰ì…˜ ê°ì²´ ìƒì„±
+		List<BoardVo> list = new ArrayList<BoardVo>(); // ¸®½ºÆ® ÄÃ·º¼Ç °´Ã¼ »ı¼º
 		
 		return list;
 	}
 	
 	// 
 	
-	// ê²Œì‹œê¸€ ê²€ìƒ‰
+	// °Ô½Ã±Û °Ë»ö
 	public List<BoardVo> getBoardList(){
 		return getBoardList("", 1);
 	}
-	// í˜ì´ì§€ ë³„ ë¦¬ìŠ¤íŠ¸ í‘œì‹œ
+	// ÆäÀÌÁö º° ¸®½ºÆ® Ç¥½Ã
 	public List<BoardVo> getBoardList(int page){
 		return getBoardList("",page);
 	}
-	// ê²€ìƒ‰ ê¸°ëŠ¥ê³¼ í˜ì´ì§•ì„ êµ¬í˜„
+	// °Ë»ö ±â´É°ú ÆäÀÌÂ¡À» ±¸Çö
 	public List<BoardVo> getBoardList(String keyword, int page){
 		String sql = "select * from ("
 				+ "select rownum n, b.* "
@@ -77,30 +77,30 @@ public class BoardDao {
 				+ ")"
 				+ "where n between ? and ?";
 		
-//		ë“±ì°¨ìˆ˜ì—´ì˜ nì— ëŒ€í•œ ì‹ì€ ì²«ì§¸í•­ Aê³µì°¨ê°€ Bì¸ ê²½ìš° => A + B(n-1)
+//		µîÂ÷¼ö¿­ÀÇ n¿¡ ´ëÇÑ ½ÄÀº Ã¹Â°Ç× A°øÂ÷°¡ BÀÎ °æ¿ì => A + B(n-1)
 //		1 + (page-1)* 10
-		List<BoardVo> list = new ArrayList<BoardVo>(); // ë¦¬ìŠ¤íŠ¸ ì»¬ë ‰ì…˜ ê°ì²´ ìƒì„±
+		List<BoardVo> list = new ArrayList<BoardVo>(); // ¸®½ºÆ® ÄÃ·º¼Ç °´Ã¼ »ı¼º
 
 		Connection conn = null;
 		ResultSet rs = null;
-		PreparedStatement pstmt = null; // ë™ì  ì¿¼ë¦¬
+		PreparedStatement pstmt = null; // µ¿Àû Äõ¸®
 
 		try {
 			conn = DBManager.getConnection();
-			// (3ë‹¨ê³„) Statement ê°ì²´ ìƒì„±
+			// (3´Ü°è) Statement °´Ã¼ »ı¼º
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, "%"+keyword+"%");
 			pstmt.setInt(2, 1+(page-1)*2);
 			pstmt.setInt(3, page * 2);
 			
 			
-			// (4ë‹¨ê³„) SQlë¬¸ ì‹¤í–‰ ë° ê²°ê³¼ì²˜ë¦¬ => executeUpdate : ì‚½ì…(insert/update/delete)
-			rs = pstmt.executeQuery(); // ì¿¼ë¦¬ ìˆ˜í–‰
+			// (4´Ü°è) SQl¹® ½ÇÇà ¹× °á°úÃ³¸® => executeUpdate : »ğÀÔ(insert/update/delete)
+			rs = pstmt.executeQuery(); // Äõ¸® ¼öÇà
 			while (rs.next()) {
 				BoardVo bVo = new BoardVo();
-				// ë””ë¹„ë¡œë¶€í„° íšŒì›ì •ë³´ íšë“
+				// µğºñ·ÎºÎÅÍ È¸¿øÁ¤º¸ È¹µæ
 				bVo.setNum(rs.getInt("num"));
-				bVo.setName(rs.getString("name")); // DBì—ì„œ ê°€ì ¸ì˜¨ ê°ì²´ë¥¼ pVoê°ì²´ì— ì €ì¥
+				bVo.setName(rs.getString("name")); // DB¿¡¼­ °¡Á®¿Â °´Ã¼¸¦ pVo°´Ã¼¿¡ ÀúÀå
 				bVo.setEmail(rs.getString("email"));
 				bVo.setPass(rs.getString("pass"));
 				bVo.setTitle(rs.getString("title"));
@@ -108,7 +108,7 @@ public class BoardDao {
 				bVo.setReadcount(rs.getInt("readcount"));
 				bVo.setWritedate(rs.getTimestamp("writedate"));
 				/* System.out.println(pVo); */
-				list.add(bVo); // list ê°ì²´ì— ë°ì´í„° ì¶”ê°€
+				list.add(bVo); // list °´Ã¼¿¡ µ¥ÀÌÅÍ Ãß°¡
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -118,11 +118,11 @@ public class BoardDao {
 		return list;
 	}
 	
-	// ê²Œì‹œë¬¼ ìˆ˜ ì¡°íšŒ
+	// °Ô½Ã¹° ¼ö Á¶È¸
 	public int getBoardCount() {
 		return getBoardCount("");
 	}
-	// íŠ¹ì • ì»¬ëŸ¼ì˜ í‚¤ì›Œë“œë¥¼ í†µí•´ ê²Œì‹œë¬¼ ìˆ˜ ì¡°íšŒ
+	// Æ¯Á¤ ÄÃ·³ÀÇ Å°¿öµå¸¦ ÅëÇØ °Ô½Ã¹° ¼ö Á¶È¸
 	public int getBoardCount(String keyword) {
 		int count=0;
 		String sql = "select count(num) as count from ( "
@@ -132,16 +132,16 @@ public class BoardDao {
 		
 		Connection conn = null;
 		ResultSet rs = null;
-		PreparedStatement pstmt = null; // ë™ì  ì¿¼ë¦¬
+		PreparedStatement pstmt = null; // µ¿Àû Äõ¸®
 
 		try {
 			conn = DBManager.getConnection();
-			// (3ë‹¨ê³„) Statement ê°ì²´ ìƒì„±
+			// (3´Ü°è) Statement °´Ã¼ »ı¼º
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, "%"+keyword+"%");
 			
-			// (4ë‹¨ê³„) SQlë¬¸ ì‹¤í–‰ ë° ê²°ê³¼ì²˜ë¦¬ => executeUpdate : ì‚½ì…(insert/update/delete)
-			rs = pstmt.executeQuery(); // ì¿¼ë¦¬ ìˆ˜í–‰
+			// (4´Ü°è) SQl¹® ½ÇÇà ¹× °á°úÃ³¸® => executeUpdate : »ğÀÔ(insert/update/delete)
+			rs = pstmt.executeQuery(); // Äõ¸® ¼öÇà
 			if(rs.next()) {
 				count = rs.getInt("count");
 			}
@@ -153,7 +153,7 @@ public class BoardDao {
 		return count;
 	}
 	
-	// ê²Œì‹œë¬¼ ë²ˆí˜¸ë¡œ íŠ¹ì • ê²Œì‹œë¬¼ ë‹¤ìŒ ê²Œì‹œë¬¼ ë°ì´í„° ì¡°íšŒ
+	// °Ô½Ã¹° ¹øÈ£·Î Æ¯Á¤ °Ô½Ã¹° ´ÙÀ½ °Ô½Ã¹° µ¥ÀÌÅÍ Á¶È¸
 	public BoardVo getNextBoard(int num) {
 		BoardVo bVo = null;
 		return bVo;
