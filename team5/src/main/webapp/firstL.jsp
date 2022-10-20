@@ -11,7 +11,7 @@
 <body onload="loaded()" onkeydown="keydown()" onkeyup="keyup()">
 <div style="flex: 80%;" >
 
-   <canvas width="884px"height="909px" id="c1"></canvas>
+   <canvas width="896px"height="909px" id="c1"></canvas>
    <div>
             <script>
            
@@ -27,7 +27,7 @@
            var imgChar= new Image();
            imgChar.src="./ms18.png";
            var imgBg= new Image();
-           imgBg.src="./bg4.png";
+           imgBg.src="./BG1.png";
     		
            // 플레이어 캐릭터의 중심좌표
            var x=800, y=850; //캐릭터의 위치좌표
@@ -65,7 +65,7 @@
            
                  function drawAll(){
                //배경 그리기
-               context.drawImage(imgBg,0,0,884,909);
+               context.drawImage(imgBg,0,0,896,909);
                //context.drawImage(imgBg,0,0,800,500);
                //플레이어 그리기
                context.drawImage(imgChar,x-w,y-h,w*2,h*2);
