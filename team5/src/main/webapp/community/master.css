@@ -1,0 +1,153 @@
+* {
+  margin: 0;
+}
+
+nav {
+  background-color: green;
+  display: flex;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+ul {
+  display: block;
+  padding-inline-start: 0px
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  vertical-align: top;
+}
+
+.box__mytools {
+  /* background-color:skyblue; */ 
+  float:right;
+  text-decoration: none;
+  margin: 10px;
+  font-size: 18px;
+  color: #777;
+  padding: 0;
+}
+
+.box__mytools .input_submit {
+	border:none;
+	background: white;
+	cursor:pointer
+}
+.box__mytools .input_button {
+	border:none;
+	background: white;
+	cursor:pointer
+}
+.box__mytools .mypage {
+	color: black;
+}
+.box__mytools .basket {
+	color: black;
+}
+
+
+.list-item {
+  display: inline-block;
+  margin-left: 25px;
+  margin-bottom: 10px;
+  /* vertical-align: top; */
+}
+.list-item__1depth {
+  width: 224px;
+}
+
+.box__best .box__item .link__item {
+  color: black;
+}
+
+.box__best .box__item .link__item .box__image {
+  width: 224px;
+  height: 224px;
+}
+
+.box__best .box__item .link__item .box__image .image {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.box__best .box__item .link__item .box__information {
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.box__best .box__item .link__item .box__information .text__name {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 14px;
+  width: 224px;
+  /* 글자간격 */
+  letter-spacing: -0.4px;
+  /* 요소의 최대 너비 */
+  /* max-width: 100%; */
+  /* 지정한 라인수보다 글자가 많으면 생략 */
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  /* 테두리를 포함한 크기를 지정 */
+  /* box-sizing: border-box; */
+  /* 내용이 넘치면 감추기 */
+  overflow: hidden;
+}
+
+.box__best .box__item .link__item .box__information .box__price {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.box__today .box__item .link__item {
+  color: black;
+}
+
+.box__today .box__item .link__item .box__image {
+  width: 224px;
+  height: 224px;
+}
+
+.box__today .box__item .link__item .box__image .image {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.box__today .box__item .link__item .box__information {
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.box__today .box__item .link__item .box__information .text__name {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 14px;
+  width: 224px;
+  /* 글자간격 */
+  letter-spacing: -0.4px;
+  /* 요소의 최대 너비 */
+  /* max-width: 100%; */
+  /* 지정한 라인수보다 글자가 많으면 생략 */
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  /* 테두리를 포함한 크기를 지정 */
+  /* box-sizing: border-box; */
+  /* 내용이 넘치면 감추기 */
+  overflow: hidden;
+}
+
+.box__today .box__item .link__item .box__information .box__price {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 16px;
+}

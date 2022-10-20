@@ -119,6 +119,9 @@ ul, li {
 		<header>
 
 			<div id="info">
+				<div>
+					<a href="commList.do"> 커뮤니티 </a> &nbsp;|&nbsp;
+				</div>
 				<div id="updateProf">
 					<a href="updateMember.do?userId=${loginUser.userid}">개인정보수정</a>
 				</div>
