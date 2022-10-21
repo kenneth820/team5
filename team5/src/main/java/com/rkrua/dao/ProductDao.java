@@ -311,15 +311,17 @@ public class ProductDao {
 	}
 	public int getProductCount(String userid, int category,String keyword) {
 		int count=0;
-		String sql = "select count(*) as count from ( select rownum n, b.* "
+		String sql = "select count(*) as count from ( "
+				+ "				select rownum n, b.* "
 				+ "				from (select  * "
 				+ "    from product p "
 				+ "    left outer join item i "
 				+ "        on i.code = p.code "
 				+ "        and i.userid = ? "
 				+ "        where i.code is null "
-				+ "        and name like  ? "
-				+ "        and category like ?) b)" ;
+				+ "        and category like ?' "
+				+ "        and name like ? ) b "
+				+ "				)";
 		
 		Connection conn = null;
 		ResultSet rs = null;

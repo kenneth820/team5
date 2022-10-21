@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.rkrua.dto.CartVo;
 import com.rkrua.dto.ItemVo;
+import com.rkrua.dto.ProductVo;
 import com.rkrua.util.DBManager;
 
 public class ItemDao {
@@ -48,16 +49,32 @@ public class ItemDao {
 	}
 	
 	// 아이템 리스트 얻기
-	public List<ItemVo> getItemList(String userid) {
-		String sql = "select  p.code "
-				+ "    ,   p.pictureurl "
-				+ "    ,   p.coordinate "
-				+ "    ,   p.reg_date "
+	
+	// 아이템 분류
+	public List<ItemVo> getItemList(){
+		return getItemList("",00, 1);
+	}
+	// 페이지 별 리스트 표시
+	public List<ItemVo> getItemList(int page){
+		return getItemList("",00,page);
+	}
+	public List<ItemVo> getItemList(int category,int page){
+		return getItemList("",category,page);
+	}
+
+	public List<ItemVo> getItemList(String userid, int category, int page) {
+		String sql = "select * from ( "
+				+ "				select rownum n, b.* "
+				+ "				from ( "
+				+ "    select  * "
 				+ "    from product p "
 				+ "    left outer join item i "
 				+ "        on i.code = p.code "
 				+ "        and i.userid = ? "
-				+ "        where i.code is null";
+				+ "        where i.code is not null "
+				+ "        and category like ?) b "
+				+ "				) "
+				+ "				where n between ? and ? ";
 
 		List<ItemVo> list = new ArrayList<ItemVo>(); // 리스트 컬렉션 객체 생성
 //		System.out.println(userid);
@@ -70,6 +87,10 @@ public class ItemDao {
 			// (3단계) Statement 객체 생성
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userid);
+			pstmt.setString(2, "%"+category+"%");
+			pstmt.setInt(3, 1+(page-1)*9);
+			pstmt.setInt(4, page * 9);
+
 
 			// (4단계) SQl문 실행 및 결과처리 => executeUpdate : 삽입(insert/update/delete)
 			rs = pstmt.executeQuery(); // 쿼리 수행
@@ -77,10 +98,13 @@ public class ItemDao {
 				ItemVo iVo = new ItemVo();
 				// 디비로부터 회원정보 획득
 		
+				iVo.setName(rs.getString("name"));
+				iVo.setCategory(rs.getInt("category"));
 				iVo.setCode(rs.getInt("code"));
-				iVo.setUserid(rs.getString("username"));
+				iVo.setUserid(rs.getString("userid"));
 				iVo.setCoordinate(rs.getString("coordinate")); // DB에서 가져온 객체를 pVo객체에 저장
 				iVo.setPictureurl(rs.getString("pictureurl"));
+				iVo.setEquip(rs.getInt("equip"));
 				/* System.out.println(pVo); */
 				list.add(iVo); // list 객체에 데이터 추가
 			}
@@ -141,6 +165,48 @@ public class ItemDao {
 		return result;
 
 	}
-	
+	// 게시물 수 조회
+	public int getItemCount() {
+		return getItemCount("",00);
+	}
+	public int getItemCount(int category) {
+		return getItemCount("",category);
+	}
+	public int getItemCount(String userid, int category) {
+		int count=0;
+		String sql = "select count(*) as count from ( "
+				+ "				select rownum n, b.* "
+				+ "				from (select  * "
+				+ "    from product p "
+				+ "    left outer join item i "
+				+ "        on i.code = p.code "
+				+ "        and i.userid = ? "
+				+ "        where i.code is not null "
+				+ "        and category like ? ) b "
+				+ "				)";
+		
+		Connection conn = null;
+		ResultSet rs = null;
+		PreparedStatement pstmt = null; // 동적 쿼리
+
+		try {
+			conn = DBManager.getConnection();
+			// (3단계) Statement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userid);
+			pstmt.setString(2, "%"+category+"%");
+			
+			// (4단계) SQl문 실행 및 결과처리 => executeUpdate : 삽입(insert/update/delete)
+			rs = pstmt.executeQuery(); // 쿼리 수행
+			if(rs.next()) {
+				count = rs.getInt("count");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		return count;
+	}
 
 }

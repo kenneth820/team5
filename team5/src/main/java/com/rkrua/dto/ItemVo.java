@@ -2,11 +2,26 @@ package com.rkrua.dto;
 
 public class ItemVo {
 	String userid;
+	String name;
 	int code;
+	int category;
 	String pictureurl;
 	String coordinate;
 	int equip;
 	
+	
+	public int getCategory() {
+		return category;
+	}
+	public void setCategory(int category) {
+		this.category = category;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	public String getUserid() {
 		return userid;
 	}
