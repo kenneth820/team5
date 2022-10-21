@@ -2,9 +2,19 @@
   margin: 0;
 }
 
-nav {
-  background-color: green;
-  display: flex;
+nav{
+	display:flex;
+	height: 75px;
+	padding:0 0 40px 40px;
+	z-index: 20;
+	min-width:558px;
+	border-bottom: 3px solid black;
+}
+
+nav div{
+	display: flex;
+	width:100%;
+	height: 75px;
 }
 
 ul, ol {
@@ -20,6 +30,9 @@ a {
   text-decoration: none;
 }
 
+a:visited{
+	color: black;
+}
 img {
   vertical-align: top;
 }
@@ -28,6 +41,7 @@ img {
   /* background-color:skyblue; */ 
   float:right;
   text-decoration: none;
+  width:52%;
   margin: 10px;
   font-size: 18px;
   color: #777;
@@ -87,17 +101,17 @@ img {
   text-align: center;
   font-size: 14px;
   width: 224px;
-  /* 글자간격 */
+  /* 湲��옄媛꾧꺽 */
   letter-spacing: -0.4px;
-  /* 요소의 최대 너비 */
+  /* �슂�냼�쓽 理쒕� �꼫鍮� */
   /* max-width: 100%; */
-  /* 지정한 라인수보다 글자가 많으면 생략 */
+  /* 吏��젙�븳 �씪�씤�닔蹂대떎 湲��옄媛� 留롮쑝硫� �깮�왂 */
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
-  /* 테두리를 포함한 크기를 지정 */
+  /* �뀒�몢由щ�� �룷�븿�븳 �겕湲곕�� 吏��젙 */
   /* box-sizing: border-box; */
-  /* 내용이 넘치면 감추기 */
+  /* �궡�슜�씠 �꽆移섎㈃ 媛먯텛湲� */
   overflow: hidden;
 }
 
@@ -132,17 +146,17 @@ img {
   text-align: center;
   font-size: 14px;
   width: 224px;
-  /* 글자간격 */
+  /* 湲��옄媛꾧꺽 */
   letter-spacing: -0.4px;
-  /* 요소의 최대 너비 */
+  /* �슂�냼�쓽 理쒕� �꼫鍮� */
   /* max-width: 100%; */
-  /* 지정한 라인수보다 글자가 많으면 생략 */
+  /* 吏��젙�븳 �씪�씤�닔蹂대떎 湲��옄媛� 留롮쑝硫� �깮�왂 */
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
-  /* 테두리를 포함한 크기를 지정 */
+  /* �뀒�몢由щ�� �룷�븿�븳 �겕湲곕�� 吏��젙 */
   /* box-sizing: border-box; */
-  /* 내용이 넘치면 감추기 */
+  /* �궡�슜�씠 �꽆移섎㈃ 媛먯텛湲� */
   overflow: hidden;
 }
 
@@ -150,4 +164,143 @@ img {
   margin-top: 10px;
   text-align: center;
   font-size: 16px;
+}
+
+.slides {
+    padding: 0;
+    width: 100%;
+    height: 500px;
+    display: flex;
+    min-width: 534px;
+    z-index: 9;
+    margin: 0;
+    position: relative;
+}
+
+.slides * {
+    user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
+.slides input { display: none; }
+
+.slide-container { display: block; }
+
+.slide {
+    top: 0;
+    opacity: 0;
+    width: 75%;
+    height: 500px;
+    display: flex;
+    justify-content:center;
+    margin: 0 12.5%;
+    position: absolute;
+
+    transition: all .8s ease-in-out;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+}
+
+.nav label {
+    width: 12.5%;
+    height: 100%;
+    display: none;
+    position: absolute;
+
+    opacity: 0;
+    z-index: 9;
+    cursor: pointer;
+
+    transition: opacity .0s;
+
+    color: #FFF;
+    font-size: 156pt;
+    text-align: center;
+    line-height: 380px;
+    font-family: "Varela Round", sans-serif;
+    background-color: rgba(0, 0, 0);
+}
+
+.slide:hover + .nav label { opacity: 1; }
+.nav label:hover { opacity: 1; }
+.nav .next { right: 0; }
+input:checked + .slide-container  .slide {
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
+}
+
+input:checked + .slide-container .nav label { display: block; }
+
+.nav-dots {
+  width: 100%;
+  bottom: 9px;
+  height: 11px;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  text-align: center;
+}
+
+.nav-dots .nav-dot {
+  top: -5px;
+  width: 11px;
+  height: 11px;
+  margin: 0 4px;
+  position: relative;
+  border-radius: 100%;
+  display: inline-block;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.nav-dots .nav-dot:hover {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+input#img-1:checked ~ .nav-dots label#img-dot-1,
+input#img-2:checked ~ .nav-dots label#img-dot-2,
+input#img-3:checked ~ .nav-dots label#img-dot-3,
+input#img-4:checked ~ .nav-dots label#img-dot-4,
+input#img-5:checked ~ .nav-dots label#img-dot-5,
+input#img-6:checked ~ .nav-dots label#img-dot-6 {
+  background: rgba(120, 200, 120);
+}
+
+.logo_img{
+	width:100%;
+	height:100%;
+	margint-top:5px;
+}
+#logo_img{
+	width:10%;
+}
+
+#Search{
+    width: 100%;
+    height: 58px;
+    font-size: 20px;
+    border: 1px solid blue;
+    position: relative;
+    bottom: -10px;
+
+}
+
+#submit {
+	width: 10%;
+    height: 50px;
+    position: relative;
+    bottom: -15px;
+    left: 10px;
+}
+
+#SearchForm {
+	width:85%;
+	display:flex;
 }

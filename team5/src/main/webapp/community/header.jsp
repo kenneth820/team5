@@ -18,9 +18,6 @@
 </head>
 <body>
     <header>
-        <div class="box__logo" style="display: inline-block;">
-            <img src="./image/comm/logo.png" width="240" height="145" margin="0" padding="0" alt="K마켓">
-        </div>
         <div class="box__mytools">
             <!-- 회원 인증된 사용자에게 제공하는 메인 페이지 -->
 			<form action="logout.do" method="get">
@@ -33,14 +30,13 @@
 							<input type="submit" class="input_submit" value="로그아웃">|
 							<input type="button" class="input_button" value="회원정보변경"
 								onclick="location.href='updateMember.do?userid=${loginUser.userid}'">|
-							<span class="mypage"><a href="#" title="나의 쇼핑정보">마이페이지</a></span>
+							<span class="mypage"><a href="main.jsp" title="쇼룸으로 이동">쇼룸 이동</a></span>
 				            &nbsp;|&nbsp;
-		            		<span class="basket"><a href="#" title="장바구니 이동">장바구니</a></span>
+		            		<span class="basket"><a href="productList.do" title="상점ㅇ">상점</a></span>
 						</td>
 					</tr>
 				</table>
 			</form>
-
 		</div>
     </header>
 </body>

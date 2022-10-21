@@ -22,25 +22,25 @@ public class WriteCommServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher dispatcher = 
 				request.getRequestDispatcher("community/writeComm.jsp");
-		dispatcher.forward(request, response);		// 포워드 방식으로 페이지 이동
+		dispatcher.forward(request, response);		// �룷�썙�뱶 諛⑹떇�쑝濡� �럹�씠吏� �씠�룞
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");		// post 방식 한글처리
+		request.setCharacterEncoding("UTF-8");		// post 諛⑹떇 �븳湲�泥섎━
 		response.setContentType("text/html; charset=UTF-8");
 		
 		CommunityDao cDao = CommunityDao.getInstance();
 		TrandVo tVo = new TrandVo();
 		
 		int result = -1;
-		// 파일 업로드 관련 정보
-		String savePath = "upload";
-		int uploadFileSizeLimit = 5 * 1024 * 1024;	// 파일 최대 업로드 크기(5M)
-		String encType = "UTF-8";					// 인코딩 방식
+		// �뙆�씪 �뾽濡쒕뱶 愿��젴 �젙蹂�
+		String savePath = "trand";
+		int uploadFileSizeLimit = 5 * 1024 * 1024;	// �뙆�씪 理쒕� �뾽濡쒕뱶 �겕湲�(5M)
+		String encType = "UTF-8";					// �씤肄붾뵫 諛⑹떇
 		
 		ServletContext context = getServletContext();
 		String uploadFilePath = context.getRealPath(savePath);
-		System.out.println("서버상의 실제 디렉토리: ");
+		System.out.println("�꽌踰꾩긽�쓽 �떎�젣 �뵒�젆�넗由�: ");
 		System.out.println(uploadFilePath);
 		
 		try {
@@ -61,17 +61,17 @@ public class WriteCommServlet extends HttpServlet {
 			result = cDao.insertTrand(tVo);
 			
 		} catch(Exception e) {
-			System.out.println("[상품 등록 예외 발생]: " + e);
+			System.out.println("[�긽�뭹 �벑濡� �삁�쇅 諛쒖깮]: " + e);
 		}
 		
 		if(result == 1) {
-			// 상품 등록 완료 시, 상품 코드를 저장
+			// �긽�뭹 �벑濡� �셿猷� �떆, �긽�뭹 肄붾뱶瑜� ���옣
 //			session.setAttribute("code", pVo.getCode());
-			System.out.println("상품 등록에 성공했습니다.");
-			request.setAttribute("message", "상품 등록에 성공했습니다.");			
+			System.out.println("�긽�뭹 �벑濡앹뿉 �꽦怨듯뻽�뒿�땲�떎.");
+			request.setAttribute("message", "�긽�뭹 �벑濡앹뿉 �꽦怨듯뻽�뒿�땲�떎.");			
 		} else {
-			System.out.println("상품 등록에 실패했습니다.");
-			request.setAttribute("message", "상품 등록에 실패했습니다.");
+			System.out.println("�긽�뭹 �벑濡앹뿉 �떎�뙣�뻽�뒿�땲�떎.");
+			request.setAttribute("message", "�긽�뭹 �벑濡앹뿉 �떎�뙣�뻽�뒿�땲�떎.");
 		}
 		response.sendRedirect("commList.do");
 
