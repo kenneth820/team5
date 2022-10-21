@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.rkrua.dto.ShowroomVo;
-import com.rkrua.dto.TrandVo;
+import com.rkrua.dto.TrendVo;
 import com.rkrua.util.DBManager;
 
 public class CommunityDao {
-	// 싱글톤
+	// �떛湲��넠
 	private CommunityDao() {		
 	}
 	private static CommunityDao instance = new CommunityDao();
@@ -20,11 +20,11 @@ public class CommunityDao {
 		return instance;
 	}
 	
-	// Create (insert) - 개인룸 등록
-	// 입력값 : 전체 개인룸 정보
-	// 반환값 : 쿼리 수행 결과
-	public int insertTrand(TrandVo tVo){
-		String sql = "insert into trand values(trand_seq.nextval, ?, ?)";
+	// Create (insert) - 媛쒖씤猷� �벑濡�
+	// �엯�젰媛� : �쟾泥� 媛쒖씤猷� �젙蹂�
+	// 諛섑솚媛� : 荑쇰━ �닔�뻾 寃곌낵
+	public int inserttrend(TrendVo tVo){
+		String sql = "insert into trand values(trend_seq.nextval, ?, ?)";
 		int result = -1;		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -46,9 +46,9 @@ public class CommunityDao {
 		return result;
 	}
 	
-	// 쇼룸 검색
+	// �눥猷� 寃��깋
 	public List<ShowroomVo> getShowroomList() {
-		// 최근 등록한 상품을 먼저 출력하기
+		// 理쒓렐 �벑濡앺븳 �긽�뭹�쓣 癒쇱� 異쒕젰�븯湲�
 		String sql = "select * from showroom order by code desc";
 		
 		List<ShowroomVo> list = new ArrayList<ShowroomVo>();
@@ -80,23 +80,23 @@ public class CommunityDao {
 		return list;		
 	}
 	
-	public List<TrandVo> getTrandList() {
-		return getTrandList("num", "", 1);		
+	public List<TrendVo> gettrendList() {
+		return gettrendList("num", "", 1);		
 	}
-	public List<TrandVo> getTrandList(int page) {
-		return getTrandList("num", "", page);		
+	public List<TrendVo> gettrendList(int page) {
+		return gettrendList("num", "", page);		
 	}
-	public List<TrandVo> getTrandList(String column, String keyword, int page){
+	public List<TrendVo> gettrendList(String column, String keyword, int page){
 //		System.out.println("keyword: "+ keyword + "column: "+ column);
-		List<TrandVo> list = new ArrayList<TrandVo>();
+		List<TrendVo> list = new ArrayList<TrendVo>();
 
 		String sql = "SELECT * FROM ("
 				+ "SELECT ROWNUM N, b.* "
 				+ "FROM (SELECT * FROM trand where "+column+" like ? order by num desc) b"
 				+ ") "
 				+ "WHERE   N BETWEEN ? AND ?";
-//		1, 11, 21, 31 => 등차수열 =>  an = 1+(page-1)*10
-//		등차수열의 n에 대한 식은 첫째항이 A, 공차가 B인 경우 =>  A + B(n-1)
+//		1, 11, 21, 31 => �벑李⑥닔�뿴 =>  an = 1+(page-1)*10
+//		�벑李⑥닔�뿴�쓽 n�뿉 ���븳 �떇�� 泥レ㎏�빆�씠 A, 怨듭감媛� B�씤 寃쎌슦 =>  A + B(n-1)
 //		10, 20, 30, 40 => page*10
 		
 		Connection conn = null;
@@ -113,7 +113,7 @@ public class CommunityDao {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				TrandVo tVo = new TrandVo();
+				TrendVo tVo = new TrendVo();
 
 				tVo.setNum(rs.getInt("num"));
 				tVo.setName(rs.getString("name"));
@@ -130,9 +130,9 @@ public class CommunityDao {
 		return list;
 	}
 
-	// 게시글 개수 획득
+	// 寃뚯떆湲� 媛쒖닔 �쉷�뱷
 	public int getShowroomCount() {
-		// 집계하는 값만 필요
+		// 吏묎퀎�븯�뒗 媛믩쭔 �븘�슂
 		String sql = "select COUNT(code) count from showroom order by code desc";
 		
 		int count = 0;
@@ -157,15 +157,15 @@ public class CommunityDao {
 		return count;
 	}
 
-	// 게시글 개수 획득
-	public int getTrandCount() {
-		return getTrandCount("num", "");
+	// 寃뚯떆湲� 媛쒖닔 �쉷�뱷
+	public int gettrendCount() {
+		return gettrendCount("num", "");
 	}
-	// 특정 컬럼의 키워드를 통해 게시물 수 조회
-	public int getTrandCount(String column, String keyword) {
+	// �듅�젙 而щ읆�쓽 �궎�썙�뱶瑜� �넻�빐 寃뚯떆臾� �닔 議고쉶
+	public int gettrendCount(String column, String keyword) {
 		System.out.println("keyword: "+ keyword);
 		System.out.println("column: "+ column);
-		// 집계하는 값만 필요
+		// 吏묎퀎�븯�뒗 媛믩쭔 �븘�슂
 		String sql = "SELECT COUNT(num) count FROM ("
 				+ "    SELECT ROWNUM N, b.* "
 				+ "    FROM (SELECT * FROM trand WHERE "+column+" like ? order by num desc) b"

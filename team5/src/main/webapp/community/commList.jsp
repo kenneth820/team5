@@ -31,17 +31,6 @@
 </nav>
 
 <!-- ======================= -->
-<!-- 방 등록 기능 구현 -->
-<div id="wrap" align="center">
-	<table class="list">
-		<tr>
-			<td colspan="7" style="border:white; text-align:right; padding-right:20px">
-				<a href="writeComm.do">트랜드 등록</a>
-			</td>
-		</tr>
-	</table>
-</div>
-
 <!-- 섹션(리스트) 영역 구현 -->
 <jsp:include page="section.jsp"></jsp:include> 
 

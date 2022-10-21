@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.rkrua.dao.CommunityDao;
-import com.rkrua.dto.TrandVo;
+import com.rkrua.dto.TrendVo;
 
 @WebServlet("/writeComm.do")
 public class WriteCommServlet extends HttpServlet {
@@ -30,11 +30,11 @@ public class WriteCommServlet extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		
 		CommunityDao cDao = CommunityDao.getInstance();
-		TrandVo tVo = new TrandVo();
+		TrendVo tVo = new TrendVo();
 		
 		int result = -1;
 		// �뙆�씪 �뾽濡쒕뱶 愿��젴 �젙蹂�
-		String savePath = "trand";
+		String savePath = "trend";
 		int uploadFileSizeLimit = 5 * 1024 * 1024;	// �뙆�씪 理쒕� �뾽濡쒕뱶 �겕湲�(5M)
 		String encType = "UTF-8";					// �씤肄붾뵫 諛⑹떇
 		
@@ -58,7 +58,7 @@ public class WriteCommServlet extends HttpServlet {
 			tVo.setName(name);
 			tVo.setPictureUrl(pictureUrl);
 
-			result = cDao.insertTrand(tVo);
+			result = cDao.inserttrend(tVo);
 			
 		} catch(Exception e) {
 			System.out.println("[�긽�뭹 �벑濡� �삁�쇅 諛쒖깮]: " + e);

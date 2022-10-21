@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.rkrua.dao.CommunityDao;
 import com.rkrua.dto.ShowroomVo;
-import com.rkrua.dto.TrandVo;
+import com.rkrua.dto.TrendVo;
 
 @WebServlet("/commList.do")
 public class CommListServlet extends HttpServlet {
@@ -21,17 +21,17 @@ public class CommListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		CommunityDao cDao = CommunityDao.getInstance();
 		
-		// 기본 값 설정
-		String column = "code"; // 검색 대상(분야)
-		String keyword = "";	// 검색 내용(검색어)
-		int page = 1;			// 페이지 번호
+		// 湲곕낯 媛� �꽕�젙
+		String column = "code"; // 寃��깋 ���긽(遺꾩빞)
+		String keyword = "";	// 寃��깋 �궡�슜(寃��깋�뼱)
+		int page = 1;			// �럹�씠吏� 踰덊샇
 
-		// 키워드가 비어 있는 경우를 대비하여 컬럼과 키워드 값 임시 저장
+		// �궎�썙�뱶媛� 鍮꾩뼱 �엳�뒗 寃쎌슦瑜� ��鍮꾪븯�뿬 而щ읆怨� �궎�썙�뱶 媛� �엫�떆 ���옣
 		String t_column = request.getParameter("column");
 		String t_keyword = request.getParameter("keyword");
 		String t_page = request.getParameter("p");
 				
-		// null 값이 아닌 경우, 
+		// null 媛믪씠 �븘�땶 寃쎌슦, 
 		if(t_column != null && !t_column.equals("")) {
 			column = t_column;
 		}
@@ -42,24 +42,24 @@ public class CommListServlet extends HttpServlet {
 			page = Integer.parseInt(t_page);
 		}
 		
-		// 모든 상품 리스트를 디비로 부터 조회하고 출력 
+		// 紐⑤뱺 �긽�뭹 由ъ뒪�듃瑜� �뵒鍮꾨줈 遺��꽣 議고쉶�븯怨� 異쒕젰 
 		List<ShowroomVo> showroomList = cDao.getShowroomList();
 		int showCount = cDao.getShowroomCount();
 
 		request.setAttribute("showroomList", showroomList);
 		request.setAttribute("showCount", showCount);
 		
-		// 기본 값 설정
-		column = "num"; // 검색 대상(분야)
-		keyword = "";	// 검색 내용(검색어)
-		page = 1;			// 페이지 번호
+		// 湲곕낯 媛� �꽕�젙
+		column = "num"; // 寃��깋 ���긽(遺꾩빞)
+		keyword = "";	// 寃��깋 �궡�슜(寃��깋�뼱)
+		page = 1;			// �럹�씠吏� 踰덊샇
 
-		// 키워드가 비어 있는 경우를 대비하여 컬럼과 키워드 값 임시 저장
+		// �궎�썙�뱶媛� 鍮꾩뼱 �엳�뒗 寃쎌슦瑜� ��鍮꾪븯�뿬 而щ읆怨� �궎�썙�뱶 媛� �엫�떆 ���옣
 		t_column = request.getParameter("column");
 		t_keyword = request.getParameter("keyword");
 		t_page = request.getParameter("p");
 				
-		// null 값이 아닌 경우, 
+		// null 媛믪씠 �븘�땶 寃쎌슦, 
 		if(t_column != null && !t_column.equals("")) {
 			column = t_column;
 		}
@@ -70,16 +70,16 @@ public class CommListServlet extends HttpServlet {
 			page = Integer.parseInt(t_page);
 		}
 		
-		List<TrandVo> trandList = cDao.getTrandList(column, keyword, page);
-		int Trandcount = cDao.getTrandCount(column, keyword);
+		List<TrendVo> trendList = cDao.gettrendList(column, keyword, page);
+		int trendcount = cDao.gettrendCount(column, keyword);
 		
-		request.setAttribute("trandList", trandList);
-		request.setAttribute("Trandcount", Trandcount);
+		request.setAttribute("trendList", trendList);
+		request.setAttribute("trendcount", trendcount);
 		
 		String url = "community/commList.jsp";
 		RequestDispatcher dispatcher = 
 				request.getRequestDispatcher(url);
-		dispatcher.forward(request, response);		// 포워드 방식으로 페이지 이동		
+		dispatcher.forward(request, response);		// �룷�썙�뱶 諛⑹떇�쑝濡� �럹�씠吏� �씠�룞		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

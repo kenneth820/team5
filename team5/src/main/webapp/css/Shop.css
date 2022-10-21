@@ -288,3 +288,10 @@ a {
 	width:100%;
 	margin:0 auto;
 }
+#item_section{
+	width:100%;
+display: flex;
+flex-direction: column;
+z-index: 20;
+min-width:558px;
+}

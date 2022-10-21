@@ -32,7 +32,14 @@
 								onclick="location.href='updateMember.do?userid=${loginUser.userid}'">|
 							<span class="mypage"><a href="main.jsp" title="쇼룸으로 이동">쇼룸 이동</a></span>
 				            &nbsp;|&nbsp;
-		            		<span class="basket"><a href="productList.do" title="상점ㅇ">상점</a></span>
+							<!-- 방 등록 기능 구현 -->
+							<span class="mypage"><a href="writeComm.do">글 쓰기</a></span>
+							&nbsp;|&nbsp;
+		            		<span class="basket"><a href="productList.do" title="상점">상점</a></span>
+		            		<div id="wrap" align="center">
+			</table>
+</div>
+		            		
 						</td>
 					</tr>
 				</table>

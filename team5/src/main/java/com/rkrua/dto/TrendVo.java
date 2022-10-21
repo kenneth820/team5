@@ -1,6 +1,6 @@
 package com.rkrua.dto;
 
-public class TrandVo {
+public class TrendVo {
 	private int num;
 	private String name;
 	private String pictureUrl;

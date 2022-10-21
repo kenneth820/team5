@@ -41,11 +41,12 @@ img {
   /* background-color:skyblue; */ 
   float:right;
   text-decoration: none;
-  width:52%;
+  width:60%;
   margin: 10px;
   font-size: 18px;
   color: #777;
   padding: 0;
+  min-width: 720px;
 }
 
 .box__mytools .input_submit {
@@ -70,6 +71,7 @@ img {
   display: inline-block;
   margin-left: 25px;
   margin-bottom: 10px;
+  width:30%;
   /* vertical-align: top; */
 }
 .list-item__1depth {
@@ -81,7 +83,7 @@ img {
 }
 
 .box__best .box__item .link__item .box__image {
-  width: 224px;
+  width: 30%;
   height: 224px;
 }
 
@@ -100,7 +102,7 @@ img {
   margin-top: 10px;
   text-align: center;
   font-size: 14px;
-  width: 224px;
+  width: 100%;
   /* 湲��옄媛꾧꺽 */
   letter-spacing: -0.4px;
   /* �슂�냼�쓽 理쒕� �꼫鍮� */
@@ -126,7 +128,7 @@ img {
 }
 
 .box__today .box__item .link__item .box__image {
-  width: 224px;
+  width: 100%;
   height: 224px;
 }
 
@@ -166,6 +168,9 @@ img {
   font-size: 16px;
 }
 
+.box__today {
+	padding-top:8%;
+}
 .slides {
     padding: 0;
     width: 100%;

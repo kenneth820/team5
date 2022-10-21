@@ -45,31 +45,38 @@
 		</c:forEach>
         </li>
     </ul>
-    <section class="section__container3__main-today" style="background-color:olivedrab">
-      container3: 본문 오늘의 트랜드
+
+    <section class="section__container3__main-today">
       <div class="box__today">
         <h2 class="text__title">
-          <span class="text">오늘의 트랜드</span>
+          <span class="text">오늘의 트렌드</span>
         </h2>
         <div class="box__item">
           <ul class="list__item">
-          	<c:forEach var="trand" items="${trandList}">
+          	<c:forEach var="trend" items="${trendList}">
+		    <!-- <form action="commenttrend" > -->
             <li class="list-item">
+              <div class="box__information">
+                <div class="text__name">
+                  <%-- ${trend.username} --%>
+                </div>
+              </div>
               <a href="#" class="link__item">
                 <div class="box__image">
-                  <img src="./image/comm/${trand.pictureUrl}" alt="트랜드룸" class="image">
+                  <img src="./image/comm/${trend.pictureUrl}" alt="트랜드룸" class="image">
                 </div>
-                <div class="box__information">
-                  <div class="text__name">
-                    ${trand.name}
-                  </div>
+                <%-- <div>${trend.userpictureurl}</div> --%>
+                <div>${trend.name}<br>
+                	${trend.name}
                 </div>
+                <div>${loginUser.name} 댓글 1</div>
+                <div>${loginUser.name} 댓글 2</div>
+                <input type="text">
+                <input type="submit">
               </a>
             </li>
+		    <!-- </form> -->
             </c:forEach>
-
-            <li class="list-item"><a href="#" class="link__item"></a></li>
-            <li class="list-item"><a href="#" class="link__item"></a></li>
           </ul>
         </div>
       </div>

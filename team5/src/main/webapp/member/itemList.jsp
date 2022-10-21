@@ -57,8 +57,8 @@
     <h2> 아이템이 존재하지 않습니다.</h2>
     </c:if>
     	<div class="shop_Form">
-	   		<c:forEach var="item" items="${itemList}">
 		        <ul class="item_list">
+			   		<c:forEach var="item" items="${itemList}">
 		            <li class="items"> 
 		                <div class="flip">  
 		                    <div class="card">
