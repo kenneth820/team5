@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -122,13 +123,17 @@ ul, li {
 				<div>
 					<a href="commList.do"> 커뮤니티 </a> &nbsp;|&nbsp;
 				</div>
-				<div id="updateProf">
-					<a href="updateMember.do?userId=${loginUser.userid}">개인정보수정</a>
-				</div>
-				<div id="Logout">
-					<a href="logout.do">로그아웃</a>
-				</div>
-			</div>
+<%-- 				<c:if test=${(!empty showroom.userid)?loginUser.userid:showroom.userid}>
+					<c:if test="${loginUser.userid == showroom.userid}">
+ --%>						<div id="updateProf">
+							<a href="updateMember.do?userId=${loginUser.userid}">개인정보수정</a>
+						</div>
+						<div id="Logout">
+							<a href="logout.do">로그아웃</a>
+						</div>
+<%-- 					</c:if>
+				</c:if>
+ --%>			</div>
 
 			<div class="user-info">
 				<img class="profilePhoto" src="./prof_img.png" alt="기본프로필사진">

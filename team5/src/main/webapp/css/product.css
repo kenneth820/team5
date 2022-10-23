@@ -62,6 +62,17 @@ li {
 	display:inline;
 	padding-left: 10px;
 }
+.items {
+	display:inline-block;
+	margin:8px;
+	width:30%;
+}
 #nowP{
 	color: white;
+}
+
+#update {
+	border-color:white;
+    background-color: cornflowerblue;
+    color:white;
 }

@@ -185,35 +185,30 @@
 						</c:when>
 						<c:otherwise>
 							<c:if test="${startNum+4 > endNum}">
-									<c:forEach var="i" begin="${startNum}" end="${endNum}">
-										<li>
-											<a style="color:${(page==(i))?'cornflowerblue':''}" href="?p=${i}&k=${param.k}&c=${category}">${i}</a>
-										</li>
-									</c:forEach>
+								<c:forEach var="i" begin="${startNum}" end="${endNum}">
+									<li>
+										<a style="color:${(page==(i))?'cornflowerblue':''}" href="?p=${i}&k=${param.k}&c=${category}">${i}</a>
+									</li>
+								</c:forEach>
 							</c:if>
 							<c:if test="${startNum+4 <= endNum}">
-									<c:forEach var="i" begin="0" end="4">
-										<li>
-											<a style="color:${(page==(i+startNum))?'cornflowerblue':''}" href="?p=${i+startNum}&k=${param.k}&c=${category}">${i+startNum}</a>
-										</li>
-									</c:forEach>
+								<c:forEach var="i" begin="0" end="4">
+									<li>
+										<a style="color:${(page==(i+startNum))?'cornflowerblue':''}" href="?p=${i+startNum}&k=${param.k}&c=${category}">${i+startNum}</a>
+									</li>
+								</c:forEach>
 							</c:if>							
 						</c:otherwise>
 					</c:choose>
 					<c:if test="${page+2 < endNum}"> <!-- 더 넘어갈 페이지가 있는 경우 -->
 						<a class="btn btn-next" href="?p=${page+1}&k=${param.k}&c=${category}">
-							<li>
-							다음
-							</li>
+							<li>다음</li>
 						</a>
 					</c:if>
 					<c:if test="${page == endNum}"><li></li></c:if>
 				</ul>
-		</tr>
-</table>
-		
-
+			</tr>
+		</table>
     </section>
-    <footer style="border-color: grey;"> footer</footer>
 </body>
 </html>

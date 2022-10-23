@@ -9,37 +9,33 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.rkrua.dao.CommunityDao;
-import com.rkrua.dto.MemberVo;
-import com.rkrua.dto.TrendVo;
+import com.rkrua.dto.ShowroomVo;
 
-@WebServlet("/writeComm.do")
-public class WriteCommServlet extends HttpServlet {
+@WebServlet("/bestShowroom.do")
+public class BestShowroomServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher dispatcher = 
-				request.getRequestDispatcher("community/writeComm.jsp");
+				request.getRequestDispatcher("community/bestShowroom.jsp");
 		dispatcher.forward(request, response);		// �룷�썙�뱶 諛⑹떇�쑝濡� �럹�씠吏� �씠�룞
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");		// post 諛⑹떇 �븳湲�泥섎━
 		response.setContentType("text/html; charset=UTF-8");
 		
-		HttpSession session = request.getSession(); // 세션 객체 호출
-		MemberVo mVo = (MemberVo)session.getAttribute("loginUser");
-		
 		CommunityDao cDao = CommunityDao.getInstance();
-		TrendVo tVo = new TrendVo();
+		ShowroomVo sVo = new ShowroomVo();
 		
 		int result = -1;
 		// �뙆�씪 �뾽濡쒕뱶 愿��젴 �젙蹂�
-		String savePath = "trend";
+		String savePath = "showroom";
 		int uploadFileSizeLimit = 5 * 1024 * 1024;	// �뙆�씪 理쒕� �뾽濡쒕뱶 �겕湲�(5M)
 		String encType = "UTF-8";					// �씤肄붾뵫 諛⑹떇
 		
@@ -57,16 +53,13 @@ public class WriteCommServlet extends HttpServlet {
 					new DefaultFileRenamePolicy()
 				);
 			
-			String title = multi.getParameter("title");
+			String name = multi.getParameter("name");
 			String pictureUrl = multi.getFilesystemName("pictureUrl");
-			String text = multi.getParameter("text");
 			
-			tVo.setUserid(mVo.getUserid());
-			tVo.setTitle(title);
-			tVo.setPictureUrl(pictureUrl);
-			tVo.setText(text);
+			sVo.setName(name);
+			sVo.setPictureUrl(pictureUrl);
 
-			result = cDao.inserttrend(tVo);
+			result = cDao.insertShowroom(sVo);
 			
 		} catch(Exception e) {
 			System.out.println("[�긽�뭹 �벑濡� �삁�쇅 諛쒖깮]: " + e);
@@ -85,3 +78,4 @@ public class WriteCommServlet extends HttpServlet {
 
 	}
 }
+

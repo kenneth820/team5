@@ -24,7 +24,7 @@ public class CommunityDao {
 	// �엯�젰媛� : �쟾泥� 媛쒖씤猷� �젙蹂�
 	// 諛섑솚媛� : 荑쇰━ �닔�뻾 寃곌낵
 	public int inserttrend(TrendVo tVo){
-		String sql = "insert into trand values(trend_seq.nextval, ?, ?)";
+		String sql = "insert into trend values(trend_seq.nextval, ?, ?, ?, ?, ?)";
 		int result = -1;		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -33,8 +33,33 @@ public class CommunityDao {
 			conn = DBManager.getConnection();
 			
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, tVo.getName());
-			pstmt.setString(2, tVo.getPictureUrl());
+			pstmt.setString(1, tVo.getUserid());
+			pstmt.setString(2, tVo.getTitle());
+			pstmt.setString(3, tVo.getPictureUrl());
+			pstmt.setString(4, tVo.getText());
+			pstmt.setTimestamp(5, tVo.getWritedate());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt);
+		}
+		return result;
+	}
+	public int insertShowroom(ShowroomVo sVo) {
+		String sql = "insert into showroom values(showroom_seq.nextval, ?, ?)";
+		int result = -1;		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		try {			
+			conn = DBManager.getConnection();
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, sVo.getName());
+			pstmt.setString(2, sVo.getPictureUrl());
 			
 			result = pstmt.executeUpdate();
 			
@@ -46,6 +71,27 @@ public class CommunityDao {
 		return result;
 	}
 	
+	public void deleteShowroom(int code) {
+		String sql = "delete from showroom where code =?";
+		int result = -1;
+		Connection conn = null;
+		// 동일한 쿼리문을 특정 값만 바꿔서 여러번 실행해야 할 때, 매개변수가 많아서 쿼리문 정리 필요
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = DBManager.getConnection();
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, code);
+
+			result = pstmt.executeUpdate(); // 쿼리문 실행
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt);
+		}
+		
+	}
 	// �눥猷� 寃��깋
 	public List<ShowroomVo> getShowroomList() {
 		// 理쒓렐 �벑濡앺븳 �긽�뭹�쓣 癒쇱� 異쒕젰�븯湲�
@@ -92,7 +138,7 @@ public class CommunityDao {
 
 		String sql = "SELECT * FROM ("
 				+ "SELECT ROWNUM N, b.* "
-				+ "FROM (SELECT * FROM trand where "+column+" like ? order by num desc) b"
+				+ "FROM (SELECT * FROM trend where "+column+" like ? order by num desc) b"
 				+ ") "
 				+ "WHERE   N BETWEEN ? AND ?";
 //		1, 11, 21, 31 => �벑李⑥닔�뿴 =>  an = 1+(page-1)*10
@@ -116,7 +162,9 @@ public class CommunityDao {
 				TrendVo tVo = new TrendVo();
 
 				tVo.setNum(rs.getInt("num"));
-				tVo.setName(rs.getString("name"));
+				tVo.setUserid(rs.getString("userid"));
+				tVo.setTitle(rs.getString("title"));
+				tVo.setWritedate(rs.getTimestamp("writedate"));
 				tVo.setPictureUrl(rs.getString("pictureUrl"));
 				System.out.println(tVo);
 				
@@ -168,7 +216,7 @@ public class CommunityDao {
 		// 吏묎퀎�븯�뒗 媛믩쭔 �븘�슂
 		String sql = "SELECT COUNT(num) count FROM ("
 				+ "    SELECT ROWNUM N, b.* "
-				+ "    FROM (SELECT * FROM trand WHERE "+column+" like ? order by num desc) b"
+				+ "    FROM (SELECT * FROM trend WHERE "+column+" like ? order by num desc) b"
 				+ ") ";
 		
 		int count = 0;

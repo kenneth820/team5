@@ -1,7 +1,6 @@
 package com.rkrua.controller;
 
 import java.io.IOException;
-import java.sql.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -14,10 +13,9 @@ import javax.servlet.http.HttpSession;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+import com.rkrua.dao.ItemDao;
 import com.rkrua.dao.MemberDao;
-import com.rkrua.dao.ProductDao;
 import com.rkrua.dto.MemberVo;
-import com.rkrua.dto.ProductVo;
 
 @WebServlet("/updateMember.do")
 public class UpdateMemberServlet extends HttpServlet {

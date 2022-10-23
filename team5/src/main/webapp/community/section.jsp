@@ -15,13 +15,15 @@
 <body>
 <c:set var="startNum" value="${1}"></c:set>
 <c:set var="endNum" value="${showCount}"></c:set>
-
+	<h2>인기 쇼룸</h2>
     <ul class="slides">
   	<c:forEach var="showroom" items="${showroomList}" varStatus="status">
         <input type="radio" name="radio-btn" id="img-${status.count}" checked />
         <li class="slide-container">
             <div class="slide">
-                <img src="./image/comm/${showroom.pictureUrl}" />
+            	<a id=ShowroomId href="#">
+	                <img src="./image/comm/${showroom.pictureUrl}" />
+            	</a>
             </div>
             <div class="nav">
             <c:if test="${status.count==startNum}">

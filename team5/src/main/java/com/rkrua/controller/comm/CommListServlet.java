@@ -9,8 +9,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.rkrua.dao.CommunityDao;
+import com.rkrua.dto.MemberVo;
 import com.rkrua.dto.ShowroomVo;
 import com.rkrua.dto.TrendVo;
 
@@ -20,6 +22,8 @@ public class CommListServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		CommunityDao cDao = CommunityDao.getInstance();
+		HttpSession session = request.getSession(); // 세션 객체 호출
+		MemberVo mVo = (MemberVo)session.getAttribute("loginUser");
 		
 		// 湲곕낯 媛� �꽕�젙
 		String column = "code"; // 寃��깋 ���긽(遺꾩빞)
@@ -76,7 +80,14 @@ public class CommListServlet extends HttpServlet {
 		request.setAttribute("trendList", trendList);
 		request.setAttribute("trendcount", trendcount);
 		
-		String url = "community/commList.jsp";
+		String url;
+		// 커뮤니티 페이지로 이동
+		if (mVo.getAdmin()==1) {			
+			url = "board/boardList.jsp";
+		} else {
+			url = "community/commList.jsp";			
+		}
+
 		RequestDispatcher dispatcher = 
 				request.getRequestDispatcher(url);
 		dispatcher.forward(request, response);		// �룷�썙�뱶 諛⑹떇�쑝濡� �럹�씠吏� �씠�룞		

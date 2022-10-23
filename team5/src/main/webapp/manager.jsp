@@ -31,13 +31,13 @@
 		</p>
 	</div>
 </a>
-
+<a href="commList.do" id=white>
 	<div id=managermode>
 		<p style="position: relative; top:55px;" >
 		커뮤니티 관리
 		</p>
 	</div>
-
+</a>
 </div>
 </section>
 </div>

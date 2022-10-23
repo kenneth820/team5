@@ -7,15 +7,28 @@
 <head>
 <link rel="stylesheet" type="text/css" href="css/product.css">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>커뮤니티 관리자 페이지</title>
 </head>
 <body>
 <c:set var="page" value="${(empty param.p)?1:param.p}"></c:set>
 <c:set var="startNum" value="${(param.p==null or param.p <= 3)?1:param.p-2}"></c:set>
 <c:set var="endNum" value="${fn:substringBefore(Math.ceil(count/2), '.')}"></c:set>
+        <a href="manager.jsp">관리자 메인 페이지</a>
 <div id="wrap" align="center">
 <h2>게시글 리스트</h2>
+<a href="bestShowroom.do"><button id=update> Best 쇼룸 사진 등록</button></a>
 	<table class="list">
+		<tr>
+			<th>번호</th><th>제목</th><th>작성자</th><th>작성일</th>
+		</tr>
+		<c:forEach var="trend" items="${trendList}">
+			<tr>
+				<td>${trend.num}</td>
+				<td><a href="trendDetail.do?num=${trend.num}">${trend.title}</a></td>
+				<td>${trand.userid}</td>
+				<td>${trand.writedate}</td>
+			</tr>
+		</c:forEach>
 		<tr>
 			<td colspan="5" style="border:white; text-algin:right; padding-right:10px;">
 				<div class="search">
@@ -26,19 +39,6 @@
 				</div>
 			</td>
 		</tr>
-		<tr>
-			<th>번호</th><th>제목</th><th>작성자</th><th>작성일</th><th>조회</th>
-		</tr>
-		<c:forEach var="board" items="${boardList}">
-			<tr>
-				<td>${board.num}</td>
-				<td><a href="board?num=${board.num}">${board.title}</a></td>
-				<td>${board.name}</td>
-				<td>${board.writedate}</td>
-				<td>${board.readcount}</td>
-				
-			</tr>
-		</c:forEach>
 	</table>
 </div>
 
@@ -55,11 +55,6 @@
 <!-- 끝 번호 : lastNum -->
 <!-- lastNum = Math.ceil(전체게시물/보여줄 게시물 수) -->
 <!-- fn:substirngBefore(String1, String2) = String1을 String2 기준 앞부분만 자르기-->
-<div>게시물 총 개수 : ${count} </div>
-<div>페이지 번호 : ${page}</div>
-<div>페이지 시작번호 : ${startNum} </div>
-<div>페이지 끝번호 : ${endNum} </div>
-<div>페이지 번호2 : ${param.p}</div>
 <!-- 12345 -->
 <!-- 678910 -->
 
@@ -164,6 +159,38 @@
 <a href="?p=3">3</a>
 <a href="?p=4">4</a>
 <a href="?p=5">5</a> -->
-
+<section id=item_section>
+    <c:if test="${empty showroomList}">
+    	<h2> 쇼룸이 존재하지 않습니다.</h2>
+    </c:if>
+    	<div class="shop_Form">
+		        <ul class="item_list">
+			   		<c:forEach var="showroom" items="${showroomList}">
+		            <li class="items"> 
+		                <div class="flip">  
+		                    <div class="card">
+		                    <!-- 앞면 -->
+		                    <div class="front">
+                       			<c:choose>
+									<c:when test="${empty showroom.pictureUrl}">
+										<img src="image/noimage.jpg">
+									</c:when>
+									<c:otherwise>
+										<img src="./image/comm/${showroom.pictureUrl}">
+									</c:otherwise>
+								</c:choose>
+		                    </div>
+		                    <!-- 뒷면 -->
+		                    <div class="back">
+		                        <a href="deleteShowroom.do?code=${showroom.code}">
+		                        	<input id=update type="button" value="삭제하기">                 
+		                        </a>
+		                    </div>
+		                </div>
+		            </li>
+					</c:forEach> 
+	        	</ul>
+    	</div>
+</section>
 </body>
 </html>
