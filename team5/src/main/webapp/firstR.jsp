@@ -120,12 +120,9 @@ ul, li {
 		<header>
 
 			<div id="info">
-				<div>
-					<a href="commList.do"> 커뮤니티 </a> &nbsp;|&nbsp;
-				</div>
 <%-- 				<c:if test=${(!empty showroom.userid)?loginUser.userid:showroom.userid}>
 					<c:if test="${loginUser.userid == showroom.userid}">
- --%>						<div id="updateProf">
+--%>					<div id="updateProf">
 							<a href="updateMember.do?userId=${loginUser.userid}">개인정보수정</a>
 						</div>
 						<div id="Logout">
