@@ -52,13 +52,13 @@
                x+=dx;
                y+=dy;
                if(x>=700 && y<=300){
-            	   location.href = ("productList.do");
+                  location.href = ("productList.do");
                 }
-               if(x<=120  && y<=267){
-            	   console.log("왼쪽 위 문입니다!!!")
+               if(x<=274  && y<=387){
+                  location.href = ("commList.do");
                }
-               if(x<=115  && y>=620){
-            	   console.log("왼쪽 아래 문입니다!!!")
+               if(x<=196  && y>=753){
+                  location.href = ("itemList.do");
                }
                
            }
