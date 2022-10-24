@@ -25,7 +25,18 @@
         <li class="slide-container">
             <div class="slide">
             	<a id=ShowroomId href="#">
-	                <img src="showroom/${showroom.pictureUrl}" />
+	               	<c:choose>
+						<c:when test="${empty showroom.pictureUrl}">
+							<img src="upload/noimage.jpg">
+						</c:when>
+						<c:otherwise>
+							<!-- img 태그 onerror 처리 -->
+							<!-- https://zxchsr.tistory.com/16 -->
+							<img src="showroom/${showroom.pictureUrl}" 
+							onerror="this.onerror=null; this.src='./image/comm/${showroom.pictureUrl}';" 
+							alt="쇼룸" class="image">									
+						</c:otherwise>
+					</c:choose>
             	</a>
             </div>
             <div class="nav">
@@ -76,7 +87,16 @@
               </div>
               <a href="#" class="link__item">
                 <div class="box__image">
-                  <img src="trend/${trend.pictureUrl}" class="image">
+	              	<c:choose>
+						<c:when test="${empty trand.pictureUrl}">
+							<img src="upload/noimage.jpg">
+						</c:when>
+						<c:otherwise>
+							<img src="trand/${trand.pictureUrl}" 
+							onerror="this.onerror=null; this.src='./image/comm/${trand.pictureUrl}';" 
+							alt="트랜드룸" class="image">									
+						</c:otherwise>
+					</c:choose>
                 </div>
                 <%-- <div>${trend.userpictureurl}</div> --%>
                 <div>${trend.title}<br>

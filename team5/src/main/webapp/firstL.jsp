@@ -26,8 +26,22 @@
            // 전역변수로서 이미지 객체 생성
            var imgChar= new Image();
            imgChar.src="./ms18.png";
-           var imgBg= new Image();
-           imgBg.src="./BG1.png";
+           var imgBg1= new Image();
+           imgBg1.src="./BG1.jpg";
+           
+           var imgBg2= new Image();
+           var imgBg3= new Image();
+           var imgBg4= new Image();
+           var imgBg5= new Image();
+           var imgBg6= new Image();
+           var imgBg7= new Image();
+           
+           imgBg2.src="./BG2.png";
+           imgBg3.src="./BG3.png";
+           imgBg4.src="./BG4.png";
+           imgBg5.src="./BG5.png";
+           imgBg6.src="./BG6.png";
+           imgBg7.src="./BG7.png";
     		
            // 플레이어 캐릭터의 중심좌표
            var x=800, y=850; //캐릭터의 위치좌표
@@ -42,8 +56,18 @@
                setInterval(runGame,10); //1초에 100번 호출
            }
     
+           ${code}
            function runGame(){
                moveAll(); //캐릭터 움직이기
+               if(${code} == "선택한아이템") {
+            	   drawAll(imgBg2.src); // 이미지들 그리기
+               } else if(조건2) {
+            	   drawAll(imgBg3.src); // 이미지들 그리기
+               } else if(조건3) {
+            	   drawAll(imgBg4.src); // 이미지들 그리기
+               } else {
+            	   drawAll(); // 이미지들 그리기
+               }
                drawAll(); // 이미지들 그리기
            }
     
@@ -63,9 +87,9 @@
                
            }
            
-                 function drawAll(){
+           function drawAll(img=imgBg1){
                //배경 그리기
-               context.drawImage(imgBg,0,0,896,909);
+               context.drawImage(img,0,0,896,909);
                //context.drawImage(imgBg,0,0,800,500);
                //플레이어 그리기
                context.drawImage(imgChar,x-w,y-h,w*2,h*2);

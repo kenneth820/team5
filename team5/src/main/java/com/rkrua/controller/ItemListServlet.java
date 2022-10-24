@@ -22,7 +22,7 @@ public class ItemListServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ItemDao iDao = ItemDao.getInstance();
-		HttpSession session = request.getSession(); // ¼¼¼Ç °´Ã¼ È£Ãâ
+		HttpSession session = request.getSession(); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ È£ï¿½ï¿½
 		
 		int page = 1;
 		String t_page = request.getParameter("p") ;
@@ -62,6 +62,9 @@ public class ItemListServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String code = request.getParameter("code");
+		request.setAttribute("code", code);
 	}
 
 }

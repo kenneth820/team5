@@ -75,18 +75,21 @@
 		                    </div>
 		                    <!-- 뒷면 -->
 		                    <div class="back">
-		                        <p>${item.name}</p>
-		                        <p>${item.category}</p>
-		                        <c:if test="${item.equip == 0}">
-			                        <a href="equipItem.do?code=${item.code}&userid=${loginUser.userid}">
-			                        	<input type="button" value="배치하기">                 
-			                        </a>
-		                        </c:if>
-		                        <c:if test="${item.equip == 1}">
-			                        <a href="unequipItem.do?code=${item.code}&userid=${loginUser.userid}">
-			                        	<input type="button" value="배치 해제하기">                 
-			                        </a>
-		                        </c:if>
+		                    	
+		                    	<form method="post" action="itemList.do">		                    	
+			                        <p>${item.name}</p>
+			                        <p>${item.category}</p>
+			                        <c:if test="${item.equip == 0}">
+				                        <a href="equipItem.do?code=${item.code}&userid=${loginUser.userid}">
+				                        	<input type="submit" value="배치하기">                 
+				                        </a>
+			                        </c:if>
+			                        <c:if test="${item.equip == 1}">
+				                        <a href="unequipItem.do?code=${item.code}&userid=${loginUser.userid}">
+				                        	<input type="button" value="배치 해제하기">                 
+				                        </a>
+			                        </c:if>
+		                        </form>
 		                    </div>
 		                    </div>
 		                </div>

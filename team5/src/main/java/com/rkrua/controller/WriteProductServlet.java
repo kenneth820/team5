@@ -1,7 +1,7 @@
 package com.rkrua.controller;
 
+import java.io.File;
 import java.io.IOException;
-import java.sql.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -34,7 +34,7 @@ public class WriteProductServlet extends HttpServlet {
 		ProductDao pDao = ProductDao.getInstance();
 		
 		int result = -1;
-		String savePath= "upload";
+		String savePath= "trnad";
 		int uploadFileSizeLimit = 5 * 1024 * 1024;
 		String encType = "UTF-8";
 
@@ -42,13 +42,26 @@ public class WriteProductServlet extends HttpServlet {
 		String uploadFilePath = context.getRealPath(savePath);
 		System.out.println(uploadFilePath);
 		
+		// í•´ë‹¹ ë””ë ‰í† ë¦¬ê°€ ì—†ì„ê²½ìš° ë””ë ‰í† ë¦¬ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
+		File Folder = new File(uploadFilePath);
+		if (!Folder.exists()) {
+			try{
+				Folder.mkdir(); 	//í´ë” ìƒì„±í•©ë‹ˆë‹¤.
+//				System.out.println("í´ë”ê°€ ìƒì„±ë˜ì—ˆìŠµë‹ˆë‹¤.");
+			} catch(Exception e){
+				e.getStackTrace();
+			}
+        }else {
+//			System.out.println("ì´ë¯¸ í´ë”ê°€ ìƒì„±ë˜ì–´ ìˆìŠµë‹ˆë‹¤.");
+		}
+		
 		try {
 			MultipartRequest multi = new MultipartRequest(
-					request,							// request °´Ã¼
-					uploadFilePath,						// ¼­¹ö»óÀÇ ½ÇÁ¦ ÆÄÀÏ °æ·Î
-					uploadFileSizeLimit,				// ÃÖ´ë ¾÷·Îµå ÆÄÀÏ Å©±â
-					encType,							// ÀÎÄÚµù ¹æ½Ä
-					new DefaultFileRenamePolicy()		// Á¤Ã¥: µ¿ÀÏ ÀÌ¸§½Ã ´Ù¸¥ ÀÌ¸§À¸·Î Ãß°¡
+					request,							// request ï¿½ï¿½Ã¼
+					uploadFilePath,						// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+					uploadFileSizeLimit,				// ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½
+					encType,							// ï¿½ï¿½ï¿½Úµï¿½ ï¿½ï¿½ï¿½
+					new DefaultFileRenamePolicy()		// ï¿½ï¿½Ã¥: ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
 					);
 
 //			int code = Integer.parseInt(multi.getParameter("code"));
@@ -65,7 +78,7 @@ public class WriteProductServlet extends HttpServlet {
 //			System.out.println(reg_date);
 			
 			
-//			pVo.setCode(code);		// ÀÔ·ÂµÈ »óÇ° Á¤º¸ Vo¿¡ ÀúÀå
+//			pVo.setCode(code);		// ï¿½Ô·Âµï¿½ ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½ Voï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			pVo.setName(name);
 			pVo.setPrice(price);
 			pVo.setCategory(category);
@@ -75,13 +88,13 @@ public class WriteProductServlet extends HttpServlet {
 			
 			result = pDao.insertProduct(pVo);
 			
-			// »óÇ° µî·Ï ¿Ï·á½Ã, ¸Ş½ÃÁö Ãâ·Â
+			// ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½ï¿½, ï¿½Ş½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 			if(result==1) {
-//				System.out.println("»óÇ° µî·Ï¿¡ ¼º°ø");
-				request.setAttribute("message", "»óÇ° µî·Ï¿¡ ¼º°øÇÏ¿´½À´Ï´Ù.");
+//				System.out.println("ï¿½ï¿½Ç° ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½");
+				request.setAttribute("message", "ï¿½ï¿½Ç° ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 			} else {
-//				System.out.println("»óÇ° µî·Ï¿¡ ½ÇÆĞ");
-				request.setAttribute("message", "»óÇ° µî·Ï¿¡ ½ÇÆĞÇÏ¿´½À´Ï´Ù.");
+//				System.out.println("ï¿½ï¿½Ç° ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½");
+				request.setAttribute("message", "ï¿½ï¿½Ç° ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 			}
 			response.sendRedirect("productList.do");
 			
@@ -89,7 +102,7 @@ public class WriteProductServlet extends HttpServlet {
 //					request.getRequestDispatcher("productList.do");
 //			dispatcher.forward(request, response);
 		} catch(Exception e) {
-			System.out.println("ÆÄÀÏ ¾÷·Îµå°£ ¿¹¿Ü ¹ß»ı" + e);
+			System.out.println("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµå°£ ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½" + e);
 		}
 	}
 
