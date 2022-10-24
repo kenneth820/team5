@@ -13,6 +13,9 @@
 
 </head>
 <body>
+<c:set var="page" value="${(empty param.p)?1:param.p}"></c:set>
+<c:set var="start" value="${(param.p==null or param.p <= 3)?1:param.p-2}"></c:set>
+<c:set var="end" value="${fn:substringBefore(Math.ceil(count/9), '.')}"></c:set>
 
 <!-- 헤더 영역 구현 -->
 <jsp:include page="header.jsp"></jsp:include>		<!-- 현재 파일 위치 기준 -->
@@ -33,43 +36,6 @@
 <!-- ======================= -->
 <!-- 섹션(리스트) 영역 구현 -->
 <jsp:include page="section.jsp"></jsp:include> 
-
-
-<!-- ======================= -->
-<!-- 쇼룸 리스트 표시 기능 구현 -->
-<div id="wrap" align="center">
-<%-- <table class="list">
-	<tr>
-		<th>코드</th> <th>이름</th> <th>사진경로</th>
-	</tr>
-	<!-- 상품 목록 출력 -->
-	<c:forEach var="showroom" items="${showroomList}">
-		<tr>
-			<td><a href="commDetail.do?code=${showroom.code}">${showroom.code}</a></td>
-			<td><a href="commDetail.do?code=${showroom.name}">${showroom.name}</a></td>
-			<td><a href="commDetail.do?code=${showroom.pictureUrl}">${showroom.pictureUrl}</a></td>
-		</tr>
-	</c:forEach>
-</table> --%>
-</div>
-
-<!-- ======================= -->
-<!-- 트랜드 리스트 표시 기능 구현 -->
-<div id="wrap" align="center">
-<%-- <table class="list">
-	<tr>
-		<th>코드</th> <th>이름</th> <th>사진경로</th>
-	</tr>
-	<!-- 상품 목록 출력 -->
-	<c:forEach var="trand" items="${TrandList}">
-		<tr>
-			<td><a href="commDetail.do?code=${trand.num}">${trand.num}</a></td>
-			<td><a href="commDetail.do?code=${trand.name}">${trand.name}</a></td>
-			<td><a href="commDetail.do?code=${trand.pictureUrl}">${trand.pictureUrl}</a></td>
-		</tr>
-	</c:forEach>
-</table> --%>
-</div>
 
 
 </body>

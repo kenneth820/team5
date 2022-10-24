@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>베스트 쇼룸 등록</title>
 <link rel="stylesheet" type="text/css" href="community/product.css">
-<script type="text/javascript" src="Script/trand.js"></script>
+<script type="text/javascript" src="Script/trend.js"></script>
 </head>
 <body>
 <div id="wrap" align="center">

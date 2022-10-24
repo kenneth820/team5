@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.rkrua.dto.ProductVo;
 import com.rkrua.dto.ShowroomVo;
 import com.rkrua.dto.TrendVo;
 import com.rkrua.util.DBManager;
@@ -24,7 +25,7 @@ public class CommunityDao {
 	// �엯�젰媛� : �쟾泥� 媛쒖씤猷� �젙蹂�
 	// 諛섑솚媛� : 荑쇰━ �닔�뻾 寃곌낵
 	public int inserttrend(TrendVo tVo){
-		String sql = "insert into trend values(trend_seq.nextval, ?, ?, ?, ?, ?)";
+		String sql = "insert into trend(num,userid,title,pictureurl,text) values(trend_seq.nextval, ?, ?, ?, ?)";
 		int result = -1;		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -36,8 +37,8 @@ public class CommunityDao {
 			pstmt.setString(1, tVo.getUserid());
 			pstmt.setString(2, tVo.getTitle());
 			pstmt.setString(3, tVo.getPictureUrl());
+			/* System.out.println("pstmt 텍스트:" + tVo.getText()); */
 			pstmt.setString(4, tVo.getText());
-			pstmt.setTimestamp(5, tVo.getWritedate());
 			
 			result = pstmt.executeUpdate();
 			
@@ -92,6 +93,87 @@ public class CommunityDao {
 		}
 		
 	}
+	public void deleteTrend(int num) {
+		String sql = "delete from Trend where num=?";
+		int result = -1;
+		Connection conn = null;
+		// 동일한 쿼리문을 특정 값만 바꿔서 여러번 실행해야 할 때, 매개변수가 많아서 쿼리문 정리 필요
+		PreparedStatement pstmt = null;
+		
+		try {
+			conn = DBManager.getConnection();
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+
+			result = pstmt.executeUpdate(); // 쿼리문 실행
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt);
+		}
+		
+	}
+	
+	public int updateTrend(TrendVo tVo)	{
+		int result = -1;
+		Connection conn = null;
+		// 동일한 쿼리문을 특정 값만 바꿔서 여러번 실행해야 할 때, 매개변수가 많아서 쿼리문 정리 필요
+		PreparedStatement pstmt = null;
+
+		String sql_update = "update Trend set title=?, pictureurl=?, text=? where num=?";
+
+		try {
+			conn = DBManager.getConnection();
+
+			pstmt = conn.prepareStatement(sql_update);
+			pstmt.setString(1, tVo.getTitle());
+			pstmt.setString(2, tVo.getPictureUrl()); // 정수형
+			pstmt.setString(3, tVo.getText());
+			pstmt.setInt(4, tVo.getNum());
+
+			result = pstmt.executeUpdate(); // 荑쇰━ �닔�뻾
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt);
+		}
+		return result;
+	}
+	
+	public TrendVo selectTrendByNum(int num) {
+		String sql = "select * from trend where num=?";		
+		Connection conn = null;
+		PreparedStatement pstmt = null; // 동적 쿼리
+		ResultSet rs = null;
+		TrendVo tVo = null;
+
+		try {
+			conn = DBManager.getConnection();
+			// (3단계) Statement 객체 생성
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, num);
+
+			// (4단계) SQl문 실행 및 결과처리 => executeUpdate : 삽입(insert/update/delete)
+			rs = pstmt.executeQuery(); // 쿼리 수행
+			while (rs.next()) {
+				tVo = new TrendVo();
+				tVo.setNum(rs.getInt("num"));
+				tVo.setTitle(rs.getString("title"));
+				tVo.setPictureUrl(rs.getString("pictureurl"));
+				tVo.setText(rs.getString("text"));
+				tVo.setUserid(rs.getString("userid"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBManager.close(conn, pstmt, rs);
+		}
+		return tVo;
+	}
+
+
+
 	// �눥猷� 寃��깋
 	public List<ShowroomVo> getShowroomList() {
 		// 理쒓렐 �벑濡앺븳 �긽�뭹�쓣 癒쇱� 異쒕젰�븯湲�
@@ -114,7 +196,7 @@ public class CommunityDao {
 				sVo.setCode(rs.getInt("code"));
 				sVo.setName(rs.getString("name"));
 				sVo.setPictureUrl(rs.getString("pictureUrl"));
-				System.out.println(sVo);
+				/* System.out.println(sVo); */
 				
 				list.add(sVo);
 			}
@@ -127,10 +209,10 @@ public class CommunityDao {
 	}
 	
 	public List<TrendVo> gettrendList() {
-		return gettrendList("num", "", 1);		
+		return gettrendList("title", "", 1);		
 	}
 	public List<TrendVo> gettrendList(int page) {
-		return gettrendList("num", "", page);		
+		return gettrendList("title", "", page);		
 	}
 	public List<TrendVo> gettrendList(String column, String keyword, int page){
 //		System.out.println("keyword: "+ keyword + "column: "+ column);
@@ -153,8 +235,8 @@ public class CommunityDao {
 			conn = DBManager.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, "%"+keyword+"%");
-			pstmt.setInt(2, 1+(page-1)*10);
-			pstmt.setInt(3, page*10);
+			pstmt.setInt(2, 1+(page-1)*9);
+			pstmt.setInt(3, page*9);
 			
 			rs = pstmt.executeQuery();
 			
@@ -164,9 +246,10 @@ public class CommunityDao {
 				tVo.setNum(rs.getInt("num"));
 				tVo.setUserid(rs.getString("userid"));
 				tVo.setTitle(rs.getString("title"));
+				tVo.setText(rs.getString("text"));
 				tVo.setWritedate(rs.getTimestamp("writedate"));
 				tVo.setPictureUrl(rs.getString("pictureUrl"));
-				System.out.println(tVo);
+				/* System.out.println(tVo); */
 				
 				list.add(tVo);
 			}

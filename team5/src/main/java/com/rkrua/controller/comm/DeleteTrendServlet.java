@@ -3,7 +3,6 @@ package com.rkrua.controller.comm;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,14 +15,16 @@ import com.rkrua.dto.MemberVo;
 import com.rkrua.dto.ShowroomVo;
 import com.rkrua.dto.TrendVo;
 
-@WebServlet("/commList.do")
-public class CommListServlet extends HttpServlet {
+@WebServlet("/deleteTrend.do")
+public class DeleteTrendServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		CommunityDao cDao = CommunityDao.getInstance();
+		int num = Integer.parseInt(request.getParameter("num"));
 		HttpSession session = request.getSession(); // 세션 객체 호출
 		MemberVo mVo = (MemberVo)session.getAttribute("loginUser");
+		CommunityDao cDao = CommunityDao.getInstance();
+		cDao.deleteTrend(num);
 		
 		// 湲곕낯 媛� �꽕�젙
 		String column = "title"; // 寃��깋 ���긽(遺꾩빞)
@@ -67,14 +68,11 @@ public class CommListServlet extends HttpServlet {
 		} else {
 			url = "community/commList.jsp";			
 		}
+		request.getRequestDispatcher(url).forward(request, response);		
 
-		RequestDispatcher dispatcher = 
-				request.getRequestDispatcher(url);
-		dispatcher.forward(request, response);		// �룷�썙�뱶 諛⑹떇�쑝濡� �럹�씠吏� �씠�룞		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
 	}
 
 }

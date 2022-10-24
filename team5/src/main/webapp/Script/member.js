@@ -66,6 +66,11 @@ function checkJoin() {
 		frm.pwd.focus();
 		return false;
 	}
+	if(!document.frm.pictureurl.value.length){
+		alert('사진을 등록해주세요.');
+		frm.pictureurl.focus();
+		return false;
+	}
 	if (document.frm.checkid.value.length===0) {
 		alert('중복 체크를 하지 않았습니다.');
 		frm.userid.focus();

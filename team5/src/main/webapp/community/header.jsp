@@ -29,7 +29,7 @@
 							&nbsp;|
 							<input type="submit" class="input_submit" value="로그아웃">|
 							<input type="button" class="input_button" value="회원정보변경"
-								onclick="location.href='updateMember.do?userid=${loginUser.userid}'">|
+								onclick="location.href='updateMember.do?userId=${loginUser.userid}'">|
 							<span class="mypage"><a href="main.jsp" title="쇼룸으로 이동">쇼룸 이동</a></span>
 				            &nbsp;|&nbsp;
 							<!-- 방 등록 기능 구현 -->

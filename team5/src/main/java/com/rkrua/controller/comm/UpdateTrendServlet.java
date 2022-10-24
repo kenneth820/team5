@@ -17,14 +17,27 @@ import com.rkrua.dao.CommunityDao;
 import com.rkrua.dto.MemberVo;
 import com.rkrua.dto.TrendVo;
 
-@WebServlet("/writeComm.do")
-public class WriteCommServlet extends HttpServlet {
+@WebServlet("/updateTrend.do")
+public class UpdateTrendServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher dispatcher = 
-				request.getRequestDispatcher("community/writeComm.jsp");
-		dispatcher.forward(request, response);		// �룷�썙�뱶 諛⑹떇�쑝濡� �럹�씠吏� �씠�룞
+		int num = Integer.parseInt(request.getParameter("num"));
+		
+		// 상품 수정 링크 클릭시 수정할 상품 정보를 표시
+		CommunityDao tDao = CommunityDao.getInstance();
+		TrendVo tVo = new TrendVo();
+		
+		// 데이터 베이스에서 수정할 정보 확인
+		tVo = tDao.selectTrendByNum(num);
+		
+		request.setAttribute("trend", tVo);
+		
+		// 페이지 이동 : 수정 페이지
+		RequestDispatcher dispatcher =
+				request.getRequestDispatcher("community/updateTrend.jsp");
+		dispatcher.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -57,6 +70,7 @@ public class WriteCommServlet extends HttpServlet {
 					new DefaultFileRenamePolicy()
 				);
 			
+			int num = Integer.parseInt(multi.getParameter("num"));
 			String title = multi.getParameter("title");
 			String pictureUrl = multi.getFilesystemName("pictureUrl");
 			String text = multi.getParameter("content");
@@ -66,8 +80,9 @@ public class WriteCommServlet extends HttpServlet {
 			tVo.setTitle(title);
 			tVo.setPictureUrl(pictureUrl);
 			tVo.setText(text);
+			tVo.setNum(num);
 			System.out.println("text:"+tVo);
-			result = cDao.inserttrend(tVo);
+			result = cDao.updateTrend(tVo);
 			
 		} catch(Exception e) {
 			System.out.println("[�긽�뭹 �벑濡� �삁�쇅 諛쒖깮]: " + e);
@@ -84,5 +99,8 @@ public class WriteCommServlet extends HttpServlet {
 		}
 		request.getRequestDispatcher("commList.do").forward(request, response);
 
+
+		
 	}
+
 }

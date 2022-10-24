@@ -171,6 +171,10 @@ img {
 .box__today {
 	padding-top:8%;
 }
+.text__name{
+	display: flex;
+	justify-content: space-between;
+}
 .slides {
     padding-top: 30px;
     width: 100%;
@@ -315,3 +319,16 @@ input#img-6:checked ~ .nav-dots label#img-dot-6 {
 #ShowroomId{
 	width:100%;
 }
+#update{
+	border-color:white;
+    background-color: cornflowerblue;
+    color:white;
+}
+#channel ul li {
+	display:inline;
+	padding-left: 10px;
+}
+#channel {
+	width:100%;
+}
+

@@ -8,9 +8,9 @@ function checkShowroom() {
 		frm.name.foucs();
 		return false;
 	}
-	if(isNaN(document.frm.pictureUrl.value)){
+	if(!document.frm.pictureUrl.value) {
 		alert("사진을 등록하세요. ");
-		frm.price.foucs();
+		frm.pictureUrl.foucs();
 		return false;
 	}
 	return true;
@@ -19,17 +19,17 @@ function checkShowroom() {
 function checkTrend() {
 	if(document.frm.title.value.length===0){
 		alert("타이틀을 입력하세요. ");
-		frm.name.foucs();
+		frm.title.foucs();
 		return false;
 	}
-	if(isNaN(document.frm.pictureUrl.value)){
+	if(!document.frm.pictureUrl.value){
 		alert("사진을 등록하세요. ");
-		frm.price.foucs();
+		frm.pictureUrl.foucs();
 		return false;
 	}
-	if(document.frm.text.value.length===0){
+	if(document.frm.content.value.length===0){
 		alert("글 내용을 입력하세요. ");
-		frm.name.foucs();
+		frm.content.foucs();
 		return false;
 	}
 	return true;

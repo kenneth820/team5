@@ -25,14 +25,20 @@
 			<tr>
 				<td>${trend.num}</td>
 				<td><a href="trendDetail.do?num=${trend.num}">${trend.title}</a></td>
-				<td>${trand.userid}</td>
-				<td>${trand.writedate}</td>
+				<td>${trend.userid}</td>
+				<td>${trend.writedate}</td>
+				<td><a href="deleteTrend.do?num=${trend.num}"><button id="update">글 삭제</button></a>
 			</tr>
 		</c:forEach>
 		<tr>
 			<td colspan="5" style="border:white; text-algin:right; padding-right:10px;">
 				<div class="search">
 					<form action="board?k=${param.k}&p=${1}">
+						<select name="column">
+							<option value="title">글 제목</option>
+							<option ${(param.column=="num")?"selected":""} value="num">글 번호</option>
+							<option ${(param.column=="userid")?"selected":""} value="userid">작성자</option>
+						</select>
 						<input type="text" name="k" value="${param.keyword}">
 						<input type="submit" value="검색">
 					</form>
@@ -176,7 +182,7 @@
 										<img src="image/noimage.jpg">
 									</c:when>
 									<c:otherwise>
-										<img src="./image/comm/${showroom.pictureUrl}">
+										<img src="showroom/${showroom.pictureUrl}">
 									</c:otherwise>
 								</c:choose>
 		                    </div>

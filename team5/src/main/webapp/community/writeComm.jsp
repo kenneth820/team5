@@ -5,29 +5,32 @@
 <head>
 <meta charset="UTF-8">
 <title>트랜드 룸 등록</title>
-<link rel="stylesheet" type="text/css" href="community/product.css">
-<script type="text/javascript" src="script/trand.js"></script>
+<link rel="stylesheet" type="text/css" href="css/product.css">
+<script type="text/javascript" src="Script/trend.js"></script>
 </head>
 <body>
 <div id="wrap" align="center">
 <h2>트랜드 룸 등록</h2>
 
 <form method="post" action="writeComm.do" enctype="multipart/form-data" name="frm">
-	<table border="1">
+	<table border="1" style="width:80%;">
 	<tr>
 		<th>글 제목</th>
 		<td>
-			<input type="text" name="title" size="80px">
+			<input type="text" name="title" size="105px">
 		</td>
 	</tr>
 	<tr>
 		<th>사 진</th>
 		<td><input type="file" name="pictureUrl"></td>
 	</tr>
-	<tr>
+	<tr height="500">
 		<th>글 내용</th>
-		<td><input type="text" name="text"></td>
+		<td rowspan="4"><textarea name="content" cols="105" rows="40"></textarea></td>
 	</tr>
+	<tr></tr>
+	<tr></tr>
+	<tr></tr>
 	</table>
 	<br>
 	<input type="submit" value="등록" onclick="return checkTrend()">
