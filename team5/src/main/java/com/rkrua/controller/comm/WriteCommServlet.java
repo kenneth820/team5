@@ -22,12 +22,14 @@ public class WriteCommServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("writeComm.do get");
 		RequestDispatcher dispatcher = 
 				request.getRequestDispatcher("community/writeComm.jsp");
 		dispatcher.forward(request, response);		// �룷�썙�뱶 諛⑹떇�쑝濡� �럹�씠吏� �씠�룞
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("writeComm.do post");
 		request.setCharacterEncoding("UTF-8");		// post 諛⑹떇 �븳湲�泥섎━
 		response.setContentType("text/html; charset=UTF-8");
 		

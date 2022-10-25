@@ -16,20 +16,20 @@ function checkShowroom() {
 	return true;
 }
 
-function checkTrend() {
-	if(document.frm.title.value.length===0){
-		alert("타이틀을 입력하세요. ");
-		frm.title.foucs();
+function checkTrand(){
+	if(document.frm.name.value.length===0){
+		alert("타이틀을 입력하세요");
+		frm.name.focus();
 		return false;
 	}
-	if(!document.frm.pictureUrl.value){
-		alert("사진을 등록하세요. ");
-		frm.pictureUrl.foucs();
+	if(document.frm.pictureUrl.value.length===0){
+		alert("사진을 등록하세요");
+		frm.pictureUrl.focus();
 		return false;
 	}
 	if(document.frm.content.value.length===0){
-		alert("글 내용을 입력하세요. ");
-		frm.content.foucs();
+		alert("글 내용을 입력하세요");
+		frm.content.focus();
 		return false;
 	}
 	return true;

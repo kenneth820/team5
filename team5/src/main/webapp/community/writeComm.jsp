@@ -17,7 +17,7 @@
 	<tr>
 		<th>글 제목</th>
 		<td>
-			<input type="text" name="title" size="105px">
+			<input type="text" name="name" size="105px">
 		</td>
 	</tr>
 	<tr>
@@ -28,12 +28,9 @@
 		<th>글 내용</th>
 		<td rowspan="4"><textarea name="content" cols="105" rows="40"></textarea></td>
 	</tr>
-	<tr></tr>
-	<tr></tr>
-	<tr></tr>
 	</table>
 	<br>
-	<input type="submit" value="등록" onclick="return checkTrend()">
+	<input type="submit" value="등록" onclick="return checkTrand();">
 	<input type="reset" value="취소">
 	<input type="button" value="목록" onclick="location.href='commList.do'">
 </form>
