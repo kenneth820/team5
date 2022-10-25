@@ -27,7 +27,7 @@
            var imgChar= new Image();
            imgChar.src="./ms18.png";
            var imgBg1= new Image();
-           imgBg1.src="./BG1.jpg";
+           imgBg1.src="./bg1.png";
            
 /*            var imgBg2= new Image();
            var imgBg3= new Image();

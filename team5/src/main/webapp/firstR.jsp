@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -112,7 +112,6 @@ ul, li {
 	color: white;
 	background-color: gray;
 }
-
 </style>
 <body>
 
@@ -120,46 +119,44 @@ ul, li {
 		<header>
 
 			<div id="info">
-<%-- 				<c:if test=${(!empty showroom.userid)?loginUser.userid:showroom.userid}>
+				<%-- 				<c:if test=${(!empty showroom.userid)?loginUser.userid:showroom.userid}>
 					<c:if test="${loginUser.userid == showroom.userid}">
---%>					<div id="updateProf">
-							<a href="updateMember.do?userId=${loginUser.userid}">개인정보수정</a>
-						</div>
-						<div id="Logout">
-							<a href="logout.do">로그아웃</a>
-						</div>
-<%-- 					</c:if>
+--%>
+				<div id="updateProf">
+					<a href="updateMember.do?userId=${loginUser.userid}">개인정보수정</a>
+				</div>
+				<div id="Logout">
+					<a href="logout.do">로그아웃</a>
+				</div>
+				<%-- 					</c:if>
 				</c:if>
- --%>			</div>
+ --%>
+			</div>
 
 			<div class="user-info">
 				<img class="profilePhoto" src="./prof_img.png" alt="기본프로필사진">
 
 				<div class="userInfo">
-					<table id=userinfoT >
+					<table id=userinfoT>
 						<tr>
-						<td>
-						유저 이름:
-						</td>
-						<td>
-							<p class="name">${loginUser.name}</p>
-						</td>
+							<td>유저 이름:</td>
+							<td>
+								<p class="name">${loginUser.name}</p>
+							</td>
 						</tr>
 						<tr>
-						<td>
-						보유 포인트:
-						</td>
-						<td>
-							<p class="point">${loginUser.point}p</p>
-						</td>
+							<td>보유 포인트:</td>
+							<td>
+								<p class="point">${loginUser.point}p</p>
+							</td>
 						</tr>
 						<tr>
-							<td colspan="2">						
-							<p class="selfcomment">${loginUser.selfcomment} </p>
+							<td colspan="2">
+								<p class="selfcomment">${loginUser.selfcomment}</p>
 							</td>
 						</tr>
 					</table>
-					
+
 				</div>
 			</div>
 
@@ -225,12 +222,45 @@ ul, li {
 						</form>
 					</li>
 					<li>
-						<form method="get" action="../comment.do" id="subscribe-mail2"
+						<form method="get" action="commentprofile.do" id="subscribe-mail2"
 							hidden>
-							방명록<input type="text" name="comment"> <input
-								type="submit" value="등록">
-						</form> ${comment}
+							<table>
+								<tr>
+									<td width="20%" height="15" bgcolor="#eeeeee"
+										style="padding-left: 6px;">userid</td>
+									<td width="80%" style="padding-left: 10px;"><textarea
+											rows="5" cols="34" name="content" class=""></textarea></td>
+									<td style="padding-top: 35px;"><input type="submit"
+										value="등록"
+										style="width: 40px; letter-spacing: 5px; float: right;">
+									</td>
+								</tr>
+							</table>
+							<br>
+							<br>
 
+							<table>
+								<tr>
+									<td width="20%" height="10" bgcolor="#eeeeee"
+										style="padding-left: 10px;"></td>
+									<td width="80%" style="padding-left: 10px;"><textarea
+											rows="5" cols="38" name="content" class=""></textarea></td>
+								</tr>
+							</table>
+							
+						</form>
+					</li>
+					<li>
+						<table>
+							<c:forEach var="comment" items="${commentList}">
+								<tr>
+									<td width="20%" height="10" bgcolor="#eeeeee"
+										style="padding-left: 10px;">${comment.replier}</td>
+									<td width="80%" style="padding-left: 10px;"><textarea
+											rows="5" cols="38" name="content" class="">${comment.reply} </textarea></td>
+								</tr>
+							</c:forEach>
+						</table>
 					</li>
 					<li>
 						<form id="subscribe-mail3" hidden>
@@ -239,7 +269,17 @@ ul, li {
 									return document.getElementById(id);
 								}
 								var audio = new Audio("team5_sdh/music1.mp3");
-								audio.addEventListener("timeupdate",function(e) {$("time_info").innerHTML = "진행 : "+ audio.currentTime+ "/"+ audio.duration;$("volume_info").innerHTML = "볼륨 : "+ audio.volume;});
+								audio
+										.addEventListener(
+												"timeupdate",
+												function(e) {
+													$("time_info").innerHTML = "진행 : "
+															+ audio.currentTime
+															+ "/"
+															+ audio.duration;
+													$("volume_info").innerHTML = "볼륨 : "
+															+ audio.volume;
+												});
 								function changeVolume(v) {
 									var new_v = audio.volume + v;
 									if (0 <= new_v && new_v <= 1.0) {
@@ -257,25 +297,25 @@ ul, li {
 									audio.pause();
 								}
 							</script>
-								<div style="font-size:1.5em; location:center;">BGM Player</div>
-								<div id="time_info"></div>
-								<div id="volume_info"></div>
-								<div id="btn_group">
-									<ul style="width: 100%; height:40px;">
-										<li style="display: inline-block; width: 23%;">
-											<input type="button" value="play" onClick="audio_play()" style="width: 100%; height: 40px; font-size: 1em;" />
-										</li>
-										<li style="display: inline-block; width: 23%;">
-											<input type="button" value="pause" onClick="audio_pause()" style="width: 100%; height: 40px; font-size: 1em;" />
-										</li>
-										<li style="display: inline-block; width: 23%;">
-											<input type="button" value="Volume ↑" onClick="changeVolume(+0.2)" style="width: 100%; height: 40px; font-size: 1em;"/>
-										</li>
-										<li style="display: inline-block; width: 23%;">
-											<input type="button" value="Volume ↓"onClick="changeVolume(-0.2)" style="width: 100%; height: 40px; font-size: 1em;"/>
-										</li>
-									</ul>
-								</div>
+							<div style="font-size: 1.5em; location: center;">BGM Player</div>
+							<div id="time_info"></div>
+							<div id="volume_info"></div>
+							<div id="btn_group">
+								<ul style="width: 100%; height: 40px;">
+									<li style="display: inline-block; width: 23%;"><input
+										type="button" value="play" onClick="audio_play()"
+										style="width: 100%; height: 40px; font-size: 1em;" /></li>
+									<li style="display: inline-block; width: 23%;"><input
+										type="button" value="pause" onClick="audio_pause()"
+										style="width: 100%; height: 40px; font-size: 1em;" /></li>
+									<li style="display: inline-block; width: 23%;"><input
+										type="button" value="Volume ↑" onClick="changeVolume(+0.2)"
+										style="width: 100%; height: 40px; font-size: 1em;" /></li>
+									<li style="display: inline-block; width: 23%;"><input
+										type="button" value="Volume ↓" onClick="changeVolume(-0.2)"
+										style="width: 100%; height: 40px; font-size: 1em;" /></li>
+								</ul>
+							</div>
 						</form>
 					</li>
 				</ul>
