@@ -34,7 +34,7 @@ public class WriteProductServlet extends HttpServlet {
 		ProductDao pDao = ProductDao.getInstance();
 		
 		int result = -1;
-		String savePath= "trnad";
+		String savePath= "upload";
 		int uploadFileSizeLimit = 5 * 1024 * 1024;
 		String encType = "UTF-8";
 
@@ -69,7 +69,6 @@ public class WriteProductServlet extends HttpServlet {
 			int price = Integer.parseInt(multi.getParameter("price"));
 			int category = Integer.parseInt(multi.getParameter("category"));
 			String pictureurl = multi.getFilesystemName("pictureurl");
-			String coordinate = multi.getParameter("coordinate");
 			
 //			System.out.println(name);
 //			System.out.println(price);
@@ -83,7 +82,6 @@ public class WriteProductServlet extends HttpServlet {
 			pVo.setPrice(price);
 			pVo.setCategory(category);
 			pVo.setPictureurl(pictureurl);
-			pVo.setCoordinate(coordinate);
 			
 			
 			result = pDao.insertProduct(pVo);

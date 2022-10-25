@@ -22,7 +22,7 @@
 		</tr>
 		<tr>
 			<th>사 진</th>
-			<td><input type="file" name="pictureUrl" value="${trend.pictureUrl}"></td>
+			<td><input type="file" name="pictureUrl"></td>
 		</tr>
 		<tr height="500">
 			<th>글 내용</th>

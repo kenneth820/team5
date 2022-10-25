@@ -1,9 +1,9 @@
 package com.rkrua.dto;
 
-//DTV(VO) »ç¿ë ÀåÁ¡
-// 1. Áß¿äÇÑ Á¤º¸ º¸¾È °­È­ (ÇÊµå Á÷Á¢ Á¢±Ù Â÷´Ü)
-// 2. µ¥ÀÌÅÍ °ü¸®ÀÇ ÀÏ¿øÈ­
-// 3. µ¥ÀÌÅÍ °ª °ËÁõ(À¯È¿ÇÑ °ª¸¸ »ç¿ë)
+//DTV(VO) ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+// 1. ï¿½ß¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È­ (ï¿½Êµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
+// 2. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï¿ï¿½È­
+// 3. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½È¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½)
 public class MemberVo {
 	private String name;
 	private String userid;
@@ -14,6 +14,14 @@ public class MemberVo {
 	private String pictureurl;
 	private String selfcomment;
 	private int point;
+	private String showroompictureurl;
+	
+	public String getShowroompictureurl() {
+		return showroompictureurl;
+	}
+	public void setShowroompictureurl(String showroompictureurl) {
+		this.showroompictureurl = showroompictureurl;
+	}
 	
 	public String getName() {
 		return name;
@@ -72,7 +80,8 @@ public class MemberVo {
 	@Override
 	public String toString() {
 		return "MemberVo [name=" + name + ", userid=" + userid + ", pwd=" + pwd + ", email=" + email + ", phone="
-				+ phone + ", admin=" + admin + ", pictureurl=" + pictureurl + ", point=" + point + ", selfcomment="+ selfcomment +"]";
+				+ phone + ", admin=" + admin + ", pictureurl=" + pictureurl + ", selfcomment=" + selfcomment
+				+ ", point=" + point + ", showroompictureurl=" + showroompictureurl + "]";
 	}
 	
 	

@@ -106,7 +106,10 @@
 								<img src="image/noimage.jpg">
 							</c:when>
 							<c:otherwise>
-								<img src="upload/${Cart.pictureurl}">
+								<img src="upload/${Cart.pictureurl}"
+								onerror="this.onerror=null; this.src='./image/shop/${Cart.picturerl}';" 
+								alt="쇼룸" class="image">									
+								>
 							</c:otherwise>
 						</c:choose>
 		        	</td>	
@@ -140,7 +143,10 @@
 										<img src="image/noimage.jpg">
 									</c:when>
 									<c:otherwise>
-										<img src="upload/${product.pictureurl}">
+										<img src="upload/${product.pictureurl}"
+									onerror="this.onerror=null; this.src='./image/shop/${product.pictureUrl}';" 
+									alt="쇼룸" class="image">									
+										>
 									</c:otherwise>
 								</c:choose>
 		                    </div>

@@ -33,7 +33,7 @@ public class ProductDao {
 		// 동일한 쿼리문을 특정 값만 바꿔서 여러번 실행해야 할 때, 매개변수가 많아서 쿼리문 정리 필요
 		PreparedStatement pstmt = null;
 
-		String sql_insert = "insert into product(name,price,pictureurl,category,coordinate) values(?, ?, ?, ?, ?)";
+		String sql_insert = "insert into product(name,price,pictureurl,category) values(?, ?, ?, ?)";
 
 		try {
 			conn = DBManager.getConnection();
@@ -45,7 +45,6 @@ public class ProductDao {
 			pstmt.setInt(2, pVo.getPrice()); // 정수형
 			pstmt.setString(3, pVo.getPictureurl());
 			pstmt.setInt(4, pVo.getCategory()); // 문자형
-			pstmt.setString(5, pVo.getCoordinate());
 
 			result = pstmt.executeUpdate(); // 荑쇰━ �닔�뻾
 		} catch (Exception e) {
@@ -84,7 +83,6 @@ public class ProductDao {
 				pVo.setPrice(rs.getInt("price"));
 				pVo.setPictureurl(rs.getString("pictureurl"));
 				pVo.setCategory(rs.getInt("Category"));
-				pVo.setCoordinate(rs.getString("Coordinate"));
 				pVo.setReg_date(rs.getTimestamp("reg_date"));
 				/* System.out.println(pVo); */
 				list.add(pVo); // list 객체에 데이터 추가
@@ -120,7 +118,6 @@ public class ProductDao {
 				pVo.setPrice(rs.getInt("price"));
 				pVo.setPictureurl(rs.getString("pictureurl"));
 				pVo.setCategory(rs.getInt("Category"));
-				pVo.setCoordinate(rs.getString("Coordinate"));
 				pVo.setReg_date(rs.getTimestamp("reg_date"));	
 			}
 		} catch (Exception e) {
@@ -138,7 +135,7 @@ public class ProductDao {
 		// 동일한 쿼리문을 특정 값만 바꿔서 여러번 실행해야 할 때, 매개변수가 많아서 쿼리문 정리 필요
 		PreparedStatement pstmt = null;
 
-		String sql_update = "update product set name=?, price=?, pictureurl=?, category=?, coordinate=? where code=?";
+		String sql_update = "update product set name=?, price=?, pictureurl=?, category=? where code=?";
 
 		try {
 			conn = DBManager.getConnection();
@@ -148,8 +145,7 @@ public class ProductDao {
 			pstmt.setInt(2, pVo.getPrice()); // 정수형
 			pstmt.setString(3, pVo.getPictureurl());
 			pstmt.setInt(4, pVo.getCategory()); // 문자형
-			pstmt.setString(5, pVo.getCoordinate());
-			pstmt.setInt(6, pVo.getCode());
+			pstmt.setInt(5, pVo.getCode());
 
 			result = pstmt.executeUpdate(); // 荑쇰━ �닔�뻾
 		} catch (Exception e) {
@@ -214,7 +210,6 @@ public class ProductDao {
 				pVo.setPrice(rs.getInt("price"));
 				pVo.setPictureurl(rs.getString("pictureurl"));
 				pVo.setCategory(rs.getInt("category"));
-				pVo.setCoordinate(rs.getString("Coordinate"));
 				pVo.setReg_date(rs.getTimestamp("reg_date"));
 				list.add(pVo);		// 리스트 객체에 데이터 추가
 			}

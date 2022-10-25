@@ -19,7 +19,7 @@
 <a href="bestShowroom.do"><button id=update> Best 쇼룸 사진 등록</button></a>
 	<table class="list">
 		<tr>
-			<th>번호</th><th>제목</th><th>작성자</th><th>작성일</th>
+			<th>번호</th><th>제목</th><th>작성자</th><th>작성일</th><th>글 삭제</th><th>글 수정</th>
 		</tr>
 		<c:forEach var="trend" items="${trendList}">
 			<tr>
@@ -28,12 +28,13 @@
 				<td>${trend.userid}</td>
 				<td>${trend.writedate}</td>
 				<td><a href="deleteTrend.do?num=${trend.num}"><button id="update">글 삭제</button></a>
+				<td><a href="updateTrend.do?num=${trend.num}"><button id="update">글 수정</button></a>
 			</tr>
 		</c:forEach>
 		<tr>
 			<td colspan="5" style="border:white; text-algin:right; padding-right:10px;">
 				<div class="search">
-					<form action="board?k=${param.k}&p=${1}">
+					<form action="commList.do?column=?&k=${param.k}&p=${1}">
 						<select name="column">
 							<option value="title">글 제목</option>
 							<option ${(param.column=="num")?"selected":""} value="num">글 번호</option>
@@ -84,14 +85,14 @@
 								<c:when test="${page+2 > endNum}">		<!-- 마지막 3개 페이지 처리 ==> 마지막 세개 페이지에서는 다음이 없기 때문에 마지막 페이지는 고정된다. -->
 									<c:forEach var="i" begin="${endNum-4}" end="${endNum}">
 										<li>
-											<a style="color:${(page==(i))?'cornflowerblue':''}" href="?p=${i}&k=${param.k}">${i}</a>
+											<a style="color:${(page==(i))?'cornflowerblue':''}" href="?column=?&p=${i}&k=${param.k}">${i}</a>
 										</li>
 									</c:forEach>			
 								</c:when>
 								<c:otherwise>
 									<c:forEach var="i" begin="${page-2}" end="${page+2}">	<!-- 페이지 한개씩 바뀌기 -->
 										<li>
-											<a style="color:${(page==(i))?'cornflowerblue':''}" href="?p=${i}&k=${param.k}">${i}</a>
+											<a style="color:${(page==(i))?'cornflowerblue':''}" href="?column=?&p=${i}&k=${param.k}">${i}</a>
 										</li>
 									</c:forEach>
 								</c:otherwise>
@@ -101,14 +102,14 @@
 							<c:if test="${startNum+4 > endNum}">
 									<c:forEach var="i" begin="${startNum}" end="${endNum}">
 										<li>
-											<a style="color:${(page==(i))?'cornflowerblue':''}" href="?p=${i}&k=${param.k}">${i}</a>
+											<a style="color:${(page==(i))?'cornflowerblue':''}" href="?column=?&p=${i}&k=${param.k}">${i}</a>
 										</li>
 									</c:forEach>
 							</c:if>
 							<c:if test="${startNum+4 <= endNum}">
 									<c:forEach var="i" begin="0" end="4">
 										<li>
-											<a style="color:${(page==(i+startNum))?'cornflowerblue':''}" href="?p=${i+startNum}&k=${param.k}">${i+startNum}</a>
+											<a style="color:${(page==(i+startNum))?'cornflowerblue':''}" href="?column=?&p=${i+startNum}&k=${param.k}">${i+startNum}</a>
 										</li>
 									</c:forEach>
 							</c:if>							

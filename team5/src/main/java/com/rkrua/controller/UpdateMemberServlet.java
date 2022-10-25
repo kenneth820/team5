@@ -1,5 +1,6 @@
 package com.rkrua.controller;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
@@ -26,8 +27,8 @@ public class UpdateMemberServlet extends HttpServlet {
 		
 		String userId = request.getParameter("userId");
 		
-		MemberDao mDao = MemberDao.getInstance();		// µ¥ÀÌÅÍº£ÀÌ½º ¿¬µ¿
-		MemberVo mVo = mDao.getMember(userId);	// µ¥ÀÌÅÍº£ÀÌ½º·ÎºÎÅÍ È¸¿øÁ¤º¸ ·Îµù
+		MemberDao mDao = MemberDao.getInstance();		// ï¿½ï¿½ï¿½ï¿½ï¿½Íºï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		MemberVo mVo = mDao.getMember(userId);	// ï¿½ï¿½ï¿½ï¿½ï¿½Íºï¿½ï¿½Ì½ï¿½ï¿½Îºï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½
 		
 //		request.setAttribute("name", mVo.getName());
 		request.setAttribute("mVo", mVo);
@@ -36,18 +37,18 @@ public class UpdateMemberServlet extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// µ¥ÀÌÅÍº£ÀÌ½º¿¡ ¼öÁ¤µÈ Á¤º¸¸¦ ¾÷µ¥ÀÌÆ®
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Íºï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
 		
 
 		
-		MemberDao mDao = MemberDao.getInstance();			// µ¥ÀÌÅÍº£ÀÌ½º ¿¬µ¿
+		MemberDao mDao = MemberDao.getInstance();			// ï¿½ï¿½ï¿½ï¿½ï¿½Íºï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		MemberVo mVo = new MemberVo();
 		
-		// »óÇ° ¼öÁ¤ ÄÚµå : µ¥ÀÌÅÍº£ÀÌ½º¿¡¼­ »óÇ° »èÁ¦
-		HttpSession session = request.getSession(); // ¼¼¼Ç °´Ã¼ È£Ãâ
+		// ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ : ï¿½ï¿½ï¿½ï¿½ï¿½Íºï¿½ï¿½Ì½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½
+		HttpSession session = request.getSession(); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ È£ï¿½ï¿½
 		MemberVo admininfo = (MemberVo)session.getAttribute("loginUser");
 		
-		// ÆÄÀÏ ¾÷·Îµå ÄÚµå ÀÛ¼º	
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½ ï¿½Úµï¿½ ï¿½Û¼ï¿½	
 		int result = -1;
 		String savePath= "profilePhoto";
 		ServletContext context = getServletContext();
@@ -57,13 +58,26 @@ public class UpdateMemberServlet extends HttpServlet {
 
 //		System.out.println(uploadFilePath);
 		
+		File Folder = new File(uploadFilePath);
+		if (!Folder.exists()) {
+			try{
+				Folder.mkdir(); 	//í´ë” ìƒì„±í•©ë‹ˆë‹¤.
+//				System.out.println("í´ë”ê°€ ìƒì„±ë˜ì—ˆìŠµë‹ˆë‹¤.");
+			} catch(Exception e){
+				e.getStackTrace();
+			}
+        }else {
+//			System.out.println("ì´ë¯¸ í´ë”ê°€ ìƒì„±ë˜ì–´ ìˆìŠµë‹ˆë‹¤.");
+		}
+
+		
 		try {
 			MultipartRequest multi = new MultipartRequest(
-					request,							// request °´Ã¼
-					uploadFilePath,						// ¼­¹ö»óÀÇ ½ÇÁ¦ ÆÄÀÏ °æ·Î
-					uploadFileSizeLimit,				// ÃÖ´ë ¾÷·Îµå ÆÄÀÏ Å©±â
-					encType,							// ÀÎÄÚµù ¹æ½Ä
-					new DefaultFileRenamePolicy()		// Á¤Ã¥: µ¿ÀÏ ÀÌ¸§½Ã ´Ù¸¥ ÀÌ¸§À¸·Î Ãß°¡
+					request,							// request ï¿½ï¿½Ã¼
+					uploadFilePath,						// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+					uploadFileSizeLimit,				// ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½
+					encType,							// ï¿½ï¿½ï¿½Úµï¿½ ï¿½ï¿½ï¿½
+					new DefaultFileRenamePolicy()		// ï¿½ï¿½Ã¥: ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
 					);
 
 			String name = multi.getParameter("name");
@@ -76,7 +90,7 @@ public class UpdateMemberServlet extends HttpServlet {
 			int admin = Integer.parseInt(multi.getParameter("admin"));
 			int point = Integer.parseInt(multi.getParameter("point"));
 			
-			mVo.setUserid(userid);		// ÀÔ·ÂµÈ »óÇ° Á¤º¸ Vo¿¡ ÀúÀå
+			mVo.setUserid(userid);		// ï¿½Ô·Âµï¿½ ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½ Voï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			mVo.setName(name);
 			mVo.setPwd(pwd);
 			mVo.setEmail(email);
@@ -86,19 +100,19 @@ public class UpdateMemberServlet extends HttpServlet {
 			mVo.setAdmin(admin);
 			mVo.setPoint(point);
 		} catch(Exception e) {
-			System.out.println("ÆÄÀÏ ¾÷·Îµå°£ ¿¹¿Ü ¹ß»ı: " + e);
+			System.out.println("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµå°£ ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½: " + e);
 		}		
-		// µ¥ÀÌÅÍº£ÀÌ½º·ÎºÎÅÍ ÇØ´ç ÄÚµåÀÇ Á¤º¸ ¼öÁ¤
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Íºï¿½ï¿½Ì½ï¿½ï¿½Îºï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½Úµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		result = mDao.updateMember(mVo);
 		
-			// »óÇ° µî·Ï ¿Ï·á½Ã, ¸Ş½ÃÁö Ãâ·Â
+			// ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½ï¿½, ï¿½Ş½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 			if(result==1) {
-				System.out.println("È¸¿øÁ¤º¸ ¼öÁ¤¿¡ ¼º°ø");
+				System.out.println("È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 			} else {
-				System.out.println("È¸¿øÁ¤º¸ ¼öÁ¤¿¡ ½ÇÆĞ");	
+				System.out.println("È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");	
 			}		
 		
-		// ¼öÁ¤ ÈÄ ¸ñ·Ï ÆäÀÌÁö·Î ÀÌµ¿
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
 			if(admininfo.getAdmin() == 1) {
 				response.sendRedirect("memberList.do");				
 			} else {

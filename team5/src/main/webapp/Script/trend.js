@@ -17,9 +17,9 @@ function checkShowroom() {
 }
 
 function checkTrand(){
-	if(document.frm.name.value.length===0){
+	if(document.frm.title.value.length===0){
 		alert("타이틀을 입력하세요");
-		frm.name.focus();
+		frm.title.focus();
 		return false;
 	}
 	if(document.frm.pictureUrl.value.length===0){

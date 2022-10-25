@@ -17,7 +17,7 @@
 	<tr>
 		<th>글 제목</th>
 		<td>
-			<input type="text" name="name" size="105px">
+			<input type="text" name="title" size="105px">
 		</td>
 	</tr>
 	<tr>

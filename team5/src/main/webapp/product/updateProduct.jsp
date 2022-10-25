@@ -37,15 +37,11 @@
 					</tr>
 					<tr>
 						<th>사진</th>
-						<td><input type="file" name="pictureurl" value="${product.pictureurl}"><br>()이미지 변경시 선택하세요.)</td>
+						<td><input type="file" name="pictureurl"></td>
 					</tr>
 					<tr>
 						<th>카테고리</th>
 						<td><input type="text" name="category" value="${product.category}">(바닥: 200 전등: 400 장식: 600)</td>
-					</tr>	
-					<tr>
-						<th>상품 좌표</th>
-						<td><input type="text" name="coordinate" value="${product.coordinate}">예시(000,000,000,000)</td>
 					</tr>
 				</table>
 			</td>

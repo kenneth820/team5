@@ -54,14 +54,6 @@
 					<input type="text" name="category" placeholder="상품 카테고리를 설정하세요."> (바닥: 200 전등: 400 장식: 600)
 				</td>
 			</tr>
-			<tr>
-				<th>
-				상품 좌표 :
-				</th>
-				<td>
-					<input type="text" name="coordinate" placeholder="000,000,000,000"> (예시) 000,000,000,000
-				</td>
-			</tr>
 		</table>
 					<input type="submit" value="등록" onclick="return checkProduct()">
 					<input type="reset" value="취소">

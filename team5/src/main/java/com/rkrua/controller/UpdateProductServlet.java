@@ -21,30 +21,30 @@ public class UpdateProductServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// Äõ¸®½ºÆ®¸µÀ¸·Î Àü´Þ¹ÞÀº code È¹µæ
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Þ¹ï¿½ï¿½ï¿½ code È¹ï¿½ï¿½
 		String code = request.getParameter("code");
 		
-		// »óÇ° ¼öÁ¤ ¸µÅ© Å¬¸¯½Ã ¼öÁ¤ÇÒ »óÇ° Á¤º¸¸¦ Ç¥½Ã
+		// ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å© Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½
 		ProductDao pDao = ProductDao.getInstance();
 		ProductVo pVo = new ProductVo();
 		
-		// µ¥ÀÌÅÍ º£ÀÌ½º¿¡¼­ ¼öÁ¤ÇÒ Á¤º¸ È®ÀÎ
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
 		pVo = pDao.selectProductByCode(code);
 		
 		request.setAttribute("product", pVo);
 		
-		// ÆäÀÌÁö ÀÌµ¿ : ¼öÁ¤ ÆäÀÌÁö
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ : ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		RequestDispatcher dispatcher =
 				request.getRequestDispatcher("product/updateProduct.jsp");
 		dispatcher.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// »óÇ° ¼öÁ¤ ÄÚµå : µ¥ÀÌÅÍº£ÀÌ½º¿¡¼­ »óÇ° »èÁ¦
+		// ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ : ï¿½ï¿½ï¿½ï¿½ï¿½Íºï¿½ï¿½Ì½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½
 		ProductDao pDao = ProductDao.getInstance();
 		ProductVo pVo = new ProductVo();
 		
-		// ÆÄÀÏ ¾÷·Îµå ÄÚµå ÀÛ¼º	
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½ ï¿½Úµï¿½ ï¿½Û¼ï¿½	
 		int result = -1;
 		String savePath= "upload";
 		ServletContext context = getServletContext();
@@ -56,41 +56,39 @@ public class UpdateProductServlet extends HttpServlet {
 		
 		try {
 			MultipartRequest multi = new MultipartRequest(
-					request,							// request °´Ã¼
-					uploadFilePath,						// ¼­¹ö»óÀÇ ½ÇÁ¦ ÆÄÀÏ °æ·Î
-					uploadFileSizeLimit,				// ÃÖ´ë ¾÷·Îµå ÆÄÀÏ Å©±â
-					encType,							// ÀÎÄÚµù ¹æ½Ä
-					new DefaultFileRenamePolicy()		// Á¤Ã¥: µ¿ÀÏ ÀÌ¸§½Ã ´Ù¸¥ ÀÌ¸§À¸·Î Ãß°¡
+					request,							// request ï¿½ï¿½Ã¼
+					uploadFilePath,						// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+					uploadFileSizeLimit,				// ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½
+					encType,							// ï¿½ï¿½ï¿½Úµï¿½ ï¿½ï¿½ï¿½
+					new DefaultFileRenamePolicy()		// ï¿½ï¿½Ã¥: ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
 					);
 
 			int code = Integer.parseInt(multi.getParameter("code"));
 			String name = multi.getParameter("name");
 			int price = Integer.parseInt(multi.getParameter("price"));
 			int category = Integer.parseInt(multi.getParameter("category"));
-			String pictureurl = multi.getFilesystemName("pictureurl");
-			String coordinate = multi.getParameter("coordinate");			
+			String pictureurl = multi.getFilesystemName("pictureurl");			
 			
-			pVo.setCode(code);		// ÀÔ·ÂµÈ »óÇ° Á¤º¸ Vo¿¡ ÀúÀå
+			pVo.setCode(code);		// ï¿½Ô·Âµï¿½ ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½ Voï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			pVo.setName(name);
 			pVo.setPrice(price);
 			pVo.setCategory(category);
 			pVo.setPictureurl(pictureurl);
-			pVo.setCoordinate(coordinate);
 		} catch(Exception e) {
-			System.out.println("ÆÄÀÏ ¾÷·Îµå°£ ¿¹¿Ü ¹ß»ý: " + e);
+			System.out.println("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµå°£ ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½: " + e);
 		}
 		
-		// µ¥ÀÌÅÍº£ÀÌ½º·ÎºÎÅÍ ÇØ´ç ÄÚµåÀÇ Á¤º¸ ¼öÁ¤
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Íºï¿½ï¿½Ì½ï¿½ï¿½Îºï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½Úµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		result = pDao.updateProduct(pVo);
 		
-			// »óÇ° µî·Ï ¿Ï·á½Ã, ¸Þ½ÃÁö Ãâ·Â
+			// ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½ï¿½, ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 			if(result==1) {
-				System.out.println("»óÇ° ¼öÁ¤¿¡ ¼º°ø");
+				System.out.println("ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 			} else {
-				System.out.println("»óÇ° ¼öÁ¤¿¡ ½ÇÆÐ");	
+				System.out.println("ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");	
 			}		
 		
-		// ¼öÁ¤ ÈÄ ¸ñ·Ï ÆäÀÌÁö·Î ÀÌµ¿
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
 		response.sendRedirect("productList.do");
 	}
 

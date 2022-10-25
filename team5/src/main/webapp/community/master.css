@@ -427,6 +427,7 @@ input#img-6:checked ~ .nav-dots label#img-dot-6 {
 	padding-left: 10px;
 }
 #channel {
+	font-size: 25px;
 	width:100%;
 }
 #m_img{

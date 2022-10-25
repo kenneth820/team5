@@ -8,17 +8,10 @@ public class ProductVo {
 	int price;
 	String pictureurl;
 	int category;
-	String Coordinate;
 	Timestamp reg_date;
 	
 	public void setReg_date(Timestamp reg_date) {
 		this.reg_date = reg_date;
-	}
-	public String getCoordinate() {
-		return Coordinate;
-	}
-	public void setCoordinate(String coordinate) {
-		Coordinate = coordinate;
 	}
 	public int getCategory() {
 		return category;

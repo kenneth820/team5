@@ -76,7 +76,9 @@
             <li class="list-item">
               <div class="box__information">
                 <div class="text__name">
+	                <a href="visitShowroom.do?userid=${trend.userid}">
 	                  <h3>${trend.userid}</h3>
+	                </a>
 	                  <c:if test="${trend.userid == loginUser.userid}">
 	                  <div>
 						<a href="updateTrend.do?num=${trend.num }">
@@ -119,7 +121,9 @@
 						<div class="user-info">
 							<img class="profilePhoto" src="image/noimage.jpg" alt="기본프로필사진">
 							<div class="userInfo">
-								<p class="name">${trend.userid}</p>
+								<a href="visitShowroom.do?userid=${trend.userid}">
+									<p class="name">${trend.userid}</p>
+								</a>
 							</div>
 							<p class="selfcomment">${trend.title}</p>
 							<p class="point">${trend.text}</p>

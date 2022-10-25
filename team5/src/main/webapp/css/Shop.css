@@ -305,3 +305,6 @@ flex-direction: column;
 z-index: 20;
 min-width:558px;
 }
+#cartTable{
+	border: 0px;
+}
