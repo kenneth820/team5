@@ -1,19 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>로그인화면</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>로그인화면</title>
 </head>
 <body onload="loaded()" onkeydown="keydown()" onkeyup="keyup()">
-<div style="flex: 80%;" >
+	<div style="flex: 80%;">
 
-   <canvas width="896px"height="909px" id="c1"></canvas>
-   <div>
-            <script>
+		<canvas width="896px" height="909px" id="c1"></canvas>
+		<div>
+			<script>
            
            var context; //화가 객체 
 
@@ -29,19 +29,19 @@
            var imgBg1= new Image();
            imgBg1.src="./BG1.jpg";
            
-           var imgBg2= new Image();
+/*            var imgBg2= new Image();
            var imgBg3= new Image();
            var imgBg4= new Image();
            var imgBg5= new Image();
            var imgBg6= new Image();
-           var imgBg7= new Image();
+           var imgBg7= new Image(); */
            
-           imgBg2.src="./BG2.png";
+/*            imgBg2.src="./BG2.png";
            imgBg3.src="./BG3.png";
            imgBg4.src="./BG4.png";
            imgBg5.src="./BG5.png";
            imgBg6.src="./BG6.png";
-           imgBg7.src="./BG7.png";
+           imgBg7.src="./BG7.png"; */
     		
            // 플레이어 캐릭터의 중심좌표
            var x=800, y=850; //캐릭터의 위치좌표
@@ -56,10 +56,10 @@
                setInterval(runGame,10); //1초에 100번 호출
            }
     
-           ${code}
+           /* ${code} */
            function runGame(){
                moveAll(); //캐릭터 움직이기
-               if(${code} == "선택한아이템") {
+/*                if(${code} == "선택한아이템") {
             	   drawAll(imgBg2.src); // 이미지들 그리기
                } else if(조건2) {
             	   drawAll(imgBg3.src); // 이미지들 그리기
@@ -67,7 +67,7 @@
             	   drawAll(imgBg4.src); // 이미지들 그리기
                } else {
             	   drawAll(); // 이미지들 그리기
-               }
+               } */
                drawAll(); // 이미지들 그리기
            }
     
@@ -121,7 +121,7 @@
            }
            
 		</script>
-   </div>
-</div>
+		</div>
+	</div>
 </body>
 </html>
