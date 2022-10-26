@@ -22,19 +22,18 @@ public class DeleteAllCartServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		CartDao cDao = CartDao.getInstance();
-		HttpSession session = request.getSession(); // ¼¼¼Ç °´Ã¼ È£Ãâ
-		MemberVo mVo = (MemberVo)session.getAttribute("loginUser");
+		HttpSession session = request.getSession(); // ì„¸ì…˜ íšë“
+		MemberVo mVo = (MemberVo)session.getAttribute("loginUser");		// ìœ ì €ì•„ì´ë”” ë°›ê¸°
 		
-		cDao.deleteAllcart(mVo.getUserid());
+		cDao.deleteAllcart(mVo.getUserid());		// í•´ë‹¹í•˜ëŠ” ìœ ì €ì˜ ì¥ë°”êµ¬ë‹ˆ ìƒí’ˆ ëª¨ë‘ ì‚­ì œ
 
-		List<CartVo> cartList = cDao.selectAllCart(mVo.getUserid());
+		List<CartVo> cartList = cDao.selectAllCart(mVo.getUserid());	// cartList = none
 		request.setAttribute("CartList", cartList);
 		int total = cDao.totalPrice(mVo.getUserid());
 		request.setAttribute("total", total);
 
-		// µ¥ÀÌÅÍº£ÀÌ½º·ÎºÎÅÍ ÇØ´ç ÄÚµåÀÇ Á¤º¸ »èÁ¦
+
 		
-		// »èÁ¦ ÈÄ ¸ñ·Ï ÆäÀÌÁö·Î ÀÌµ¿
 		RequestDispatcher dispatcher = 
 				request.getRequestDispatcher("product/Cart.jsp");
 		dispatcher.forward(request, response);

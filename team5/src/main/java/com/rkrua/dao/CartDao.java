@@ -146,6 +146,7 @@ public class CartDao {
 		return list;
 	}
 	
+	// 장바구니에 있는지 확인
 	public int checkCart(String userid, int code) {
 		int result = -1;
 		String sql = "select userid, code from cart where userid = ? and code = ?";
@@ -177,6 +178,8 @@ public class CartDao {
 		}	
 		return result;
 	}
+	
+	// 총 금액 계산
 	public int totalPrice(String userid) {
 		int t_price = 0;
 		String sql = "select sum(price) as price "

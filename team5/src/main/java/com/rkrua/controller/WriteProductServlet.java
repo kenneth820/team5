@@ -34,12 +34,12 @@ public class WriteProductServlet extends HttpServlet {
 		ProductDao pDao = ProductDao.getInstance();
 		
 		int result = -1;
-		String savePath= "upload";
-		int uploadFileSizeLimit = 5 * 1024 * 1024;
-		String encType = "UTF-8";
+		String savePath= "upload";		// 저장경로
+		int uploadFileSizeLimit = 5 * 1024 * 1024;		// 파일 크기
+		String encType = "UTF-8";		// 인코딩 타입
 
 		ServletContext context = getServletContext();
-		String uploadFilePath = context.getRealPath(savePath);
+		String uploadFilePath = context.getRealPath(savePath);	// 실제 서버 경로 획득
 		System.out.println(uploadFilePath);
 		
 		// 해당 디렉토리가 없을경우 디렉토리를 생성합니다.
@@ -57,48 +57,32 @@ public class WriteProductServlet extends HttpServlet {
 		
 		try {
 			MultipartRequest multi = new MultipartRequest(
-					request,							// request ��ü
-					uploadFilePath,						// �������� ���� ���� ���
-					uploadFileSizeLimit,				// �ִ� ���ε� ���� ũ��
-					encType,							// ���ڵ� ���
-					new DefaultFileRenamePolicy()		// ��å: ���� �̸��� �ٸ� �̸����� �߰�
+					request,							
+					uploadFilePath,						
+					uploadFileSizeLimit,				
+					encType,							
+					new DefaultFileRenamePolicy()		
 					);
 
-//			int code = Integer.parseInt(multi.getParameter("code"));
 			String name = multi.getParameter("name");
 			int price = Integer.parseInt(multi.getParameter("price"));
 			int category = Integer.parseInt(multi.getParameter("category"));
 			String pictureurl = multi.getFilesystemName("pictureurl");
 			
-//			System.out.println(name);
-//			System.out.println(price);
-//			System.out.println(description);
-//			System.out.println(pictureurl);
-//			System.out.println(reg_date);
-			
-			
-//			pVo.setCode(code);		// �Էµ� ��ǰ ���� Vo�� ����
 			pVo.setName(name);
 			pVo.setPrice(price);
 			pVo.setCategory(category);
 			pVo.setPictureurl(pictureurl);
 			
-			
 			result = pDao.insertProduct(pVo);
 			
-			// ��ǰ ��� �Ϸ��, �޽��� ���
 			if(result==1) {
-//				System.out.println("��ǰ ��Ͽ� ����");
 				request.setAttribute("message", "��ǰ ��Ͽ� �����Ͽ����ϴ�.");
 			} else {
-//				System.out.println("��ǰ ��Ͽ� ����");
 				request.setAttribute("message", "��ǰ ��Ͽ� �����Ͽ����ϴ�.");
 			}
 			response.sendRedirect("productList.do");
 			
-//			RequestDispatcher dispatcher = 
-//					request.getRequestDispatcher("productList.do");
-//			dispatcher.forward(request, response);
 		} catch(Exception e) {
 			System.out.println("���� ���ε尣 ���� �߻�" + e);
 		}

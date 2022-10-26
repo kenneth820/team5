@@ -18,35 +18,31 @@ public class DeleteProductServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// »óÇ° »èÁ¦ ¸µÅ© Å¬¸¯½Ã ÀÌµ¿
+		// ìƒí’ˆ ì½”ë“œ íšë“
 		String code = request.getParameter("code");
 		
 		ProductDao pDao = ProductDao.getInstance();
 		ProductVo pVo = new ProductVo();
 		
-		// µ¥ÀÌÅÍ º£ÀÌ½º¿¡¼­ »èÁ¦ÇÒ Á¤º¸ È®ÀÎ
+		// ì‚­ì œí•˜ë ¤ëŠ” ìƒí’ˆë°ì´í„° ì½”ë“œë¡œ íšë“
 		pVo = pDao.selectProductByCode(code);
 		
 		request.setAttribute("product", pVo);
-		
-		// ÆäÀÌÁö ÀÌµ¿ : »èÁ¦ ÆäÀÌÁö
+	
 		RequestDispatcher dispatcher =
 				request.getRequestDispatcher("product/deleteProduct.jsp");
 		dispatcher.forward(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// »óÇ° »èÁ¦ ÄÚµå : µ¥ÀÌÅÍº£ÀÌ½º¿¡¼­ »óÇ° »èÁ¦
-		
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
 		ProductDao pDao = ProductDao.getInstance();
-		ProductVo pVo = new ProductVo();
 		
 		String code = request.getParameter("code");
 		
-		// µ¥ÀÌÅÍº£ÀÌ½º·ÎºÎÅÍ ÇØ´ç ÄÚµåÀÇ Á¤º¸ »èÁ¦
+		// ì½”ë“œë¡œ ì–»ì€ ìƒí’ˆ ì‚­ì œ
 		pDao.deleteProduct(code);
 		
-		// »èÁ¦ ÈÄ ¸ñ·Ï ÆäÀÌÁö·Î ÀÌµ¿
+		// ìƒí’ˆë¦¬ìŠ¤íŠ¸ë¡œ ì´ë™
 		response.sendRedirect("productList.do");
 	}
 

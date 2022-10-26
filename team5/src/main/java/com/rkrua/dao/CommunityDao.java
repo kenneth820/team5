@@ -21,9 +21,7 @@ public class CommunityDao {
 		return instance;
 	}
 	
-	// Create (insert) - 媛쒖씤猷� �벑濡�
-	// �엯�젰媛� : �쟾泥� 媛쒖씤猷� �젙蹂�
-	// 諛섑솚媛� : 荑쇰━ �닔�뻾 寃곌낵
+	// Create (insert) - 등록
 	public int inserttrend(TrendVo tVo){
 		String sql = "insert into trend(num,userid,title,pictureurl,text) values(trend_seq.nextval, ?, ?, ?, ?)";
 		int result = -1;		
@@ -49,6 +47,8 @@ public class CommunityDao {
 		}
 		return result;
 	}
+	
+	// 쇼룸 등록
 	public int insertShowroom(ShowroomVo sVo) {
 		String sql = "insert into showroom values(showroom_seq.nextval, ?, ?)";
 		int result = -1;		
@@ -72,6 +72,7 @@ public class CommunityDao {
 		return result;
 	}
 	
+	// 쇼룸 삭제
 	public void deleteShowroom(int code) {
 		String sql = "delete from showroom where code =?";
 		int result = -1;
@@ -91,8 +92,9 @@ public class CommunityDao {
 		} finally {
 			DBManager.close(conn, pstmt);
 		}
-		
 	}
+	
+	// 트렌드 삭제
 	public void deleteTrend(int num) {
 		String sql = "delete from Trend where num=?";
 		int result = -1;
@@ -115,6 +117,7 @@ public class CommunityDao {
 		
 	}
 	
+	// 트렌드 수정
 	public int updateTrend(TrendVo tVo)	{
 		int result = -1;
 		Connection conn = null;
@@ -141,6 +144,7 @@ public class CommunityDao {
 		return result;
 	}
 	
+	//특정 게시글 가져오기
 	public TrendVo selectTrendByNum(int num) {
 		String sql = "select * from trend where num=?";		
 		Connection conn = null;

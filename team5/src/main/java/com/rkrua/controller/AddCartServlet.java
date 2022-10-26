@@ -22,7 +22,6 @@ public class AddCartServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
 		
 		int code = Integer.parseInt(request.getParameter("code"));
 		String userid = request.getParameter("userid");
@@ -33,16 +32,16 @@ public class AddCartServlet extends HttpServlet {
 //		System.out.println(cVo.getUserid());
 		
 		int result = cDao.checkCart(userid, code);
-		if (result == -1){
+		if (result == -1){	// ìƒí’ˆì´ ì—†ì„ê²½ìš°
 			response.setContentType("text/html; charset=UTF-8");
 			cDao.addCart(userid, code);			
 			PrintWriter writer = response.getWriter();
-			writer.println("<script>alert('Àå¹Ù±¸´Ï¿¡ Ãß°¡µÇ¾ú½À´Ï´Ù.'); location.href='productList.do';</script>");
+			writer.println("<script>alert('ì¥ë°”êµ¬ë‹ˆì— ë‹´ê²¼ìŠµë‹ˆë‹¤.'); location.href='productList.do';</script>");
 			writer.close();
-		} else {
+		} else {	// ìƒí’ˆì´ ìˆì„ ê²½ìš°
 			response.setContentType("text/html; charset=UTF-8");		
 			PrintWriter writer = response.getWriter();
-			writer.println("<script>alert('ÀÌ¹Ì Àå¹Ù±¸´Ï¿¡ ÀÖ´Â »óÇ°ÀÔ´Ï´Ù.'); location.href='productList.do';</script>");
+			writer.println("<script>alert('ì´ë¯¸ ì¥ë°”êµ¬ë‹ˆì— ìˆëŠ” ìƒí’ˆì…ë‹ˆë‹¤.'); location.href='productList.do';</script>");
 			writer.close();
 		}
 			

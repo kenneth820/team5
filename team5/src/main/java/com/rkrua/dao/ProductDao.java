@@ -179,49 +179,6 @@ public class ProductDao {
 		}
 	}
 
-	// 상품 검색
-	// 입력값 : column: 검색대상(분야), keyword: 검색어
-	// 반환값: 검색 결과 리슽으
-	public List<ProductVo> searchProduct(String keyword) {
-//		# 안되는 예시 : select * from product where 'code' like '%사과%' order by code desc;
-//		=> String sql = "select * from product where ? like ? order by code desc";
-//		String sql= "select * from product where "+column+" like ? order by code desc";
-		String sql = "select * from ( "
-				+ "select rownum n, p.* "
-				+ "from (select * from product where name like ? order by code) p) ";
-		
-		List<ProductVo> list = new ArrayList<ProductVo>();		// List 컬렉션 객체 생성
-		
-		Connection conn = null;
-		PreparedStatement pstmt = null; // 동적 쿼리
-		ResultSet rs = null;
-
-		try {
-			conn = DBManager.getConnection();
-			// (3단계) Statement 객체 생성
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, "%"+keyword+"%");
-			// (4단계) SQl문 실행 및 결과처리 => executeUpdate : 삽입(insert/update/delete)
-			rs = pstmt.executeQuery(); // 쿼리 수행
-			while (rs.next()) {
-				ProductVo pVo = new ProductVo();
-				pVo.setCode(rs.getInt("code"));
-				pVo.setName(rs.getString("name"));
-				pVo.setPrice(rs.getInt("price"));
-				pVo.setPictureurl(rs.getString("pictureurl"));
-				pVo.setCategory(rs.getInt("category"));
-				pVo.setReg_date(rs.getTimestamp("reg_date"));
-				list.add(pVo);		// 리스트 객체에 데이터 추가
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			DBManager.close(conn, pstmt, rs);
-		}
-		return list;
-	}
-	
-
 	// 게시글 검색
 	public List<ProductVo> getProductList(){
 		return getProductList(00,"", 1);
@@ -269,7 +226,6 @@ public class ProductDao {
 			pstmt.setString(3, "%"+category+"%");
 			pstmt.setInt(4, 1+(page-1)*9);
 			pstmt.setInt(5, page * 9);
-			
 			
 			// (4단계) SQl문 실행 및 결과처리 => executeUpdate : 삽입(insert/update/delete)
 			rs = pstmt.executeQuery(); // 쿼리 수행

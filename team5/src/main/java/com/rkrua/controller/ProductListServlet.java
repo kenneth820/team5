@@ -24,53 +24,41 @@ public class ProductListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ProductDao pDao = ProductDao.getInstance();
 		CartDao cDao = CartDao.getInstance();
-		HttpSession session = request.getSession(); // ���� ��ü ȣ��
+		HttpSession session = request.getSession(); // 세션 호출
 		
-		int page = 1;
+		int page = 1;		// 기본 페이지 : 1
 		String t_page = request.getParameter("p") ;
-		
 		if(t_page != null && !t_page.equals("")) {
 			page = Integer.parseInt(t_page);
 		}
 		
-		String keyword = "";
-		
+		String keyword = ""; // 기본 키워드 : ""
 		String t_keyword = request.getParameter("k");
-		
 		if(t_keyword != null && !t_keyword.equals("")) {
 			keyword = t_keyword;
 		}
 		
-		int category = 00;
+		int category = 00;	// 기본 카테고리 : 00 (모두 선택)
 		String t_category = request.getParameter("c") ;
-		
 		if(t_category != null && !t_keyword.equals("00")) {
 			category = Integer.parseInt(t_category);
 		}
 		
-		MemberVo mVo = (MemberVo)session.getAttribute("loginUser");
+		MemberVo mVo = (MemberVo)session.getAttribute("loginUser");		// 유저아이디 세션으로 획득
 		String userid = "";
-		String t_userid = mVo.getUserid();
+		String t_userid = mVo.getUserid();		// 유저아이디 획득
 		
-		if(t_userid != null && !t_userid.equals("")) {
+		if(t_userid != null && !t_userid.equals("")) {		
 			userid = t_userid;
 		}
+		List<ProductVo> pageList = pDao.getProductList(userid,category, keyword, page);		// 상품 리스트 가져오기 유저아이디는 해당 유저가 갖고있지 않은 상품만 보여줌 
+		List<CartVo> cartList = cDao.selectAllCart(userid);	 // 장바구니 리스트 가져오기
 		
-		List<ProductVo> pageList = pDao.getProductList(userid,category, keyword, page);
-		System.out.println(pageList);
-		
-		
-		List<CartVo> cartList = cDao.selectAllCart(userid);
-		
-		
-		int count = pDao.getProductCount(userid, category, keyword);
+		int count = pDao.getProductCount(userid, category, keyword);		// 페이징처리
 		request.setAttribute("count", count);
 		request.setAttribute("pageList", pageList);
 		request.setAttribute("CartList", cartList);
-//		productList.size();
-//		productList.get(0);
-
-		// ����Ʈ �������� �̵�
+		
 		if (mVo.getAdmin()==1) {			
 		RequestDispatcher dispatcher = 
 				request.getRequestDispatcher("product/Shop_manager.jsp");
@@ -80,8 +68,6 @@ public class ProductListServlet extends HttpServlet {
 					request.getRequestDispatcher("product/Shop.jsp");
 			dispatcher.forward(request, response);
 		}
-		
-//		request.getRequestDispatcher("product/productList.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

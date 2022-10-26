@@ -31,9 +31,11 @@ public class VisitShowroomServlet extends HttpServlet {
 		VisitVo vVo = new VisitVo();
 		VisitDao vDao = VisitDao.getInstance();
 		
-		String url;
 		vVo = vDao.moveShowroomByCode(userid);
+		System.out.println(vVo);
 		request.setAttribute("vVo", vVo);
+
+		String url;
 		
 		if(userid.equals(mVo.getUserid())) {
 			url = "main.jsp";

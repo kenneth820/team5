@@ -23,24 +23,22 @@ public class DeleteCartServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	CartDao cDao = CartDao.getInstance();
-	CartVo cVo = new CartVo();
-	HttpSession session = request.getSession(); // ¼¼¼Ç °´Ã¼ È£Ãâ
+	HttpSession session = request.getSession(); 
 	MemberVo mVo = (MemberVo)session.getAttribute("loginUser");
 	
-	String cartid = request.getParameter("cartid");
-	cDao.deleteCart(cartid);
+	String cartid = request.getParameter("cartid"); // ì‚­ì œí•˜ë ¤ëŠ” ì¹´íŠ¸ ì•„ì´ë””ê°’ ì–»ê¸°
+	cDao.deleteCart(cartid);		// ì–»ì€ ì¹´íŠ¸ ì•„ì´ë””ê°’ì„ ì‚­ì œ
 
 	List<CartVo> cartList = cDao.selectAllCart(mVo.getUserid());
 	request.setAttribute("CartList", cartList);
-	int total = cDao.totalPrice(mVo.getUserid());
+	int total = cDao.totalPrice(mVo.getUserid());		// ì‚­ì œí•œ ë’¤ ì´ ê¸ˆì•¡ ê³„ì‚°
 	request.setAttribute("total", total);
 
-	int change = cDao.resultPrice(mVo.getPoint(), total);
+	int change = cDao.resultPrice(mVo.getPoint(), total);  // ì‚­ì œí•œ ë’¤ ê±°ìŠ¤ë¦„ëˆ ê³„ì‚°
 	
-	request.setAttribute("change", change);
-	// µ¥ÀÌÅÍº£ÀÌ½º·ÎºÎÅÍ ÇØ´ç ÄÚµåÀÇ Á¤º¸ »èÁ¦
+	request.setAttribute("change", change);	
 	
-	// »èÁ¦ ÈÄ ¸ñ·Ï ÆäÀÌÁö·Î ÀÌµ¿
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
 	RequestDispatcher dispatcher = 
 			request.getRequestDispatcher("product/Cart.jsp");
 	dispatcher.forward(request, response);

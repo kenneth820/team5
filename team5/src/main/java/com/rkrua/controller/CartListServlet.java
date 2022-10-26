@@ -24,20 +24,18 @@ public class CartListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		HttpSession session = request.getSession(); // ººº« ∞¥√º »£√‚
+		HttpSession session = request.getSession(); 
 		MemberVo mVo = (MemberVo)session.getAttribute("loginUser");
 		
 		String userid = request.getParameter("userid");
 		
-		CartVo cVo = new CartVo();
 		CartDao cDao = CartDao.getInstance();		
 	
 		List<CartVo> cartList = cDao.selectAllCart(userid);
 //		System.out.println(cartList.size());
 		request.setAttribute("CartList", cartList);
-		int total = cDao.totalPrice(userid);
-		int change = cDao.resultPrice(mVo.getPoint(), total);
+		int total = cDao.totalPrice(userid);		// Ï¥ù Í∏àÏï°
+		int change = cDao.resultPrice(mVo.getPoint(), total);		// Í±∞Ïä§Î¶ÑÎèà
 		System.out.println(mVo.getPoint());
 		System.out.println(change);
 		
@@ -45,7 +43,7 @@ public class CartListServlet extends HttpServlet {
 		request.setAttribute("total", total);
 //		System.out.println(cartList); 
 		
-		// ∏ÆΩ∫∆Æ ∆‰¿Ã¡ˆ∑Œ ¿Ãµø
+		
 		RequestDispatcher dispatcher = 
 				request.getRequestDispatcher("product/Cart.jsp");
 		dispatcher.forward(request, response);

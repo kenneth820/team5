@@ -21,11 +21,10 @@ public class ItemDao {
 		return instance;
 	}
 	
-	// �븘�씠�뀥 援щℓ
+	//상품 구매
 	public int insertItem(String userid, int code ) {
 		int result = -1;
 		Connection conn = null;
-		// �룞�씪�븳 荑쇰━臾몄쓣 �듅�젙 媛믩쭔 諛붽퓭�꽌 �뿬�윭踰� �떎�뻾�빐�빞 �븷 �븣, 留ㅺ컻蹂��닔媛� 留롮븘�꽌 荑쇰━臾� �젙由� �븘�슂
 		PreparedStatement pstmt = null;
 
 		String sql_insert = "insert into item(userid,code) values(?, ?)";
@@ -33,13 +32,10 @@ public class ItemDao {
 		try {
 			conn = DBManager.getConnection();
 			pstmt = conn.prepareStatement(sql_insert);
-//			pstmt.setInt(1, pVo.getCode());
 			pstmt.setString(1, userid);
 			pstmt.setInt(2, code); // �젙�닔�삎
-//			System.out.println("�쑀���븘�씠�뵒: "+userid);
-//			System.out.println("�긽�뭹�븘�씠�뵒: "+code);
 			
-			result = pstmt.executeUpdate(); // �뜎�눖�봺 占쎈땾占쎈뻬
+			result = pstmt.executeUpdate(); 
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -48,13 +44,11 @@ public class ItemDao {
 		return result;
 	}
 	
-	// �븘�씠�뀥 由ъ뒪�듃 �뼸湲�
+	// 상품 리스트
 	
-	// �븘�씠�뀥 遺꾨쪟
 	public List<ItemVo> getItemList(){
 		return getItemList("",00, 1);
 	}
-	// �럹�씠吏� 蹂� 由ъ뒪�듃 �몴�떆
 	public List<ItemVo> getItemList(int page){
 		return getItemList("",00,page);
 	}
@@ -76,23 +70,19 @@ public class ItemDao {
 				+ "				) "
 				+ "				where n between ? and ? ";
 
-		List<ItemVo> list = new ArrayList<ItemVo>(); // 由ъ뒪�듃 而щ젆�뀡 媛앹껜 �깮�꽦
-//		System.out.println(userid);
+		List<ItemVo> list = new ArrayList<ItemVo>(); 
 		Connection conn = null;
 		ResultSet rs = null;
-		PreparedStatement pstmt = null; // �룞�쟻 荑쇰━
+		PreparedStatement pstmt = null; 
 
 		try {
 			conn = DBManager.getConnection();
-			// (3�떒怨�) Statement 媛앹껜 �깮�꽦
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userid);
 			pstmt.setString(2, "%"+category+"%");
 			pstmt.setInt(3, 1+(page-1)*9);
 			pstmt.setInt(4, page * 9);
 
-
-			// (4�떒怨�) SQl臾� �떎�뻾 諛� 寃곌낵泥섎━ => executeUpdate : �궫�엯(insert/update/delete)
 			rs = pstmt.executeQuery(); // 荑쇰━ �닔�뻾
 			while (rs.next()) {
 				ItemVo iVo = new ItemVo();
@@ -127,11 +117,9 @@ public class ItemDao {
 		
 		try {
 			conn = DBManager.getConnection();
-			// (3�떒怨�) Statement 媛앹껜 �깮�꽦
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userid);			
-			// (4�떒怨�) SQl臾� �떎�뻾 諛� 寃곌낵泥섎━ => executeUpdate : �궫�엯(insert/update/delete)
-			result = pstmt.executeUpdate();			// 荑쇰━ �닔�뻾
+			result = pstmt.executeUpdate();		
 			
 		} catch(Exception e) {			
 			e.printStackTrace();			
@@ -141,7 +129,7 @@ public class ItemDao {
 		return result;
 	}
 	
-	// �븘�씠�뀥 �빐�젣
+	// 장착 해제
 	public int unequipItem(String userid) {
 		int result = -1;
 		String sql = "update item set equip=0 where userid=?";
@@ -151,10 +139,8 @@ public class ItemDao {
 		
 		try {
 			conn = DBManager.getConnection();
-			// (3�떒怨�) Statement 媛앹껜 �깮�꽦
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userid);			
-			// (4�떒怨�) SQl臾� �떎�뻾 諛� 寃곌낵泥섎━ => executeUpdate : �궫�엯(insert/update/delete)
 			result = pstmt.executeUpdate();			// 荑쇰━ �닔�뻾
 			
 		} catch(Exception e) {			
@@ -166,7 +152,6 @@ public class ItemDao {
 
 	}
 
-	// 寃뚯떆臾� �닔 議고쉶
 	public int getItemCount() {
 		return getItemCount("",00);
 	}
@@ -188,17 +173,15 @@ public class ItemDao {
 		
 		Connection conn = null;
 		ResultSet rs = null;
-		PreparedStatement pstmt = null; // �룞�쟻 荑쇰━
+		PreparedStatement pstmt = null; 
 
 		try {
 			conn = DBManager.getConnection();
-			// (3�떒怨�) Statement 媛앹껜 �깮�꽦
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userid);
 			pstmt.setString(2, "%"+category+"%");
 			
-			// (4�떒怨�) SQl臾� �떎�뻾 諛� 寃곌낵泥섎━ => executeUpdate : �궫�엯(insert/update/delete)
-			rs = pstmt.executeQuery(); // 荑쇰━ �닔�뻾
+			rs = pstmt.executeQuery(); 
 			if(rs.next()) {
 				count = rs.getInt("count");
 			}

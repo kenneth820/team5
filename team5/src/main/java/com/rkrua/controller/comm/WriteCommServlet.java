@@ -26,12 +26,11 @@ public class WriteCommServlet extends HttpServlet {
 		System.out.println("writeComm.do get");
 		RequestDispatcher dispatcher = 
 				request.getRequestDispatcher("community/writeComm.jsp");
-		dispatcher.forward(request, response);		// �룷�썙�뱶 諛⑹떇�쑝濡� �럹�씠吏� �씠�룞
+		dispatcher.forward(request, response);		// 커뮤니티 페이지 이동
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("writeComm.do post");
-		request.setCharacterEncoding("UTF-8");		// post 諛⑹떇 �븳湲�泥섎━
+		request.setCharacterEncoding("UTF-8");		
 		response.setContentType("text/html; charset=UTF-8");
 		
 		HttpSession session = request.getSession(); // 세션 객체 호출
@@ -41,15 +40,13 @@ public class WriteCommServlet extends HttpServlet {
 		TrendVo tVo = new TrendVo();
 		
 		int result = -1;
-		// �뙆�씪 �뾽濡쒕뱶 愿��젴 �젙蹂�
+		// 저장 경로 설정
 		String savePath = "trend";
-		int uploadFileSizeLimit = 5 * 1024 * 1024;	// �뙆�씪 理쒕� �뾽濡쒕뱶 �겕湲�(5M)
-		String encType = "UTF-8";					// �씤肄붾뵫 諛⑹떇
+		int uploadFileSizeLimit = 5 * 1024 * 1024;	// 파일 크기(5M)
+		String encType = "UTF-8";					// 인코딩 타입
 		
 		ServletContext context = getServletContext();
 		String uploadFilePath = context.getRealPath(savePath);
-		System.out.println("�꽌踰꾩긽�쓽 �떎�젣 �뵒�젆�넗由�: ");
-		System.out.println(uploadFilePath);
 		
 		File Folder = new File(uploadFilePath);
 		if (!Folder.exists()) {

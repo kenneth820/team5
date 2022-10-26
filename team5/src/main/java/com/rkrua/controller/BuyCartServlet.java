@@ -27,35 +27,35 @@ public class BuyCartServlet extends HttpServlet {
 		int code;
 		
 		CartDao cDao = CartDao.getInstance();		
-		List<CartVo> cartList = cDao.selectAllCart(userid);
-		ItemDao iDao = ItemDao.getInstance();
+		List<CartVo> cartList = cDao.selectAllCart(userid);		// 모든 카트리스트 획득
+		ItemDao iDao = ItemDao.getInstance();		// 아이템 호출
 		
 //		code = cartList.get(1).getCode();
 //		System.out.println(code);
 		
 		for(int i=0; i<cartList.size();i++) {
-			code = cartList.get(i).getCode(); // cartList�� �ڵ� ������
-			System.out.println("�ڵ�:"+code);
-			iDao.insertItem(userid, code);
+			code = cartList.get(i).getCode(); // cartList n번째 값 얻기
+//			System.out.println(code);
+			iDao.insertItem(userid, code);	// n번째 값을 보유 아이템에 넣어줌 -> 상품 구매
 		}
 		
 		/* System.out.println(cartList.get(1).getCode()); */
 		
 		
-		int result = cDao.buyProduct(userid, change);
+		int result = cDao.buyProduct(userid, change);		// 상품 구매
 
 		if (result == 1){ 
-			cDao.deleteAllcart(userid);
+			cDao.deleteAllcart(userid);		// 상품 구매시, 장바구니에 있는 상품들 삭제
 		  
 			MemberDao mDao = MemberDao.getInstance();
 			MemberVo mVo = mDao.getMember(userid);
-			mVo.setPoint(change);
+			mVo.setPoint(change);			// 거스름돈 = 유저포인트
 					  
-			HttpSession session = request.getSession(); // ���� ��ü ȣ��
-			session.setAttribute("loginUser", mVo);		// ���ǿ� ȸ�� ���� ����
+			HttpSession session = request.getSession(); // 세션 호출
+			session.setAttribute("loginUser", mVo);		// 세션 획득 why? => 초기화된 값을 새로고침해주기 위해
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter writer = response.getWriter();
-			writer.println("<script>alert('��ǰ�� ���ŵǾ����ϴ�.'); location.href='productList.do';</script>");
+			writer.println("<script>alert('상품이 구매되었습니다.'); location.href='productList.do';</script>");
 			writer.close(); 
 			}
 		}

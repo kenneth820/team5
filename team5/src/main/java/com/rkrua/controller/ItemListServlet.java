@@ -24,16 +24,16 @@ public class ItemListServlet extends HttpServlet {
 		ItemDao iDao = ItemDao.getInstance();
 		HttpSession session = request.getSession(); // ���� ��ü ȣ��
 		
-		int page = 1;
+		int page = 1;	// 기본페이지 : 1페이지
 		String t_page = request.getParameter("p") ;
 		
 		if(t_page != null && !t_page.equals("")) {
 			page = Integer.parseInt(t_page);
 		}
 		
-		String keyword = "";
+		String keyword = "";	// 기본 페이지 : ""
 				
-		int category = 00;
+		int category = 00;		// 기본 카테고리 : 00(모두 선택)
 		String t_category = request.getParameter("c") ;
 		
 		if(t_category != null && !t_category.equals("00")) {

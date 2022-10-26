@@ -19,15 +19,15 @@ public class VisitDao {
 	
 	// 해당하는 사람의 쇼룸으로 이동
 	public VisitVo moveShowroomByCode(String userid) {
-		String sql = "select m.userid, "
+		String sql = "select t.userid, "
 				+ "    m.selfcomment, "
 				+ "    m.pictureurl, "
 				+ "    m.showroompicture, "
 				+ "    m.name "
 				+ "from trend t "
-				+ "left outer join member m "
-				+ "on m.userid = t.userid "
-				+ "and m.userid = ?";		
+				+ "join member m "
+				+ "on t.userid = ? "
+				+ "and m.userid = t.userid ";		
 		Connection conn = null;
 		PreparedStatement pstmt = null; // 동적 쿼리
 		ResultSet rs = null;
@@ -48,6 +48,7 @@ public class VisitDao {
 				vVo.setSelfcomment(rs.getString("selfcomment"));
 				vVo.setPictureurl(rs.getString("pictureurl"));
 				vVo.setShowpicture(rs.getString("showroompicture"));
+				System.out.println(vVo);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

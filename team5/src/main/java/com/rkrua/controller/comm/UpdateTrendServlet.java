@@ -41,7 +41,7 @@ public class UpdateTrendServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");		// post 諛⑹떇 �븳湲�泥섎━
+		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 		
 		HttpSession session = request.getSession(); // 세션 객체 호출
@@ -51,15 +51,13 @@ public class UpdateTrendServlet extends HttpServlet {
 		TrendVo tVo = new TrendVo();
 		
 		int result = -1;
-		// �뙆�씪 �뾽濡쒕뱶 愿��젴 �젙蹂�
+		// 파일 경로 설정
 		String savePath = "trend";
-		int uploadFileSizeLimit = 5 * 1024 * 1024;	// �뙆�씪 理쒕� �뾽濡쒕뱶 �겕湲�(5M)
-		String encType = "UTF-8";					// �씤肄붾뵫 諛⑹떇
+		int uploadFileSizeLimit = 5 * 1024 * 1024;	// 파일 크기 설정
+		String encType = "UTF-8";					// 파일 인코딩 타입설정
 		
 		ServletContext context = getServletContext();
-		String uploadFilePath = context.getRealPath(savePath);
-		System.out.println("�꽌踰꾩긽�쓽 �떎�젣 �뵒�젆�넗由�: ");
-		System.out.println(uploadFilePath);
+		String uploadFilePath = context.getRealPath(savePath);	// 파일 서버경로로 설정
 		
 		try {
 			MultipartRequest multi = new MultipartRequest(
@@ -81,26 +79,18 @@ public class UpdateTrendServlet extends HttpServlet {
 			tVo.setPictureUrl(pictureUrl);
 			tVo.setText(text);
 			tVo.setNum(num);
-			System.out.println("text:"+tVo);
-			result = cDao.updateTrend(tVo);
+			result = cDao.updateTrend(tVo);	// 데이터 업데이트
 			
 		} catch(Exception e) {
-			System.out.println("[�긽�뭹 �벑濡� �삁�쇅 諛쒖깮]: " + e);
+			System.out.println("[오류 발생]: " + e);
 		}
 		
 		if(result == 1) {
-			// �긽�뭹 �벑濡� �셿猷� �떆, �긽�뭹 肄붾뱶瑜� ���옣
-//			session.setAttribute("code", pVo.getCode());
-			System.out.println("상품 등록에 성공");
-			request.setAttribute("message", "�긽�뭹 �벑濡앹뿉 �꽦怨듯뻽�뒿�땲�떎.");			
+			System.out.println("게시글 등록에 성공");			
 		} else {
-			System.out.println("상품 등록에 실패.");
-			request.setAttribute("message", "�긽�뭹 �벑濡앹뿉 �떎�뙣�뻽�뒿�땲�떎.");
+			System.out.println("게시글 등록에 실패.");
 		}
-		request.getRequestDispatcher("commList.do").forward(request, response);
-
-
-		
+		request.getRequestDispatcher("commList.do").forward(request, response);	
 	}
 
 }
