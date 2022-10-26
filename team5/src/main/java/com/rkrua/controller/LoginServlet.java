@@ -22,7 +22,7 @@ import com.rkrua.dto.MemberVo;
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
  	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
- 		String url = "member/login.jsp";
+ 		String url = "index.jsp";
  		
  		// 占쏙옙占쏙옙 占쏙옙占쏙옙
  		HttpSession session = request.getSession();
