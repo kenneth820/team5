@@ -173,10 +173,15 @@ ul, li {
 							style="width: 100%; height: 40px; font-size: 1em;">사진</button>
 					</li>
 					<li style="display: inline-block; width: 32%;">
-						<button data-toggle-id2="subscribe-mail2"
-							style="width: 100%; height: 40px; font-size: 1em;">방명록</button>
-
+						
+						<button	style="width: 100%; height: 40px; font-size: 1em;" data-toggle-id2="subscribe-mail2">
+							<%-- <a href="commentprofile.do?userid=${loginUser.userid}" > --%>
+							 방명록
+							<!-- </a> -->
+						 </button>
+						
 					</li>
+					
 					<li style="display: inline-block; width: 32%;">
 						<button data-toggle-id3="subscribe-mail3"
 							style="width: 100%; height: 40px; font-size: 0.9em;">BGM</button>
@@ -222,45 +227,36 @@ ul, li {
 						</form>
 					</li>
 					<li>
-						<form method="get" action="commentprofile.do" id="subscribe-mail2"
+						<form method="post" action="commentprofile.do" id="subscribe-mail2"
 							hidden>
 							<table>
 								<tr>
 									<td width="20%" height="15" bgcolor="#eeeeee"
-										style="padding-left: 6px;">userid</td>
+										style="padding-left: 6px;">${loginUser.userid}</td>
 									<td width="80%" style="padding-left: 10px;"><textarea
 											rows="5" cols="34" name="content" class=""></textarea></td>
-									<td style="padding-top: 35px;"><input type="submit"
-										value="등록"
-										style="width: 40px; letter-spacing: 5px; float: right;">
+									<td style="padding-top: 35px;">
+									<input type="submit" value="등록" style="width: 40px; letter-spacing: 5px; float: right;">
 									</td>
 								</tr>
 							</table>
 							<br>
 							<br>
 
-							<table>
-								<tr>
-									<td width="20%" height="10" bgcolor="#eeeeee"
-										style="padding-left: 10px;"></td>
-									<td width="80%" style="padding-left: 10px;"><textarea
-											rows="5" cols="38" name="content" class=""></textarea></td>
-								</tr>
+	 						<table>
+								<c:forEach var="comment" items="${commentList}">
+									<tr>
+										<td width="20%" height="10" bgcolor="#eeeeee"
+											style="padding-left: 10px;">${comment.replier}</td>
+										<td width="80%" style="padding-left: 10px;"><textarea
+												rows="5" cols="38" name="content" class="">${comment.reply} </textarea></td>
+									</tr>
+								</c:forEach>
 							</table>
-							
 						</form>
 					</li>
 					<li>
-						<table>
-							<c:forEach var="comment" items="${commentList}">
-								<tr>
-									<td width="20%" height="10" bgcolor="#eeeeee"
-										style="padding-left: 10px;">${comment.replier}</td>
-									<td width="80%" style="padding-left: 10px;"><textarea
-											rows="5" cols="38" name="content" class="">${comment.reply} </textarea></td>
-								</tr>
-							</c:forEach>
-						</table>
+
 					</li>
 					<li>
 						<form id="subscribe-mail3" hidden>

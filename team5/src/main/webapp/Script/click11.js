@@ -18,12 +18,14 @@ function change3()
 function change4()
 {
   document.addEventListener('click', function(event) {
-    let id = event.target.dataset.toggleId2;
+    let id = event.target.dataset.toggleId2;   
     if (!id) return;
 
     let elem = document.getElementById(id);
 
     elem.hidden = !elem.hidden;
+    
+    
   });
 
 }
