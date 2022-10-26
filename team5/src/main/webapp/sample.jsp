@@ -6,26 +6,26 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-	<style>
-	*{
-	padding:0px;
-	margin:0px;
-	}
-	
-	
-	</style>
+   <style>
+   *{
+   padding:0px;
+   margin:0px;
+   }
+   
+   
+   </style>
 </head>
 <body>
-	<div style="display: flex;">
-		<div style="width:70%">
-		<%@ include file="firstL.jsp" %>
-		</div>
-		<div style="width:30%">	
-		<%@ include file="sampleR.jsp" %>	
-		</div>
-	</div>
-	
-	
-	
+   <div style="display: flex;">
+      <div style="width:70%">
+      <%@ include file="firstL.jsp" %>
+      </div>
+      <div style="width:30%">   
+      <%@ include file="sampleR.jsp" %>   
+      </div>
+   </div>
+   
+   
+   
 </body>
 </html>

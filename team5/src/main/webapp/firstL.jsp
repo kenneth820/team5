@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,11 +9,11 @@
 <title>로그인화면</title>
 </head>
 <body onload="loaded()" onkeydown="keydown()" onkeyup="keyup()">
-	<div style="flex: 80%;">
+<div style="flex: 80%;">
 
-		<canvas width="896px" height="909px" id="c1"></canvas>
-		<div>
-			<script>
+<canvas width="896px" height="909px" id="c1"></canvas>
+<div>
+<script>
            
            var context; //화가 객체 
 
@@ -25,27 +25,14 @@
 
            // 전역변수로서 이미지 객체 생성
            var imgChar= new Image();
-           imgChar.src="./ms18.png";
+           imgChar.src="./Char.png";
            var imgBg1= new Image();
            imgBg1.src="./bg1.png";
-           
-/*            var imgBg2= new Image();
-           var imgBg3= new Image();
-           var imgBg4= new Image();
-           var imgBg5= new Image();
-           var imgBg6= new Image();
-           var imgBg7= new Image(); */
-           
-/*            imgBg2.src="./BG2.png";
-           imgBg3.src="./BG3.png";
-           imgBg4.src="./BG4.png";
-           imgBg5.src="./BG5.png";
-           imgBg6.src="./BG6.png";
-           imgBg7.src="./BG7.png"; */
-    		
+
+    
            // 플레이어 캐릭터의 중심좌표
            var x=800, y=850; //캐릭터의 위치좌표
-           var w=50, h=50; //플레이어 이미지의 사이즈
+           var w=250, h=250; //플레이어 이미지의 사이즈
     
            function loaded(){
                canvas= document.getElementById('c1');
@@ -59,15 +46,6 @@
            /* ${code} */
            function runGame(){
                moveAll(); //캐릭터 움직이기
-/*                if(${code} == "선택한아이템") {
-            	   drawAll(imgBg2.src); // 이미지들 그리기
-               } else if(조건2) {
-            	   drawAll(imgBg3.src); // 이미지들 그리기
-               } else if(조건3) {
-            	   drawAll(imgBg4.src); // 이미지들 그리기
-               } else {
-            	   drawAll(); // 이미지들 그리기
-               } */
                drawAll(); // 이미지들 그리기
            }
     
@@ -90,7 +68,6 @@
            function drawAll(img=imgBg1){
                //배경 그리기
                context.drawImage(img,0,0,896,909);
-               //context.drawImage(imgBg,0,0,800,500);
                //플레이어 그리기
                context.drawImage(imgChar,x-w,y-h,w*2,h*2);
                // 키 코드값 글씨 그리기
@@ -120,8 +97,8 @@
                }
            }
            
-		</script>
-		</div>
-	</div>
+</script>
+</div>
+</div>
 </body>
 </html>
