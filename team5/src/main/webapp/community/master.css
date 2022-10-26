@@ -2,7 +2,9 @@
   margin: 0;
   font-family: 'Dongle', sans-serif;
 }
-
+a:link{
+	color:black;
+}
 
 nav{
 	display:flex;
@@ -296,7 +298,7 @@ input#img-3:checked ~ .nav-dots label#img-dot-3,
 input#img-4:checked ~ .nav-dots label#img-dot-4,
 input#img-5:checked ~ .nav-dots label#img-dot-5,
 input#img-6:checked ~ .nav-dots label#img-dot-6 {
-  background: rgba(120, 200, 120);
+  background: rgb(0,0, 0);
 }
 
 .logo_img{

@@ -24,7 +24,7 @@
 		<c:forEach var="trend" items="${trendList}">
 			<tr>
 				<td>${trend.num}</td>
-				<td><a href="trendDetail.do?num=${trend.num}">${trend.title}</a></td>
+				<td>${trend.title}</a></td>
 				<td>${trend.userid}</td>
 				<td>${trend.writedate}</td>
 				<td><a href="deleteTrend.do?num=${trend.num}"><button id="update">글 삭제</button></a>
