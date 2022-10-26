@@ -18,7 +18,7 @@
 <body>
 	<div style="display: flex;">
 		<div style="width:70%">
-		<%@ include file="sampleL.jsp" %>
+		<%@ include file="firstL.jsp" %>
 		</div>
 		<div style="width:30%">	
 		<%@ include file="sampleR.jsp" %>	
