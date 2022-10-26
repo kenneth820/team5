@@ -39,14 +39,16 @@
 	                <c:forEach var="Cart" items="${CartList}">
 	                <tr>
 	                    <td>
-							<c:choose>
+               			<c:choose>
 							<c:when test="${empty Cart.pictureurl}">
-								<img id=cartImg src="image/noimage.jpg">
+								<img src="image/noimage.jpg">
 							</c:when>
 							<c:otherwise>
-								<img id=cartImg src="upload/${Cart.pictureurl}">
+								<img src="upload/${Cart.pictureurl}"
+								onerror="this.onerror=null; this.src='./image/shop/${Cart.pictureurl}';" 
+								alt="쇼룸" class="image">									
 							</c:otherwise>
-							</c:choose>
+						</c:choose>
 						</td>
 	                    <td>${Cart.name}</td>
 	                    <td>${Cart.price}</td>

@@ -92,7 +92,6 @@ public class ItemDao {
 				iVo.setCategory(rs.getInt("category"));
 				iVo.setCode(rs.getInt("code"));
 				iVo.setUserid(rs.getString("userid"));
-				iVo.setCoordinate(rs.getString("coordinate")); // DB�뿉�꽌 媛��졇�삩 媛앹껜瑜� pVo媛앹껜�뿉 ���옣
 				iVo.setPictureurl(rs.getString("pictureurl"));
 				iVo.setEquip(rs.getInt("equip"));
 				/* System.out.println(pVo); */

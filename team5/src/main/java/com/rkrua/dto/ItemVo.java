@@ -6,7 +6,6 @@ public class ItemVo {
 	int code;
 	int category;
 	String pictureurl;
-	String coordinate;
 	int equip;
 	
 	
@@ -40,12 +39,6 @@ public class ItemVo {
 	public void setPictureurl(String pictureurl) {
 		this.pictureurl = pictureurl;
 	}
-	public String getCoordinate() {
-		return coordinate;
-	}
-	public void setCoordinate(String coordinate) {
-		this.coordinate = coordinate;
-	}
 	public int getEquip() {
 		return equip;
 	}
@@ -55,8 +48,8 @@ public class ItemVo {
 	
 	@Override
 	public String toString() {
-		return "ItemVo [userid=" + userid + ", code=" + code + ", pictureurl=" + pictureurl + ", coordinate="
-				+ coordinate + ", equip=" + equip + "]";
+		return "ItemVo [userid=" + userid + ", name=" + name + ", code=" + code + ", category=" + category
+				+ ", pictureurl=" + pictureurl + ", equip=" + equip + "]";
 	}
 	
 }
