@@ -24,13 +24,13 @@ public class JoinServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// È¸¿ø°¡ÀÔ¿¡¼­ ÀÛ¼ºÇÑ µ¥ÀÌÅÍ¸¦ µ¥ÀÌÅÍ º£ÀÌ½º¿¡ »ðÀÔ(insert)
+		// È¸ï¿½ï¿½ï¿½ï¿½ï¿½Ô¿ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(insert)
 		
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();		// À¥ÆäÀÌÁö Ãâ·Â Ã³¸®
+		PrintWriter out = response.getWriter();		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
 		
-		String name = request.getParameter("name");		//ÀÔ·Â¾ç½ÄÀ¸·ÎºÎÅÍ ¹Þ±â
+		String name = request.getParameter("name");		//ï¿½Ô·Â¾ï¿½ï¿½ï¿½ï¿½ï¿½Îºï¿½ï¿½ï¿½ ï¿½Þ±ï¿½
 		String userid = request.getParameter("userid");
 		String pwd = request.getParameter("pwd");
 		String email = request.getParameter("email");
@@ -45,10 +45,10 @@ public class JoinServlet extends HttpServlet {
 //		System.out.println("phone: " + phone);
 //		System.out.println("admin: " + admin);
 		
-		MemberDao mDao = MemberDao.getInstance();	// DB¿¬µ¿ 
+		MemberDao mDao = MemberDao.getInstance();	// DBï¿½ï¿½ï¿½ï¿½ 
 		
 		MemberVo mVo = new MemberVo();
-		mVo.setName(name);			// ¼¼ÅÍ¸¦ ÅëÇØ MemberVo Å¬·¡½º¿¡ Á¤º¸ ÀúÀå
+		mVo.setName(name);			// ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ MemberVo Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		mVo.setUserid(userid);
 		mVo.setPwd(pwd);
 		mVo.setEmail(email);
@@ -59,13 +59,13 @@ public class JoinServlet extends HttpServlet {
 //		mDao.insertMember(mVo);
 		int result = mDao.insertMember(mVo);
 		if (result == 1 ) {
-			System.out.println("È¸¿ø°¡ÀÔ ¼º°ø");
+			System.out.println("È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		} else {
-			System.out.println("È¸¿ø°¡ÀÔ ½ÇÆÐ");
+			System.out.println("È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 		}
 		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("member/login.jsp");
-		dispatcher.forward(request, response);			// ÆäÀÌÁö ÀÌµ¿
+		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+		dispatcher.forward(request, response);			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
 	}
 
 }
