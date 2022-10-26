@@ -128,7 +128,16 @@ background-color: gray;
 </div>
 
 <div class="user-info">
-<img class="profilePhoto" src="./prof_img.png" alt="기본프로필사진">
+<c:choose>
+	<c:when test="${empty loginUser.pictureurl}">
+		<img src="image/noimage.jpg">
+	</c:when>
+	<c:otherwise>
+	<img src="profilePhoto/${loginUser.pictureurl}" 
+	onerror="this.onerror=null; this.src='./image/noimage.jpg';" 
+	alt="트랜드룸" class="image">									
+	</c:otherwise>
+</c:choose>
 
 <div class="userInfo">
 <table id=userinfoT>
@@ -168,7 +177,7 @@ style="width: 100%; height: 40px; font-size: 1em;">사진</button>
 </li>
 <li style="display: inline-block; width: 32%;">
 
-<buttonstyle="width: 100%; height: 40px; font-size: 1em;" data-toggle-id2="subscribe-mail2">
+<button style="width: 100%; height: 40px; font-size: 1em;" data-toggle-id2="subscribe-mail2">
  방명록
  </button>
 

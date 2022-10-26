@@ -69,12 +69,14 @@
 	    	<ul class="right-menu">
 		        <li>
 			        <div class="profilePhoto">
-               			<c:choose>
+						<c:choose>
 							<c:when test="${empty loginUser.pictureurl}">
 								<img src="image/noimage.jpg">
 							</c:when>
 							<c:otherwise>
-								<img src="profilePhoto/${loginUser.pictureurl}">
+							<img src="profilePhoto/${loginUser.pictureurl}" 
+							onerror="this.onerror=null; this.src='./image/noimage.jpg';" 
+							alt="트랜드룸" class="image">									
 							</c:otherwise>
 						</c:choose>
 			        </div>

@@ -25,14 +25,14 @@
            var keycode;
     
            // 전역변수로서 이미지 객체 생성
-           var imgChar= new Image();
-           imgChar.src="./ms18.png";
+			var imgChar= new Image();
+           imgChar.src="./Char.png";
            var imgBg= new Image();
            imgBg.src="./BGINDEX.png";
     		
            // 플레이어 캐릭터의 중심좌표
            var x=800, y=850; //캐릭터의 위치좌표
-           var w=50, h=50; //플레이어 이미지의 절반 사이즈
+           var w=200, h=200; //플레이어 이미지의 절반 사이즈
     
            function loaded(){
                canvas= document.getElementById('c1');

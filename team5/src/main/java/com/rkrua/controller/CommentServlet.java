@@ -23,7 +23,7 @@ public class CommentServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
-		HttpSession session = request.getSession(); // ¼¼¼Ç °´Ã¼ È£Ãâ
+		HttpSession session = request.getSession(); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ È£ï¿½ï¿½
 		MemberVo mVo = (MemberVo)session.getAttribute("loginUser");
 		
 		String userid = request.getParameter("userid");
@@ -44,7 +44,7 @@ public class CommentServlet extends HttpServlet {
 //		request.setAttribute("total", total);
 //		System.out.println(cartList); 
 		
-		// ¸®½ºÆ® ÆäÀÌÁö·Î ÀÌµ¿
+		// ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
 		RequestDispatcher dispatcher = 
 				request.getRequestDispatcher("main.jsp");
 		dispatcher.forward(request, response);
@@ -52,7 +52,7 @@ public class CommentServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
-		HttpSession session = request.getSession(); // ¼¼¼Ç °´Ã¼ È£Ãâ
+		HttpSession session = request.getSession(); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ È£ï¿½ï¿½
 		MemberVo mVo = (MemberVo)session.getAttribute("loginUser");
 		
 		CommentVo cVo = new CommentVo();

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,11 +9,11 @@ pageEncoding="UTF-8"%>
 <title>로그인화면</title>
 </head>
 <body onload="loaded()" onkeydown="keydown()" onkeyup="keyup()">
-<div style="flex: 80%;">
+   <div style="flex: 80%;">
 
-<canvas width="896px" height="909px" id="c1"></canvas>
-<div>
-<script>
+      <canvas width="896px" height="909px" id="c1"></canvas>
+      <div>
+         <script>
            
            var context; //화가 객체 
 
@@ -29,7 +29,7 @@ pageEncoding="UTF-8"%>
            var imgBg1= new Image();
            imgBg1.src="./bg1.png";
 
-    
+          
            // 플레이어 캐릭터의 중심좌표
            var x=800, y=850; //캐릭터의 위치좌표
            var w=250, h=250; //플레이어 이미지의 사이즈
@@ -97,8 +97,8 @@ pageEncoding="UTF-8"%>
                }
            }
            
-</script>
-</div>
-</div>
+      </script>
+      </div>
+   </div>
 </body>
 </html>
